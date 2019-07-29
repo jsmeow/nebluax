@@ -38,6 +38,8 @@ Bullet.prototype.update = function(entities, idx) {
     // Move in vector.
     this.move();
 
+    // Assert boundary collision.
+    // Schedule bullet to be disposed.
     if (
       this.collides().boundary.left ||
       this.collides().boundary.right ||
@@ -47,8 +49,6 @@ Bullet.prototype.update = function(entities, idx) {
       this.status.alive = false;
     }
   } else {
-    this.status.alive;
-
     // Remove from the entities list.
     this.remove(entities, idx);
   }

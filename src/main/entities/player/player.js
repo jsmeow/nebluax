@@ -28,14 +28,14 @@ function Player(entities) {
 
   /** @override **/
 
-  this.x = canvas.width * 0.5 - this.width / 2;
+  this.x = canvas.width * 0.5 - this.width * 0.5;
   this.y = canvas.height - this.height * 2;
 
   /** @override **/
   this.type = Entity.types.PLAYER;
 
   /** @override **/
-  this.speed = 2;
+  this.speed = 1.5;
 
   // Flags whether already moving in a specific direction.
   // This is necessary to avoid a keydown event delay.
@@ -54,6 +54,8 @@ function Player(entities) {
   /** @override **/
   this.points = {
     ...this.points,
+    health: 10,
+    attack: 1,
     shield: 1,
     bomb: 1,
     power: 1,
@@ -76,7 +78,7 @@ Player.height = 60;
 Player.prototype.createBullets = function() {
   this.entities.push(
     new StandardBullet({
-      x: this.x + this.width / 2 - StandardBullet.width / 2,
+      x: this.x + this.width * 0.5 - StandardBullet.width * 0.5,
       y: this.y - StandardBullet.height,
       attack: this.points.attack,
       faction: Faction.factions.ALLIED
@@ -88,7 +90,7 @@ Player.prototype.createBullets = function() {
 Player.prototype.createBombs = function() {
   this.entities.push(
     new Bomb1({
-      x: this.x + this.width / 2 - Bomb1.width / 2,
+      x: this.x + this.width * 0.5 - Bomb1.width * 0.5,
       y: this.y - Bomb1.height,
       explosion: {
         width: this.width * 3,

@@ -32,13 +32,16 @@ Explosion.prototype = Object.create(Entity.prototype);
 
 /** @override **/
 Explosion.prototype.loadImage = function() {
-  if (this.frame <= this.duration / 5) {
+  if (this.frame < this.duration * 0.25) {
     this.image.src = this.imageSrc[0];
-  } else if (this.frame <= (this.duration * 2) / 5) {
+  }
+  if (this.frame >= this.duration * 0.25 && this.frame < this.duration * 0.5) {
     this.image.src = this.imageSrc[1];
-  } else if (this.frame <= (this.duration * 3) / 5) {
+  }
+  if (this.frame >= this.duration * 0.5 && this.frame < this.duration * 0.75) {
     this.image.src = this.imageSrc[2];
-  } else if (this.frame <= (this.duration * 4) / 5) {
+  }
+  if (this.frame >= this.duration * 0.75 && this.frame < this.duration) {
     this.image.src = this.imageSrc[3];
   }
 };
@@ -47,9 +50,9 @@ Explosion.prototype.loadImage = function() {
 Explosion.prototype.update = function(entities, idx) {
   // Animate for a duration.
   if (this.frame < this.duration) {
-    this.loadImage();
-
+    // Set the image.
     // Increment timer.
+    this.loadImage();
     this.frame = this.frame + 1;
   } else {
     // Remove from the entities list.

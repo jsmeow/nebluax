@@ -1,5 +1,6 @@
 const canvas = require('../../canvas');
 const { fps } = require('../../options');
+const log = require('../../log');
 const Entity = require('../entity');
 const MovingEntity = require('./moving');
 const ExplosionDamage = require('../explosion/damage/explosion-damage');
@@ -18,9 +19,9 @@ function Challenger({ x, y, width, height } = {}) {
     powered: null
   };
 
-  // The statuses an entity can take.
-  // Extending entities may implement more statuses.
+  /** @override **/
   this.status = {
+    ...this.status,
     alive: true,
     firing: false,
     invincible: false,
@@ -41,13 +42,15 @@ function Challenger({ x, y, width, height } = {}) {
   // Attack point damage.
   this.damaged = {
     frame: 0,
-    duration: fps / 2
+    duration: fps / 4
   };
+
   // Render powered image as long as the entity is using power.
   this.powered = {
     frame: 0,
     duration: fps * 2
   };
+
   // Create a bullet at a fixed interval.
   this.bullet = {
     frame: 0,
@@ -81,67 +84,19 @@ Challenger.prototype.power = function() {
   };
 };
 
-// Exchange/trade health points and attack points on collision.
-Challenger.prototype.collision = function(entity) {
-  // Skip if this entity instance is dead or invincible.
-  if (this.status.alive && !this.status.invincible) {
-    // Take damage on this entity instance.
-    this.points.health = this.points.health - entity.points.attack;
-
-    // Die if hit points <= 0 on this entity instance.
-    if (this.points.health <= 0) {
-      this.status.alive = false;
-    }
-
-    if (
-      entity.type === Entity.types.BULLET ||
-      entity.type === Entity.types.BOMB
-    ) {
-      entity.status.alive = false;
-    }
-
-    console.log(
-      `%c${this.faction} ${this.type}%c attacked %c${entity.faction} ` +
-        `${entity.type}%c for : %c${this.points.attack} health`,
-      'color:#cb4b16;',
-      'color:inherit',
-      'color:#2aa198',
-      'color:inherit',
-      'color:#b58900;'
-    );
-    console.log(
-      `%c${this.faction} ${this.type}%c has %c${this.points.health} ` +
-        `health%c left`,
-      'color:#cb4b16;',
-      'color:inherit',
-      'color:#cb4b16',
-      'color:inherit'
-    );
-    console.log(
-      `%c${entity.faction} ${entity.type}%c has %c${entity.points.health} ` +
-        `health%c left`,
-      'color:#2aa198;',
-      'color:inherit',
-      'color:#2aa198',
-      'color:inherit'
-    );
-    console.log('-------------------------------------');
-  }
-};
-
 // Collision validation.
 Challenger.prototype.assertCollision = function(entities, idx) {
   // Collision flag.
   let hasCollided = false;
+
   // Cycle through entity collection.
   entities.forEach((entity, _idx) => {
-    // Validate if collision assert should occur.
+    // Assert if collision conditions.
     if (
-      idx !== _idx &&
-      this.status.alive &&
-      !this.status.invincible &&
-      this.faction !== entity.faction &&
-      this.type !== Entity.types.EFFECT
+      this.type !== Entity.types.EFFECT &&
+      entity.type !== Entity.types.EFFECT &&
+      entity.faction !== this.faction &&
+      idx !== _idx
     ) {
       // Assert if collision occurred.
       if (
@@ -150,10 +105,34 @@ Challenger.prototype.assertCollision = function(entities, idx) {
         this.y < entity.y + entity.height &&
         this.y + this.height > entity.y
       ) {
-        // Take action on collision event.
-        this.collision(entity);
+        // Deal damage on this entity instance.
+        // To log.
+        if (entity.status.alive) {
+          entity.points.health = entity.points.health - this.points.attack;
+          log.exchange(this, entity);
+        }
 
-        // Set collision flag to true.
+        // Deal damage on entity instance.
+        // To log.
+        if (this.status.alive && !this.status.invincible) {
+          this.points.health = this.points.health - entity.points.attack;
+          log.exchange(entity, this);
+        }
+
+        // Assert health points on this entity instance
+        if (
+          this.points.health <= 0 ||
+          this.type === (Entity.types.BULLET || Entity.types.BOMB)
+        ) {
+          this.status.alive = false;
+        }
+
+        // Assert health points on entity instance.
+        if (entity.points.health <= 0) {
+          entity.status.alive = false;
+        }
+
+        // Set collided flag.
         hasCollided = true;
       }
     }
@@ -204,52 +183,42 @@ Challenger.prototype.update = function(entities, idx) {
     this.move();
 
     // Assert an entity collision.
+    // Start the damaged image duration timer.
+    // Create a destroy explosion.
     if (this.assertCollision(entities, idx)) {
-      // Start the damaged image duration timer.
       this.status.damaged = true;
-
-      // Create a damaged explosion if alive after collision.
-      if (this.status.alive) {
-        this.createExplosions().damage(entities);
-      }
+      this.createExplosions().destroy(entities);
     }
 
     // Do damaged logic for a duration.
     if (this.status.damaged && this.damaged.frame < this.damaged.duration) {
       // Make entity invincible.
-      this.status.invincible = true;
-
       // Set the image to damaged.
-      this.loadImage();
-
       // Increment timer.
+      this.status.invincible = true;
+      this.loadImage();
       this.damaged.frame = this.damaged.frame + 1;
     } else {
       // Make entity undamaged.
-      this.status.damaged = false;
-
       // Set invincible status to false.
-      this.status.invincible = false;
-
       // Set the image back to default.
-      this.loadImage();
-
       // Reset timer.
+      this.status.damaged = false;
+      this.status.invincible = false;
+      this.loadImage();
       this.damaged.frame = 0;
     }
 
     // Activate entity power for a duration.
     if (this.status.powered && this.powered.frame < this.powered.duration) {
       // Perform power.
-      this.power().enable();
-
       // Increment timer.
+      this.power().enable();
       this.powered.frame = this.powered.frame + 1;
     } else {
       // Perform unpower.
-      this.power().disable();
-
       // Reset timer.
+      this.power().disable();
       this.powered.frame = 0;
     }
 
@@ -259,23 +228,16 @@ Challenger.prototype.update = function(entities, idx) {
       this.bullet.frame = this.bullet.frame + 1;
     } else {
       // Create bullets.
-      this.createBullets(entities);
-
       // Reset timer.
+      this.createBullets(entities);
       this.bullet.frame = 0;
     }
   } else {
     // To log.
-    console.log(
-      `%c${this.faction} ${this.type} has been killed`,
-      'color:#859900;'
-    );
-    console.log('-------------------------------------');
-
     // Create a destroy explosion if dead after collision.
-    this.createExplosions().destroy(entities);
-
     // Remove from the entities list.
+    log.death(this);
+    this.createExplosions().destroy(entities);
     this.remove(entities, idx);
   }
 };

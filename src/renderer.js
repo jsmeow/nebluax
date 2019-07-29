@@ -6,6 +6,9 @@
 
 const main = require('./main/main');
 
+window && (window.ELECTRON_DISABLE_SECURITY_WARNINGS = true);
+window && (window.ELECTRON_ENABLE_SECURITY_WARNINGS = false);
+
 // Application renderer.
 function render() {
   // Run the application only after the application font is loaded.

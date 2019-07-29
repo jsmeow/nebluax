@@ -8,11 +8,11 @@
   },
   "repository": "https://github.com/electron/electron-quick-start",
   "keywords": [
-    "Electron",
-    "quick",
-    "start",
-    "tutorial",
-    "demo"
+    "electron",
+    "nebulax",
+    "space",
+    "game",
+    "shooter"
   ],
   "author": "GitHub",
   "license": "CC0-1.0",

@@ -21,6 +21,12 @@ const height =
 canvas.width = width;
 canvas.height = height;
 
+// Set the <canvas> element aspect ratio, for reference.
+aspectRatio = {
+  width: canvas.width / 4,
+  height: canvas.height / 3
+};
+
 // Draw <canvas> element text.
 function drawText({ text, x, y, size, fillStyle = grey[50].light }) {
   context.fillStyle = fillStyle;
@@ -76,6 +82,7 @@ module.exports = {
   context,
   width,
   height,
+  aspectRatio,
   drawText,
   drawImage,
   drawImageRotated,

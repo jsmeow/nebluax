@@ -5,23 +5,34 @@ const Entity = require('../entity');
 function Moving({ x, y, width, height } = {}) {
   Entity.call(this, { x, y, width, height });
 
-  // Vector magnitude and flags whether moving in a vector direction.
+  // The statuses an entity can take.
+  // Extending entities may implement more statuses.
+  this.status = {
+    moving: false,
+    pathing: false,
+    roaming: false
+  };
+
+  // Vector movement magnitude.
   this.speed = 1;
 
   // The change in vector movement in x, y.
   this.dx = 0;
   this.dy = 0;
 
-  // The point to move the entity to.
-  this.point = {
+  // The coordinate to move the entity to.
+  this.coordinate = {
     x: 0,
     y: 0
   };
 
-  // Flag is moving to a point.
-  this.moving = false;
+  // The vector coordinates path to move the entity.
+  this.coordinates = [];
 
-  // Moving direction.
+  // Flag if moving in vector direction towards a point.
+  this.status.moving = false;
+
+  // The moving vector direction.
   this.direction = {
     left: false,
     right: false,
@@ -29,11 +40,8 @@ function Moving({ x, y, width, height } = {}) {
     down: false
   };
 
-  // The path to move the entity.
-  this.path = [];
-
   // Flag is pathing.
-  this.pathing = false;
+  this.status.pathing = false;
 }
 
 Moving.prototype = Object.create(Entity.prototype);
@@ -60,77 +68,113 @@ Moving.prototype.collides = function() {
   };
 };
 
-// Move in a vector.
-Moving.prototype.move = function(
-  { dx = 0, dy = 0 } = { dx: this.dx, dy: this.dy }
-) {
-  // Move
-  this.x = this.x + this.speed * dx;
-  this.y = this.y + this.speed * dy;
-
-  if (!this.pathing && this.path.length > 0) {
-    this.point = this.path.shift();
-
-    this.pathing = true;
+// Move in a vector line towards a point.
+Moving.prototype.point = function() {
+  // Get movement vector directions.
+  // Directions relative to the moving point.
+  if (this.x > this.coordinate.x) {
+    this.direction.left = true;
+  }
+  if (this.x < this.coordinate.x) {
+    this.direction.right = true;
+  }
+  if (this.y > this.coordinate.y) {
+    this.direction.up = true;
+  }
+  if (this.y < this.coordinate.y) {
+    this.direction.down = true;
   }
 
-  if (this.pathing && !this.moving) {
-    this.moving = true;
+  // Path action if not moving towards a point.
+  if (!this.status.moving) {
+    // Set moving to true.
+    this.status.moving = true;
 
-    // Move to a point in a vector.
-    // Directions relative to the point.
-    if (this.x > this.point.x) {
-      this.direction.left = true;
-    }
-    if (this.x < this.point.x) {
-      this.direction.right = true;
-    }
-    if (this.y > this.point.y) {
-      this.direction.up = true;
-    }
-    if (this.y < this.point.y) {
-      this.direction.down = true;
-    }
-
-    // Move
+    // Set change in vector movement.
     if (this.direction.left) {
-      this.dx = dx || -1;
+      this.dx = this.status.roaming ? -0.5 : -1;
     }
     if (this.direction.right) {
-      this.dx = dx || 1;
+      this.dx = this.status.roaming ? 0.5 : 1;
     }
     if (this.direction.up) {
-      this.dy = dy || -1;
+      this.dy = this.status.roaming ? -0.5 : -1;
     }
     if (this.direction.down) {
-      this.dy = dy || 1;
+      this.dy = this.status.roaming ? 0.5 : 1;
     }
   }
 
-  if (this.direction.left && this.x < this.point.x) {
+  // Set change in vector movement to 0 if point has been reached.
+  if (this.direction.left && this.x < this.coordinate.x) {
     this.dx = 0;
   }
-  if (this.direction.right && this.x > this.point.x) {
+  if (this.direction.right && this.x > this.coordinate.x) {
     this.dx = 0;
   }
-  if (this.direction.up && this.y < this.point.y) {
+  if (this.direction.up && this.y < this.coordinate.y) {
     this.dy = 0;
   }
-  if (this.direction.down && this.y > this.point.y) {
+  if (this.direction.down && this.y > this.coordinate.y) {
     this.dy = 0;
   }
 
-  // Stop moving when point is reached.
+  // Set moving and pathing to false when point has been reached in the
+  // X and y plane.
   if (this.dx === 0 && this.dy === 0) {
+    this.coordinate = {
+      x: 0,
+      y: 0
+    };
     this.direction = {
       left: false,
       right: false,
       up: false,
       down: false
     };
-    this.moving = false;
-    this.pathing = false;
+
+    // Set moving to false.
+    // Set pathing to false.
+    this.status.moving = false;
+    this.status.pathing = false;
   }
+};
+
+// Move in a vector point path.
+Moving.prototype.path = function() {
+  if (!this.status.pathing && this.coordinates.length > 0) {
+    // Set pathing to true.
+    this.status.pathing = true;
+    // Action to take while not pathing and path has elements.
+    // If done pathing, set roaming to false.
+    // Set the moving point to be the first element of the path list.
+    this.coordinate = this.coordinates.shift();
+  } else if (!this.status.pathing && this.coordinates.length <= 0) {
+    // If no point in path, set roaming to false.
+    // Reset pathing elements.
+    this.status.moving = false;
+    this.status.pathing = false;
+    this.status.roaming = false;
+    this.coordinates = [];
+  }
+
+  // Evaluate vector movement towards a point, if moving.
+  if (this.status.pathing && this.coordinates.length >= 0) {
+    console.log(this.coordinate);
+    this.point();
+  }
+};
+
+// Move in a vector.
+Moving.prototype.move = function(
+  { dx = 0, dy = 0 } = { dx: this.dx, dy: this.dy }
+) {
+  // Perform movement in the x and y plane.
+  this.x = this.x + this.speed * dx;
+  this.y = this.y + this.speed * dy;
+
+  // Set up change in vector movement in x, y, if a point path exists.
+  this.path();
 };
 
 module.exports = Moving;

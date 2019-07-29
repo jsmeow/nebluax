@@ -1,3 +1,4 @@
+const canvas = require('../../../canvas');
 const Bullet = require('../bullet');
 const enemyImageSrc =
   './main/entities/bullet/standard/assets/images/enemy-standard-bullet.png';
@@ -22,8 +23,8 @@ function StandardBullet({ x, y, width, height, attack, faction }) {
 
 StandardBullet.prototype = Object.create(Bullet.prototype);
 
-// Static size.
-StandardBullet.width = 6;
-StandardBullet.height = 6;
+// Size
+StandardBullet.width = 6.667;
+StandardBullet.height = 6.667;
 
 module.exports = StandardBullet;

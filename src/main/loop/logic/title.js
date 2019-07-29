@@ -5,6 +5,7 @@ function update() {}
 
 function render() {
   // Draw the 'NEBULON' text.
+  // Draw the 'Press Enter To Play' text.
   canvas.drawText({
     text: 'NEBULON',
     x: canvas.width / 6,
@@ -12,8 +13,6 @@ function render() {
     size: 150,
     fillStyle: red[500].main
   });
-
-  // Draw the 'Press Enter To Play' text.
   canvas.drawText({
     text: 'Press Enter To Play',
     x: canvas.width / 5.2,

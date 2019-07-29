@@ -14,7 +14,10 @@ function Bomb({ x, y, width, height, explosion, attack, faction }) {
   this.status.invincible = true;
 
   /** @override **/
-  this.points.attack = attack;
+  this.points = {
+    ...this.points,
+    attack
+  };
 
   // Explosion size.
   this.explosion = explosion;
@@ -42,25 +45,25 @@ Bomb.prototype.update = function(entities, idx) {
     this.move();
 
     // Assert entity collision.
+    // Set the size to the explosion size.
+    // Create a destroy explosion if dead after collision.
+    // Create a destroy explosion.
+    // Schedule bomb to be disposed.
     if (this.assertCollision(entities, idx)) {
       this.width = this.explosion.width;
       this.height = this.explosion.height;
-
-      // Create a destroy explosion if dead after collision.
       this.createExplosions().destroy(entities);
-
-      // Schedule bomb to be disposed.
       this.status.alive = false;
     }
 
     // Assert boundary collision.
+    // Schedule bomb to be disposed.
     if (
       this.collides().boundary.left ||
       this.collides().boundary.right ||
       this.collides().boundary.top ||
       this.collides().boundary.bottom
     ) {
-      // Schedule bomb to be disposed.
       this.status.alive = false;
     }
   } else {

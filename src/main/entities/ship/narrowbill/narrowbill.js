@@ -1,3 +1,4 @@
+const canvas = require('../../../canvas');
 const Ship = require('../ship');
 const Faction = require('../../base/faction');
 const StandardBullet = require('../../bullet/standard/standard-bullet');
@@ -26,8 +27,11 @@ function Narrowbill({ x, y, width, height, faction }) {
   this.status.firing = true;
 
   /** @override **/
-  this.points.health = 3;
-  this.points.attack = 1;
+  this.points = {
+    ...this.points,
+    health: 10,
+    attack: 1
+  };
 
   this.init();
 }
