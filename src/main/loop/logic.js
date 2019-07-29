@@ -1,8 +1,24 @@
 const canvas = require('../canvas');
+const keyHandler = require('../key-handler');
 const state = require('./state');
-const update = require('./logic/update');
-const render = require('./logic/render');
+const title = require('./logic/title');
+const game = require('./logic/game');
+const Player = require('../entities/player/player');
 const Space = require('../entities/background/space');
+
+// The application entities list.
+// All entities have lifecycles inside this list.
+const entities = [];
+
+// The application user/player.
+const player = new Player(entities);
+entities.push(player);
+
+// Send the player to the key handler to handle user key events.
+// Send the state to the key handler to handle state events.
+// Add keydown and keyup event listeners.
+keyHandler.addKeydownEventListener(player, state);
+keyHandler.addKeyupEventListener(player, state);
 
 // The space background.
 // Will render regardless of application state.
@@ -14,17 +30,36 @@ const space = new Space({
 });
 
 function logic({ step, delta }) {
-  // Update the space background.
-  space.update();
+  // Update the application.
   if (step) {
-    // Perform an application update.
-    update(state);
+    // Update the space background.
+    space.update();
+
+    // Update the title.
+    if (state.current === state.states.TITLE) {
+      title.update();
+    }
+
+    // Update the game.
+    if (state.current === state.states.GAME) {
+      game.update(entities);
+    }
   }
+
+  // Render the application.
   if (delta) {
     // Render the space background.
     space.render();
-    // Perform an application render.
-    render(state);
+
+    // Render the title.
+    if (state.current === state.states.TITLE) {
+      title.render();
+    }
+
+    // Render the game.
+    else if (state.current === state.states.GAME) {
+      game.render(entities);
+    }
   }
 }
 

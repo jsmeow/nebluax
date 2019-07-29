@@ -5,5 +5,8 @@ const states = {
   PAUSED: 2
 };
 
-module.exports.current = states.GAME;
+// The initial application state.
+const current = states.GAME;
+
+module.exports.current = current;
 module.exports.states = states;

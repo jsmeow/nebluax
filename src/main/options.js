@@ -1,5 +1,5 @@
 const options = {
-  fps: 60
+  fps: 120
 };
 
 module.exports = options;

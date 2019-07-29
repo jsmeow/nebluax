@@ -1,13 +1,16 @@
+const canvas = require('../../canvas');
+const { fps } = require('../../options');
+const Entity = require('../entity');
 const MovingEntity = require('./moving');
+const ExplosionDamage = require('../explosion/damage/explosion-damage');
+const ExplosionDestroy = require('../explosion/destroy/explosion-destroy');
 
 // An entity with health points that can deal/receive attack point damage.
 // This entity has a physical presence in the game.
 // This entity can deal or suffer from status effects.
-function ChallengerEntity({ x, y, width, height } = {}) {
+function Challenger({ x, y, width, height } = {}) {
   MovingEntity.call(this, { x, y, width, height });
 
-  // The image sources used by this entity.
-  // To be provided by the extending class.
   /** @override **/
   this.imageSrc = {
     default: null,
@@ -15,7 +18,8 @@ function ChallengerEntity({ x, y, width, height } = {}) {
     powered: null
   };
 
-  // Status effects
+  // The statuses an entity can take.
+  // Extending entities may implement more statuses.
   this.status = {
     alive: true,
     firing: false,
@@ -33,148 +37,113 @@ function ChallengerEntity({ x, y, width, height } = {}) {
     score: 1
   };
 
-  // Type of challenger.
-  // Optional, although allows for additional validation.
-  this.type = '';
-
-  // Different timers for actions and status effects.
-  this.timers = {
-    // Render damaged image when dealt attack point damage, if vulnerable to
-    // Attack point damage.
-    damaged: {
-      timer: 0,
-      delay: 500,
-      startTimer: () => {
-        // Make entity damaged.
-        this.status.damaged = true;
-        // Make entity invincible.
-        this.status.invincible = true;
-        // Set the image to damaged.
-        this.loadImage();
-        // Begin the timer.
-        this.timers.damaged.timer = setTimeout(() => {
-          // Make entity undamaged.
-          this.status.damaged = true;
-          // Set the image back to default.
-          this.loadImage();
-          // Make entity vulnerable.
-          this.status.invincible = false;
-        }, this.timers.damaged.delay);
-      },
-      clearTimer: () => {
-        window.clearTimeout(this.timers.damaged.timer);
-      }
-    },
-    // Render powered image as long as the entity is using power.
-    powered: {
-      timer: 0,
-      delay: 2000,
-      startTimer: () => {
-        // Make entity powered.
-        this.status.powered = true;
-        // Set the image to powered.
-        this.loadImage();
-        // Begin the timer.
-        this.timers.powered.timer = setTimeout(() => {
-          // Make entity unpowered.
-          this.status.powered = true;
-          // Set the image back to default.
-          this.loadImage();
-        }, this.timers.powered.delay);
-      },
-      clearTimer: () => {
-        window.clearTimeout(this.timers.powered.timer);
-      }
-    },
-    // Fire a bullet at a fixed interval.
-    bullet: {
-      timer: 0,
-      delay: 500,
-      startTimer: () => {
-        // Do not start timer if timer already exists.
-        if (!this.timers.bullet.timer) {
-          // Begin the timer.
-          this.timers.bullet.timer = setInterval(() => {
-            // Do not create bullet if idle.
-            if (!this.status.idle) {
-              // Create bullets.
-              // To be implemented by the extending class.
-              this.createBullets();
-            }
-          }, this.timers.bullet.delay);
-        }
-      },
-      clearTimer: () => {
-        window.clearTimeout(this.timers.bullet.timer);
-      }
-    }
+  // Render damaged image when dealt attack point damage, if vulnerable to
+  // Attack point damage.
+  this.damaged = {
+    frame: 0,
+    duration: fps / 2
+  };
+  // Render powered image as long as the entity is using power.
+  this.powered = {
+    frame: 0,
+    duration: fps * 2
+  };
+  // Create a bullet at a fixed interval.
+  this.bullet = {
+    frame: 0,
+    delay: fps
   };
 }
 
-ChallengerEntity.prototype = Object.create(MovingEntity.prototype);
-
-// Types of challengers.
-ChallengerEntity.types = {
-  BULLET: 'bullet'
-};
+Challenger.prototype = Object.create(MovingEntity.prototype);
 
 /** @override **/
-ChallengerEntity.prototype.loadImage = function() {
+Challenger.prototype.loadImage = function() {
   if (this.status.damaged) {
     this.image.src = this.imageSrc.damaged;
   } else if (this.status.powered) {
     this.image.src = this.imageSrc.powered;
+  } else {
+    this.image.src = this.imageSrc.default;
   }
-  this.image.src = this.imageSrc.default;
 };
 
-// Use power.
+// Use power action.
 // To be implemented by the extending class.
-ChallengerEntity.prototype.power = function() {
-  // ...implementation
+Challenger.prototype.power = function() {
+  return {
+    enable: () => {
+      // ...implementation
+    },
+    disable: () => {
+      // ...implementation
+    }
+  };
 };
 
 // Exchange/trade health points and attack points on collision.
-ChallengerEntity.prototype.collision = function(entity) {
+Challenger.prototype.collision = function(entity) {
   // Skip if this entity instance is dead or invincible.
   if (this.status.alive && !this.status.invincible) {
     // Take damage on this entity instance.
     this.points.health = this.points.health - entity.points.attack;
-  }
-  // Die if hit points <= 0 on this entity instance.
-  if (this.points.health <= 0) {
-    this.status.alive = false;
-  }
-  // Skip if entity instance is dead or invincible.
-  if (entity.status.alive && !entity.status.invincible) {
-    // Take damage on this entity instance.
-    entity.points.health = entity.points.health - this.points.attack;
-  }
-  // Die if hit points <= 0 on entity instance.
-  if (entity.points.health <= 0) {
-    entity.status.alive = false;
+
+    // Die if hit points <= 0 on this entity instance.
+    if (this.points.health <= 0) {
+      this.status.alive = false;
+    }
+
+    if (
+      entity.type === Entity.types.BULLET ||
+      entity.type === Entity.types.BOMB
+    ) {
+      entity.status.alive = false;
+    }
+
+    console.log(
+      `%c${this.faction} ${this.type}%c attacked %c${entity.faction} ` +
+        `${entity.type}%c for : %c${this.points.attack} health`,
+      'color:#cb4b16;',
+      'color:inherit',
+      'color:#2aa198',
+      'color:inherit',
+      'color:#b58900;'
+    );
+    console.log(
+      `%c${this.faction} ${this.type}%c has %c${this.points.health} ` +
+        `health%c left`,
+      'color:#cb4b16;',
+      'color:inherit',
+      'color:#cb4b16',
+      'color:inherit'
+    );
+    console.log(
+      `%c${entity.faction} ${entity.type}%c has %c${entity.points.health} ` +
+        `health%c left`,
+      'color:#2aa198;',
+      'color:inherit',
+      'color:#2aa198',
+      'color:inherit'
+    );
+    console.log('-------------------------------------');
   }
 };
 
 // Collision validation.
-ChallengerEntity.prototype.assertCollision = function(entities, idx) {
+Challenger.prototype.assertCollision = function(entities, idx) {
+  // Collision flag.
   let hasCollided = false;
   // Cycle through entity collection.
   entities.forEach((entity, _idx) => {
-    // Skip if entity is dead.
-    // Skip if this entity instance faction is the same as entity faction.
-    // Skip if this this entity and entity are both bullet types.
-    // Skip if this entity instance is invincible.
-    // Skip if entity references itself.
+    // Validate if collision assert should occur.
     if (
-      !entity.status.alive &&
-      this.faction !== entity.faction &&
-      (this.type === ChallengerEntity.types.BULLET &&
-        entity.type === ChallengerEntity.types.BULLET) &&
+      idx !== _idx &&
+      this.status.alive &&
       !this.status.invincible &&
-      idx !== _idx
+      this.faction !== entity.faction &&
+      this.type !== Entity.types.EFFECT
     ) {
-      // Assert collision.
+      // Assert if collision occurred.
       if (
         this.x < entity.x + entity.width &&
         this.x + this.width > entity.x &&
@@ -183,88 +152,143 @@ ChallengerEntity.prototype.assertCollision = function(entities, idx) {
       ) {
         // Take action on collision event.
         this.collision(entity);
-        // Set collided flag.
+
+        // Set collision flag to true.
         hasCollided = true;
       }
     }
   });
+
   return hasCollided;
 };
 
 // Create any number and types of bullets.
 // To be implemented by the extending class.
-ChallengerEntity.prototype.createBullets = function() {
-  return {
-    standard: () => {
-      // ...implementation
-    },
-    homing: () => {
-      // ...implementation
-    }
-  };
-};
+Challenger.prototype.createBullets = function(entities) {};
 
-// Bullet factory.
-ChallengerEntity.prototype.bulletFactory = function() {
-  // ...
-};
-
-// Bomb factory.
-ChallengerEntity.prototype.bombFactory = function() {
-  return {
-    small: () => {
-      // ...implementation
-    }
-  };
-};
-
-// Explosion factory.
-ChallengerEntity.prototype.explosionFactory = function() {
-  return {
-    damaged: () => {
-      // ...implementation
-    },
-    destroy: () => {
-      // ...implementation
-    }
-  };
-};
-
-// Create a damage explosion.
+// Create any number and types of bombs.
 // To be implemented by the extending class.
-ChallengerEntity.prototype.createBombs = function() {
-  // ...implementation
+Challenger.prototype.createBombs = function(entities) {};
+
+// Create any number and types of explosions.
+Challenger.prototype.createExplosions = function() {
+  return {
+    damage: entities => {
+      entities.push(
+        new ExplosionDamage({
+          x: this.x,
+          y: this.y,
+          width: this.width,
+          height: this.height
+        })
+      );
+    },
+    destroy: entities => {
+      entities.push(
+        new ExplosionDestroy({
+          x: this.x,
+          y: this.y,
+          width: this.width,
+          height: this.height
+        })
+      );
+    }
+  };
 };
 
 /** @override **/
-ChallengerEntity.prototype.update = function(entities, idx) {
+Challenger.prototype.update = function(entities, idx) {
+  // Assert alive status.
   if (this.status.alive) {
-    // Start the fire bullet(s) timer if firing status and the bullet firing
-    // Timer does not exist.
-    if (this.status.firing && !this.timers.bullet.timer) {
-      this.timers.bullet.startTimer();
-    }
-    // Start the damaged timer if entity has collided and the damaged timer
-    // Does not exist.
-    if (this.assertCollision(entities, idx) && !this.timers.damaged.timer) {
+    // Move in vector.
+    this.move();
+
+    // Assert an entity collision.
+    if (this.assertCollision(entities, idx)) {
+      // Start the damaged image duration timer.
+      this.status.damaged = true;
+
       // Create a damaged explosion if alive after collision.
       if (this.status.alive) {
-        this.explosionFactory().damaged();
+        this.createExplosions().damage(entities);
       }
-      // Start the damaged timer.
-      this.timers.damaged.startTimer();
+    }
+
+    // Do damaged logic for a duration.
+    if (this.status.damaged && this.damaged.frame < this.damaged.duration) {
+      // Make entity invincible.
+      this.status.invincible = true;
+
+      // Set the image to damaged.
+      this.loadImage();
+
+      // Increment timer.
+      this.damaged.frame = this.damaged.frame + 1;
+    } else {
+      // Make entity undamaged.
+      this.status.damaged = false;
+
+      // Set invincible status to false.
+      this.status.invincible = false;
+
+      // Set the image back to default.
+      this.loadImage();
+
+      // Reset timer.
+      this.damaged.frame = 0;
+    }
+
+    // Activate entity power for a duration.
+    if (this.status.powered && this.powered.frame < this.powered.duration) {
+      // Perform power.
+      this.power().enable();
+
+      // Increment timer.
+      this.powered.frame = this.powered.frame + 1;
+    } else {
+      // Perform unpower.
+      this.power().disable();
+
+      // Reset timer.
+      this.powered.frame = 0;
+    }
+
+    // Create bullets at an interval.
+    if (this.bullet.frame < this.bullet.delay) {
+      // Increment timer.
+      this.bullet.frame = this.bullet.frame + 1;
+    } else {
+      // Create bullets.
+      this.createBullets(entities);
+
+      // Reset timer.
+      this.bullet.frame = 0;
     }
   } else {
-    // Create a damaged explosion dead.
-    this.explosionFactory().destroy();
-    // Destroy all timers.
-    this.vector.clearTimer();
-    this.timers.damaged.clearTimer();
-    this.timers.powered.clearTimer();
-    this.timers.damaged.clearTimer();
+    // To log.
+    console.log(
+      `%c${this.faction} ${this.type} has been killed`,
+      'color:#859900;'
+    );
+    console.log('-------------------------------------');
+
+    // Create a destroy explosion if dead after collision.
+    this.createExplosions().destroy(entities);
+
     // Remove from the entities list.
-    // ...implementation
+    this.remove(entities, idx);
   }
 };
 
-module.exports = ChallengerEntity;
+// Render action.
+Challenger.prototype.render = function() {
+  canvas.drawImage({
+    image: this.image,
+    x: this.x,
+    y: this.y,
+    width: this.width,
+    height: this.height
+  });
+};
+
+module.exports = Challenger;

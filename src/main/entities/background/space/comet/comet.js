@@ -13,25 +13,16 @@ function Comet() {
   this.y = Math.random() * -canvas.height + canvas.height;
 
   /** @override **/
-  this.width = canvas.width / 750;
+  this.width = canvas.width / 550;
 
   /** @override **/
-  this.height =
-    (Comet.gradient.length * canvas.height) / (350 * Comet.gradient.length);
+  this.height = canvas.width / 550;
 
   /** @override **/
-  this.vector.magnitude = 0.5;
-
-  /** @override **/
-  this.vector.delay = 0.05;
-  this.init();
+  this.dy = 1;
 }
 
 Comet.prototype = Object.create(MovingEntity.prototype);
-
-Comet.prototype.init = function() {
-  this.moveVector({ down: this.vector.magnitude });
-};
 
 // Opacity hex gradient. Obtained from
 // https://gist.github.com/lopspower/03fb1cc0ac9f32ef38f4
@@ -46,9 +37,12 @@ Comet.prototype.reset = function() {
 /** @override **/
 Comet.prototype.update = function() {
   // Get new random position on bottom boundary collision.
-  if (this.collidesBoundary().bottom(-this.height * Comet.gradient.length)) {
+  if (this.y + this.dy >= canvas.height - this.height * Comet.gradient.length) {
     this.reset();
   }
+
+  // Move in vector.
+  this.move();
 };
 
 /** @override **/

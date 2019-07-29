@@ -2,147 +2,135 @@ const canvas = require('../../canvas');
 const Entity = require('../entity');
 
 // An entity that can move.
-function MovingEntity({ x, y, width, height } = {}) {
+function Moving({ x, y, width, height } = {}) {
   Entity.call(this, { x, y, width, height });
 
-  // The moving vector.
-  this.vector = {
-    magnitude: 0.1,
-    timer: 0,
-    delay: 0.05,
-    startTimer: fn => {
-      this.vector.timer = setInterval(fn, this.delay);
-    },
-    clearTimer: () => {
-      window.clearTimeout(this.vector.timer);
-    }
+  // Vector magnitude and flags whether moving in a vector direction.
+  this.speed = 1;
+
+  // The change in vector movement in x, y.
+  this.dx = 0;
+  this.dy = 0;
+
+  // The point to move the entity to.
+  this.point = {
+    x: 0,
+    y: 0
   };
+
+  // Flag is moving to a point.
+  this.moving = false;
+
+  // Moving direction.
+  this.direction = {
+    left: false,
+    right: false,
+    up: false,
+    down: false
+  };
+
+  // The path to move the entity.
+  this.path = [];
+
+  // Flag is pathing.
+  this.pathing = false;
 }
 
-MovingEntity.prototype = Object.create(Entity.prototype);
+Moving.prototype = Object.create(Entity.prototype);
 
-// Collides with a boundary detection.
-MovingEntity.prototype.collidesBoundary = function() {
+// Collision detection.
+Moving.prototype.collides = function() {
   return {
-    left: (width = 0) => {
-      return this.x - this.vector.magnitude <= width;
+    // Boundary collision.
+    boundary: {
+      left: this.x - this.dx <= 0,
+      right: this.x + this.dx >= canvas.width + this.width,
+      top: this.y - this.dy <= 0,
+      bottom: this.y + this.dy >= canvas.height - this.height
     },
-    right: (width = this.width) => {
-      return this.x + this.vector.magnitude <= canvas.width + width;
-    },
-    top: (height = 0) => {
-      return this.y - this.vector.magnitude <= height;
-    },
-    bottom: (height = this.height) => {
-      return this.y + this.vector.magnitude >= canvas.height - height;
-    }
-  };
-};
-
-// Collides with a point detection.
-MovingEntity.prototype.collidesPoint = function() {
-  return {
-    left: x => {
-      return x <= this.x;
-    },
-    right: x => {
-      return x >= this.x;
-    },
-    up: y => {
-      return y <= this.y;
-    },
-    down: y => {
-      return y >= this.y;
-    }
-  };
-};
-
-// Move in a direction.
-MovingEntity.prototype.moveDirection = function(magnitude = 0) {
-  return {
-    left: () => {
-      this.x = this.x - magnitude;
-    },
-    right: () => {
-      this.x = this.x + magnitude;
-    },
-    up: () => {
-      this.y = this.y - magnitude;
-    },
-    down: () => {
-      this.y = this.y + magnitude;
+    // Point collision.
+    point: ({ x, y }) => {
+      return {
+        left: x <= this.x,
+        right: x >= this.x,
+        up: y <= this.y,
+        down: y >= this.y
+      };
     }
   };
 };
 
 // Move in a vector.
-MovingEntity.prototype.moveVector = function({
-  left = 0,
-  right = 0,
-  up = 0,
-  down = 0
-}) {
-  this.vector.startTimer(() => {
-    this.moveDirection(left).left();
-    this.moveDirection(right).right();
-    this.moveDirection(up).up();
-    this.moveDirection(down).down();
-  });
-};
+Moving.prototype.move = function(
+  { dx = 0, dy = 0 } = { dx: this.dx, dy: this.dy }
+) {
+  // Move
+  this.x = this.x + this.speed * dx;
+  this.y = this.y + this.speed * dy;
 
-// Move to a in a vector to a point.
-MovingEntity.prototype.movePoint = function({ x, y, magnitude }) {
-  return new Promise(resolve => {
-    if (!this.vector.timer) {
-      // Flags if vector has magnitude in a direction.
-      let willMoveLeft = true;
-      let willMoveRight = true;
-      let willMoveUp = true;
-      let willMoveDown = true;
-      // Move in a vector at an interval.
-      this.vector.startTimer(() => {
-        // Move in a left direction.
-        if (this.collidesBoundary().left(x)) {
-          this.moveDirection(magnitude).left();
-        } else {
-          willMoveLeft = false;
-        }
-        // Move in a right direction.
-        if (this.collidesBoundary().right(x)) {
-          this.moveDirection(magnitude).right();
-        } else {
-          willMoveRight = false;
-        }
-        // Move in an up direction.
-        if (this.collidesBoundary().up(y)) {
-          this.moveDirection(magnitude).up();
-        } else {
-          willMoveUp = false;
-        }
-        // Move in a down direction.
-        if (this.collidesBoundary().down(y)) {
-          this.moveDirection(magnitude).down();
-        } else {
-          willMoveDown = false;
-        }
-        if (!willMoveLeft && !willMoveRight && !willMoveUp && !willMoveDown) {
-          resolve();
-        }
-      });
+  if (!this.pathing && this.path.length > 0) {
+    this.point = this.path.shift();
+
+    this.pathing = true;
+  }
+
+  if (this.pathing && !this.moving) {
+    this.moving = true;
+
+    // Move to a point in a vector.
+    // Directions relative to the point.
+    if (this.x > this.point.x) {
+      this.direction.left = true;
     }
-  }).then(() => {
-    this.vector.clearTimer();
-    return Promise.resolve();
-  });
+    if (this.x < this.point.x) {
+      this.direction.right = true;
+    }
+    if (this.y > this.point.y) {
+      this.direction.up = true;
+    }
+    if (this.y < this.point.y) {
+      this.direction.down = true;
+    }
+
+    // Move
+    if (this.direction.left) {
+      this.dx = dx || -1;
+    }
+    if (this.direction.right) {
+      this.dx = dx || 1;
+    }
+    if (this.direction.up) {
+      this.dy = dy || -1;
+    }
+    if (this.direction.down) {
+      this.dy = dy || 1;
+    }
+  }
+
+  if (this.direction.left && this.x < this.point.x) {
+    this.dx = 0;
+  }
+  if (this.direction.right && this.x > this.point.x) {
+    this.dx = 0;
+  }
+  if (this.direction.up && this.y < this.point.y) {
+    this.dy = 0;
+  }
+  if (this.direction.down && this.y > this.point.y) {
+    this.dy = 0;
+  }
+
+  // Stop moving when point is reached.
+  if (this.dx === 0 && this.dy === 0) {
+    this.direction = {
+      left: false,
+      right: false,
+      up: false,
+      down: false
+    };
+    this.moving = false;
+    this.pathing = false;
+  }
 };
 
-// Move in a vector path.
-MovingEntity.prototype.movePath = function(points) {
-  return points.reduce((previousPromise, currentPoint) => {
-    return previousPromise.then(() => {
-      return this.movePoint({ ...currentPoint });
-    });
-  }, Promise.resolve());
-};
-
-module.exports = MovingEntity;
+module.exports = Moving;

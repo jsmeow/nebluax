@@ -1,8 +1,8 @@
 const canvas = require('../../canvas');
 const Entity = require('../entity');
 const Comet = require('./space/comet/comet');
+const Star = require('./space/star/star');
 
-// The space background.
 function Space() {
   Entity.call(this);
 
@@ -16,6 +16,10 @@ function Space() {
 
   // The comet entities list.
   this.comets = [];
+
+  // The stars entities list.
+  this.stars = [];
+
   this.init();
 }
 
@@ -27,12 +31,21 @@ Space.prototype.init = function() {
   this.comets = [...Array(30)].map(() => {
     return new Comet();
   });
+
+  // Create the star entities.
+  this.stars = [...Array(30)].map(() => {
+    return new Star();
+  });
 };
 
 /** @override **/
 Space.prototype.update = function() {
   this.comets.forEach(comet => {
     comet.update();
+  });
+
+  this.stars.forEach(star => {
+    star.update();
   });
 };
 
@@ -46,9 +59,15 @@ Space.prototype.render = function() {
     height: this.height,
     fillStyle: '#000000'
   });
+
   // Draw the comets.
   this.comets.forEach(comet => {
     comet.render();
+  });
+
+  // Draw the stars.
+  this.stars.forEach(star => {
+    star.render();
   });
 };
 

@@ -9,14 +9,14 @@ function timestamp() {
 }
 
 // The current frame datetime timestamp.
-let now = null;
+let now;
 
 // The previous frame datetime timestamp.
 let last = timestamp();
 
 // The difference between the previous frame datetime timestamp and the current
 // Frame datetime timestamp.
-let delta = 0;
+let delta;
 
 // Depending on the collision detection scheme, fast moving objects can pass
 // Through small objects, this can be mitigated if our fixed step is set
@@ -28,20 +28,28 @@ const step = 1 / fps;
 function frame() {
   // Set the current frame datetime timestamp.
   now = timestamp();
+
   // Resolve the delta.
   // One additional note is that requestAnimationFrame might pause if our
   // Browser loses focus, resulting in a very, very large dt after it resumes.
   // We can workaround this by limiting the delta to one second
   delta = Math.min(1, (now - last) / 1000);
+
   // Perform work.
   while (delta > step) {
     delta -= step;
+
+    // Update the application.
     logic({ step });
   }
+
+  // Render the application.
   logic({ delta });
+
   // The current frame datetime timestamp becomes the previous frame datetime
   // Timestamp.
   last = now;
+
   // Perform the loop.
   window.requestAnimationFrame(() => {
     frame();

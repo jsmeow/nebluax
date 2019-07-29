@@ -1,26 +1,44 @@
 <component name="ProjectDictionaryState">
   <dictionary name="jsmeow">
     <words>
+      <w>altleft</w>
       <w>altr</w>
       <w>altright</w>
+      <w>arrowdown</w>
+      <w>arrowleft</w>
+      <w>arrowright</w>
+      <w>arrowup</w>
       <w>backquote</w>
       <w>bcksp</w>
       <w>btnclick</w>
+      <w>capslock</w>
+      <w>cattacked</w>
+      <w>cfor</w>
       <w>closebracket</w>
+      <w>controlleft</w>
+      <w>controlright</w>
       <w>ctrlr</w>
       <w>ctrlright</w>
       <w>electronjs</w>
       <w>fpsmeter</w>
       <w>hokein</w>
+      <w>keya</w>
+      <w>keyb</w>
+      <w>keyc</w>
       <w>keypressed</w>
       <w>lifecycles</w>
       <w>loadnewwindow</w>
       <w>narrowbill</w>
       <w>nebulon</w>
+      <w>pathing</w>
+      <w>pausebreak</w>
       <w>respawning</w>
       <w>secondparam</w>
+      <w>shiftleft</w>
+      <w>spacebar</w>
       <w>strg</w>
       <w>timestep</w>
+      <w>unpower</w>
       <w>unpowered</w>
       <w>woff</w>
     </words>

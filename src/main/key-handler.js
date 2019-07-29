@@ -1,115 +1,132 @@
-const eventKeys = require('../static/key-event-keys');
-
-// The player.
-let player = null;
-
-function init(_player) {
-  player = _player;
-}
-
-// Keyboard keys used.
-const keys = [
-  eventKeys[13],
-  eventKeys[32],
-  eventKeys[37],
-  eventKeys[38],
-  eventKeys[39],
-  eventKeys[40],
-  eventKeys[81]
-];
-
-// Flag whether a key has been pressed.
-let isKeypressed = null;
+const keyCodes = require('../static/key-event-codes');
 
 // On keydown event.
-function onKeydown(event) {
-  // Set keypressed status to true.
-  isKeypressed = true;
-  const events = {};
-  /*    [keys.START]() {
-      // Start the game if in title screen state and not running.
-      if (this.state === Game.states.TITLE) {
-        this.setState(Game.states.PLAYING);
+function onKeydown(player, state, event) {
+  // Key actions
+  const actions = {
+    // Enter key
+    [keyCodes.ENTER]() {
+      // Start the game if state = title.
+      if (state.current === state.states.TITLE) {
+        state.current = state.states.GAME;
       }
     },
-    // Move player entity left.
-    [keys.LEFT]() {
-      player.moveInVector('left');
+    // A key
+    [keyCodes.KEYA]() {
+      player.dx = -player.speed;
+      player.ddx.left = true;
     },
-    // Move player entity right.
-    [keys.RIGHT]() {
-      player.moveInVector('right');
+    // D key
+    [keyCodes.KEYD]() {
+      player.dx = player.speed;
+      player.ddx.right = true;
     },
-    // Move player entity up.
-    [keys.UP]() {
-      player.moveInVector('up');
+    // W key
+    [keyCodes.KEYW]() {
+      player.dy = -player.speed;
+      player.ddy.up = true;
     },
-    // Move player entity down.
-    [keys.DOWN]() {
-      player.moveInVector('down');
+    // S key
+    [keyCodes.KEYS]() {
+      player.dy = player.speed;
+      player.ddy.down = true;
     },
-    // Fire a game player entity bomb.
-    [keys.ACTION1]() {
-      player.addPlayerEntitySmallBombToGameEntities();
+    // Spacebar key
+    [keyCodes.SPACE]() {
+      player.createBombs();
     },
-    // Use game player entity power.
-    [keys.ACTION2]() {
-      player.usePlayerPower();
-    }*/
-  events.key && key();
+    // Q key
+    [keyCodes.KEYQ]() {
+      // ...
+    }
+  };
+
+  // If key corresponds to an action, do key event action.
+  if (Object.keys(actions).includes(event.keyCode.toString())) {
+    actions[event.keyCode]();
+  }
 }
 
 // On keyup event.
-function onKeyup(event) {
-  // Set keypressed status to true.
-  isKeypressed = false;
-  const events = {};
-  /*    // Clear move player entity move left interval.
-    [keys.left]() {
-      player.disposePlayerEntityMoveLeftInterval();
+function onKeyup(player, state, event) {
+  // Key actions
+  const actions = {
+    // A key
+    [keyCodes.KEYA]() {
+      if (player.ddx.right) {
+        player.dx = player.speed;
+      } else {
+        player.dx = 0;
+      }
+      player.ddx.left = false;
     },
-    // Clear move player entity move right interval.
-    [keys.right]() {
-      player.disposePlayerEntityMoveRightInterval();
+    // D key
+    [keyCodes.KEYD]() {
+      if (player.ddx.left) {
+        player.dx = -player.speed;
+      } else {
+        player.dx = 0;
+      }
+      player.ddx.right = false;
     },
-    // Clear move player entity move up interval.
-    [keys.up]() {
-      player.disposePlayerEntityMoveUpInterval();
+    // W key
+    [keyCodes.KEYW]() {
+      if (player.ddy.down) {
+        player.dy = player.speed;
+      } else {
+        player.dy = 0;
+      }
+      player.ddy.up = false;
     },
-    // Clear move player entity move down interval.
-    [keys.down]() {
-      player.disposePlayerEntityMoveDownInterval();
+    // S key
+    [keyCodes.KEYS]() {
+      if (player.ddy.up) {
+        player.dy = -player.speed;
+      } else {
+        player.dy = 0;
+      }
+      player.ddy.down = false;
     }
-  };*/
-  events.key && key();
+  };
+
+  // If key corresponds to an action, do key event action.
+  if (Object.keys(actions).includes(event.keyCode.toString())) {
+    actions[event.keyCode]();
+  }
 }
 
 // Add keydown event listener.
-function addKeydownEventListener() {
-  document.body.addEventListener('keydown', onKeydown);
+function addKeydownEventListener(player, state) {
+  document.body.addEventListener(
+    'keydown',
+    onKeydown.bind(this, player, state)
+  );
 }
 
 // Add keyup event listener.
-function addKeyupEventListener() {
-  document.body.addEventListener('keyup', onKeyup);
+function addKeyupEventListener(player, state) {
+  document.body.addEventListener('keyup', onKeyup.bind(this, player, state));
 }
 
 // Remove keydown event listener.
-function removeKeydownEventListener() {
-  document.body.removeEventListener('keydown', onKeydown);
+function removeKeydownEventListener(player, state) {
+  document.body.removeEventListener(
+    'keydown',
+    this.onKeydown.bind(this, player, state)
+  );
 }
 
 // Remove keyup event listener.
-function removeKeyupEventListener() {
-  document.body.removeEventListener('keyup', onKeyup);
+function removeKeyupEventListener(player, state) {
+  document.body.removeEventListener(
+    'keyup',
+    this.onKeyup.bind(this, player, state)
+  );
 }
 
-module.exports = init;
-module.exports.keys = keys;
-module.exports.keyisKeypresseds = isKeypressed;
-module.exports.onKeydown = onKeydown;
-module.exports.onKeyup = onKeyup;
-module.exports.addKeydownEventListener = addKeydownEventListener;
-module.exports.addKeyupEventListener = addKeyupEventListener;
-module.exports.removeKeydownEventListener = removeKeydownEventListener;
-module.exports.removeKeyupEventListener = removeKeyupEventListener;
+module.exports = {
+  addKeydownEventListener,
+  addKeyupEventListener,
+  removeKeydownEventListener,
+  removeKeyupEventListener
+};
