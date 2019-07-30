@@ -14,9 +14,6 @@ function Bomb({ creator, x, y, width, height, explosion, attack, faction }) {
   this.type = Entity.types.PROJECTILE;
 
   /** @override **/
-  this.status.invincible = true;
-
-  /** @override **/
   this.points = {
     ...this.points,
     attack

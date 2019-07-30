@@ -14,9 +14,6 @@ function Bullet({ creator, x, y, width, height, attack, faction }) {
   this.type = Entity.types.PROJECTILE;
 
   /** @override **/
-  this.status.invincible = true;
-
-  /** @override **/
   this.points.attack = attack;
 }
 

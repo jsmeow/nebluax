@@ -28,7 +28,6 @@ function Player(entities) {
   this.height = Player.height;
 
   /** @override **/
-
   this.x = canvas.width * 0.5 - this.width * 0.5;
   this.y = canvas.height - this.height * 2;
 

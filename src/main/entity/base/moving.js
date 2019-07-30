@@ -65,7 +65,7 @@ MovingEntity.prototype.move = function(
 
 // Move in a vector line towards a point.
 // Accepts a vector movement magnitude as a parameter.
-MovingEntity.prototype.point = function({ x, y, d = 1 }) {
+MovingEntity.prototype.point = function({ x = this.x, y = this.y, d = 1 }) {
   // Set movement flag.
   this.status.moving = true;
 
@@ -187,40 +187,26 @@ MovingEntity.prototype.roam = function() {
 
 // Prowling movement/action.
 // To be implemented by the extending class.
-Entity.prototype.prowl = function() {
+MovingEntity.prototype.prowl = function() {
   // Set prowling flag.
-  this.status.patrolling = true;
+  this.status.prowling = true;
 
   // ...implementation
 
   // Set prowling flag.
-  this.status.patrolling = false;
+  this.status.prowling = false;
   return Promise.resolve();
 };
 
 // Patrolling movement/action.
 // Loops between roaming and prowling.
-Entity.prototype.patrol = function() {
+MovingEntity.prototype.patrol = function() {
   // Set patrolling flag.
   this.status.patrolling = true;
 
   return this.roam()
     .then(() => {
-      return new Promise(resolve => {
-        setTimeout(() => {
-          resolve();
-        }, fps * 10);
-      });
-    })
-    .then(() => {
       return this.prowl();
-    })
-    .then(() => {
-      return new Promise(resolve => {
-        setTimeout(() => {
-          resolve();
-        }, fps * 10);
-      });
     })
     .then(() => {
       if (this.status.patrolling) {

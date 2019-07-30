@@ -11,7 +11,7 @@ let level;
 function update(player, entities) {
   // Create a new level.
   if (!level) {
-    level = new Level1(entities);
+    level = new Level1(player, entities);
   }
 
   // Iterate through the entities list.

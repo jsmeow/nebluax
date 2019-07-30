@@ -1,4 +1,7 @@
-function Wave(entities) {
+function Wave(player, entities) {
+  // The player entity.
+  this.player = player;
+
   // The entities list.
   this.entities = entities;
 

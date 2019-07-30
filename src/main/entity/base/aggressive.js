@@ -39,29 +39,28 @@ function AggressiveEntity({ x, y, width, height } = {}) {
     score: 0
   };
 
+  // Timers for actions/events.
   // Render damaged image when dealt attack point damage, if vulnerable to
   // Attack point damage.
-  this.damaged = {
-    frame: 0,
-    duration: fps / 4
-  };
-
   // Render powered image as long as the entity is using power.
-  this.powered = {
-    frame: 0,
-    duration: fps * 2
-  };
-
   // Render shielded image as long as the entity is using shield.
-  this.shielded = {
-    frame: 0,
-    duration: fps * 2
-  };
-
-  // Create a bullet at a fixed interval.
-  this.bullet = {
-    frame: 0,
-    delay: fps
+  this.timer = {
+    damaged: {
+      frame: 0,
+      duration: fps / 4
+    },
+    powered: {
+      frame: 0,
+      duration: fps * 2
+    },
+    shielded: {
+      frame: 0,
+      duration: fps * 2
+    },
+    bullet: {
+      frame: 0,
+      delay: fps
+    }
   };
 }
 
@@ -125,7 +124,7 @@ AggressiveEntity.prototype.assertEntityCollision = function(entities, idx) {
 
   // Cycle through entity collection.
   entities.forEach((entity, _idx) => {
-    // Assert boundary collision.
+    // Assert boundary collision for projectile entity type.
     // Schedule projectile to be disposed.
     if (
       this.type === Entity.types.PROJECTILE &&
@@ -137,8 +136,7 @@ AggressiveEntity.prototype.assertEntityCollision = function(entities, idx) {
       this.status.alive = false;
     }
 
-    // Assert entity collision.
-    // Assert if collision conditions.
+    // Validate collision conditions.
     if (
       idx !== _idx &&
       this.type !== Entity.types.EFFECT &&
@@ -156,22 +154,33 @@ AggressiveEntity.prototype.assertEntityCollision = function(entities, idx) {
         this.y < entity.y + entity.height &&
         this.y + this.height > entity.y
       ) {
-        // Deal damage on this entity instance.
-        if (entity.status.alive) {
-          entity.points.health = entity.points.health - this.points.attack;
-
+        // Deal damage on entity instance.
+        if (
+          this.status.alive &&
+          entity.status.alive &&
+          !entity.status.invincible
+        ) {
+          // This entity instance deals damage to entity instance.
           // To log.
+          entity.points.health = entity.points.health - this.points.attack;
           log.exchange(this, entity);
-
-          // Assert alive status.
-          if (entity.points.health <= 0) {
-            entity.status.alive = false;
-          }
 
           // Assert entity type.
           // Projectiles are set for disposal on collision.
+          // Assert alive status.
           if (entity.type === Entity.types.PROJECTILE) {
             entity.status.alive = false;
+          } else if (entity.points.health <= 0) {
+            entity.status.alive = false;
+
+            // Add to the entity score.
+            // Add to the creator entity score if entity is a projectile type.
+            if (this.type === Entity.types.PROJECTILE) {
+              this.creator.points.score =
+                this.creator.points.score + entity.points.score;
+            } else {
+              this.points.score = this.points.score + entity.points.score;
+            }
           }
         }
 
@@ -181,43 +190,28 @@ AggressiveEntity.prototype.assertEntityCollision = function(entities, idx) {
           this.status.alive &&
           !this.status.invincible
         ) {
-          this.points.health = this.points.health - entity.points.attack;
-
+          // Entity instance deals damage to this entity instance.
           // To log.
+          this.points.health = this.points.health - entity.points.attack;
           log.exchange(entity, this);
-
-          // Assert alive status.
-          if (this.points.health <= 0) {
-            this.status.alive = false;
-          }
 
           // Assert entity type.
           // Projectiles are set for disposal on collision.
+          // Assert alive status.
+          // Projectiles are set for disposal on collision.
           if (this.type === Entity.types.PROJECTILE) {
             this.status.alive = false;
-          }
-        }
+          } else if (this.points.health <= 0) {
+            this.status.alive = false;
 
-        // Assert entity type.
-        // Projectiles are set for disposal on collision.
-        if (this.type === Entity.types.PROJECTILE) {
-          this.status.alive = false;
-        }
-        if (entity.type === Entity.types.PROJECTILE) {
-          entity.status.alive = false;
-        }
+            // Add to the entity score.
+            entity.points.score = entity.points.score + this.points.score;
 
-        // Assert health points on entity instance.
-        if (entity.points.health <= 0) {
-          entity.status.alive = false;
-
-          // Add to the entity score.
-          this.points.score = this.points.score + entity.points.score;
-
-          // Add to the creator entity score if entity is a projectile type.
-          if (this.type === Entity.types.PROJECTILE) {
-            this.creator.points.score =
-              this.creator.points.score + entity.points.score;
+            // Add to the creator entity score if entity is a projectile type.
+            if (entity.type === Entity.types.PROJECTILE) {
+              entity.creator.points.score =
+                entity.creator.points.score + this.points.score;
+            }
           }
         }
 
@@ -283,13 +277,13 @@ AggressiveEntity.prototype.update = function(entities, idx) {
 
     // Do damaged logic for a duration.
     if (this.status.damaged) {
-      if (this.damaged.frame < this.damaged.duration) {
+      if (this.timer.damaged.frame < this.timer.damaged.duration) {
         // Make entity invincible.
         // Set the image to damaged.
         // Increment timer.
         this.status.invincible = true;
         this.loadImage();
-        this.damaged.frame = this.damaged.frame + 1;
+        this.timer.damaged.frame = this.timer.damaged.frame + 1;
       } else {
         // Make entity undamaged.
         // Set invincible status to false.
@@ -298,49 +292,49 @@ AggressiveEntity.prototype.update = function(entities, idx) {
         this.status.damaged = false;
         this.status.invincible = false;
         this.loadImage();
-        this.damaged.frame = 0;
+        this.timer.damaged.frame = 0;
       }
     }
 
     // Activate entity power for a duration.
     if (this.status.powered) {
-      if (this.powered.frame < this.powered.duration) {
+      if (this.timer.powered.frame < this.timer.powered.duration) {
         // Perform power.
         // Increment timer.
         this.power().enable();
-        this.powered.frame = this.powered.frame + 1;
+        this.timer.powered.frame = this.timer.powered.frame + 1;
       } else {
         // Perform unpower.
         // Reset timer.
         this.power().disable();
-        this.powered.frame = 0;
+        this.timer.powered.frame = 0;
       }
     }
 
     // Activate entity power for a duration.
     if (this.status.shielded) {
-      if (this.shielded.frame < this.shielded.duration) {
+      if (this.timer.shielded.frame < this.timer.shielded.duration) {
         // Perform shield.
         // Increment timer.
         this.shield().enable();
-        this.shielded.frame = this.shielded.frame + 1;
+        this.timer.shielded.frame = this.timer.shielded.frame + 1;
       } else {
         // Perform unshield.
         // Reset timer.
         this.shield().disable();
-        this.shielded.frame = 0;
+        this.timer.shielded.frame = 0;
       }
     }
 
     // Create bullets at an interval.
-    if (this.bullet.frame < this.bullet.delay) {
+    if (this.timer.bullet.frame < this.timer.bullet.delay) {
       // Increment timer.
-      this.bullet.frame = this.bullet.frame + 1;
+      this.timer.bullet.frame = this.timer.bullet.frame + 1;
     } else {
       // Create bullets.
       // Reset timer.
       this.createBullets(entities);
-      this.bullet.frame = 0;
+      this.timer.bullet.frame = 0;
     }
   } else {
     // To log.

@@ -1,4 +1,7 @@
-function Level(entities) {
+function Level(player, entities) {
+  // The player entity.
+  this.player = player;
+
   // The entities list.
   this.entities = entities;
 
