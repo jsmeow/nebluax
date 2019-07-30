@@ -36,6 +36,7 @@ function AggressiveEntity({ x, y, width, height } = {}) {
   this.points = {
     health: 1,
     attack: 1,
+    value: 1,
     score: 0
   };
 
@@ -177,9 +178,9 @@ AggressiveEntity.prototype.assertEntityCollision = function(entities, idx) {
             // Add to the creator entity score if entity is a projectile type.
             if (this.type === Entity.types.PROJECTILE) {
               this.creator.points.score =
-                this.creator.points.score + entity.points.score;
+                this.creator.points.score + entity.points.value;
             } else {
-              this.points.score = this.points.score + entity.points.score;
+              this.points.score = this.points.score + entity.points.value;
             }
           }
         }
@@ -205,12 +206,12 @@ AggressiveEntity.prototype.assertEntityCollision = function(entities, idx) {
             this.status.alive = false;
 
             // Add to the entity score.
-            entity.points.score = entity.points.score + this.points.score;
+            entity.points.score = entity.points.score + this.points.value;
 
             // Add to the creator entity score if entity is a projectile type.
             if (entity.type === Entity.types.PROJECTILE) {
               entity.creator.points.score =
-                entity.creator.points.score + this.points.score;
+                entity.creator.points.score + this.points.value;
             }
           }
         }
