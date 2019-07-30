@@ -56,6 +56,8 @@ function Player(entities) {
     ...this.points,
     health: 3,
     attack: 1,
+    value: 0,
+    score: 0,
     shield: 3,
     bomb: 3,
     power: 3,

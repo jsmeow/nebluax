@@ -16,10 +16,10 @@ function MovingEntity({ x, y, width, height } = {}) {
     patrolling: false
   };
 
-  // Vector movement magnitude.
+  // Vector movement unit magnitude.
   this.speed = 1;
 
-  // The change in vector movement in x, y.
+  // The vector movement magnitude in the x, y direction.
   this.dx = 0;
   this.dy = 0;
 }

@@ -1,13 +1,13 @@
 const Ship = require('../ship');
 const FactionedEntity = require('../../base/factioned');
 const StandardBullet = require('../../bullet/standard/standard-bullet');
-const enemyImageSrc = './main/entity/ship/bowerbird/assets/images/enemy.png';
-const alliedImageSrc = './main/entity/ship/bowerbird/assets/images/allied.png';
+const enemyImageSrc = './main/entity/ship/albatross/assets/images/enemy.png';
+const alliedImageSrc = './main/entity/ship/albatross/assets/images/allied.png';
 const damagedImageSrc =
-  './main/entity/ship/bowerbird/assets/images/damaged.png';
+  './main/entity/ship/albatross/assets/images/damaged.png';
 
 // An entity with the ability to perform roaming.
-function Bowerbird({ x, y, width, height, faction, player }) {
+function Albatross({ x, y, width, height, faction, player }) {
   Ship.call(this, { x, y, width, height, faction });
 
   // The player entity.
@@ -21,8 +21,8 @@ function Bowerbird({ x, y, width, height, faction, player }) {
   };
 
   /** @override **/
-  this.width = Bowerbird.width;
-  this.height = Bowerbird.height;
+  this.width = Albatross.width;
+  this.height = Albatross.height;
 
   /** @override **/
   this.status.firing = true;
@@ -38,14 +38,14 @@ function Bowerbird({ x, y, width, height, faction, player }) {
   this.init();
 }
 
-Bowerbird.prototype = Object.create(Ship.prototype);
+Albatross.prototype = Object.create(Ship.prototype);
 
 // Size
-Bowerbird.width = 60;
-Bowerbird.height = 60;
+Albatross.width = 60;
+Albatross.height = 60;
 
 /** @override **/
-Bowerbird.prototype.createBullets = function(entities) {
+Albatross.prototype.createBullets = function(entities) {
   entities.push(
     new StandardBullet({
       creator: this,
@@ -58,7 +58,7 @@ Bowerbird.prototype.createBullets = function(entities) {
 };
 
 /** @override **/
-Bowerbird.prototype.prowl = function() {
+Albatross.prototype.prowl = function() {
   // Set prowling flag.
   this.status.prowling = true;
 
@@ -95,4 +95,4 @@ Bowerbird.prototype.prowl = function() {
     });
 };
 
-module.exports = Bowerbird;
+module.exports = Albatross;
