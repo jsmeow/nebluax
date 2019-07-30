@@ -1,6 +1,6 @@
 const canvas = require('../canvas');
 const keyHandler = require('../key-handler');
-const state = require('../loop/state');
+const state = require('../state');
 const title = require('./title/title');
 const game = require('./game/game');
 const Player = require('../entities/player/player');

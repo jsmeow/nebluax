@@ -1,4 +1,4 @@
-const loop = require('./loop/loop');
+const loop = require('./loop');
 
 // Application logic entry point.
 function run() {

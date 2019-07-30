@@ -1,5 +1,5 @@
-const { fps } = require('../options');
-const logic = require('../logic/logic');
+const { fps } = require('./options');
+const logic = require('./logic/logic');
 
 // The animation start frame timestamp.
 function timestamp() {
