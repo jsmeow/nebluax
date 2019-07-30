@@ -3,8 +3,8 @@ const keyHandler = require('../key-handler');
 const state = require('../state');
 const title = require('./title/title');
 const game = require('./game/game');
-const Player = require('../entities/player/player');
-const Space = require('../entities/background/space');
+const Player = require('../entity/player/player');
+const Space = require('../entity/background/space');
 
 // The application entities list.
 // All entities have lifecycles inside this list.

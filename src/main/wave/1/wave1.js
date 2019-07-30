@@ -1,7 +1,7 @@
 const canvas = require('../../canvas');
 const Wave = require('../wave');
-const Faction = require('../../entities/base/faction');
-const Narrowbill = require('../../entities/ship/narrowbill/narrowbill');
+const FactionedEntity = require('../../entity/base/factioned');
+const Narrowbill = require('../../entity/ship/narrowbill/narrowbill');
 
 function Wave1(entities) {
   Wave.call(this, entities);
@@ -17,11 +17,11 @@ Wave.prototype.createEntities = function() {
     new Narrowbill({
       x: canvas.width * 0.5 - Narrowbill.width / 2,
       y: Narrowbill.height * 3,
-      faction: Faction.factions.ENEMY
+      faction: FactionedEntity.factions.ENEMY
     })
   ];
 
-  // This.waveEntities[0].roam();
+  this.waveEntities[0].roam();
 
   // This.waveEntities[0].status.roaming = true;
 };
