@@ -1,5 +1,5 @@
 const canvas = require('../../canvas');
-const { grey, red } = require('../../../static/muiColors');
+const { grey, red } = require('../../../static/mui/muiColors');
 
 function update() {}
 

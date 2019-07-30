@@ -21,12 +21,9 @@ Wave.prototype.createEntities = function() {
     })
   ];
 
-  this.waveEntities[0].roam();
-  /* This.waveEntities[0].path = [
-    { x: 600, y: 600 },
-    { x: 1000, y: 600 },
-    { x: 20, y: 20 }
-  ];*/
+  // This.waveEntities[0].roam();
+
+  // This.waveEntities[0].status.roaming = true;
 };
 
 module.exports = Wave1;

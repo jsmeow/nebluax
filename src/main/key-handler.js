@@ -1,4 +1,4 @@
-const keyCodes = require('../static/key-event-codes');
+const keyCodes = require('../static/key-codes/key-event-codes');
 
 // On keydown event.
 function onKeydown(player, state, event) {
@@ -37,7 +37,7 @@ function onKeydown(player, state, event) {
     },
     // Q key
     [keyCodes.KEYQ]() {
-      // ...
+      player.shield().enable();
     }
   };
 

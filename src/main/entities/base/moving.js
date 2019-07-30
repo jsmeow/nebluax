@@ -10,7 +10,9 @@ function Moving({ x, y, width, height } = {}) {
   this.status = {
     moving: false,
     pathing: false,
-    roaming: false
+    roaming: false,
+    prowling: false,
+    patrolling: false
   };
 
   // Vector movement magnitude.
@@ -134,34 +136,83 @@ Moving.prototype.point = function() {
     };
 
     // Set moving to false.
-    // Set pathing to false.
     this.status.moving = false;
-    this.status.pathing = false;
   }
 };
 
 // Move in a vector point path.
 Moving.prototype.path = function() {
-  if (!this.status.pathing && this.coordinates.length > 0) {
+  if (!this.status.pathing) {
     // Set pathing to true.
     this.status.pathing = true;
-    // Action to take while not pathing and path has elements.
-    // If done pathing, set roaming to false.
-    // Set the moving point to be the first element of the path list.
-    this.coordinate = this.coordinates.shift();
-  } else if (!this.status.pathing && this.coordinates.length <= 0) {
-    // If no point in path, set roaming to false.
-    // Reset pathing elements.
-    this.status.moving = false;
-    this.status.pathing = false;
-    this.status.roaming = false;
-    this.coordinates = [];
   }
 
-  // Evaluate vector movement towards a point, if moving.
-  if (this.status.pathing && this.coordinates.length >= 0) {
-    console.log(this.coordinate);
-    this.point();
+  // Action to take while not pathing and path has elements.
+  // If done pathing, set roaming to false.
+  // Set the moving point to be the first element of the path list.
+  if (this.coordinates.length > 0 && !this.status.moving) {
+    this.coordinate = this.coordinates.shift();
+  }
+
+  this.point();
+
+  if (
+    this.status.pathing &&
+    !this.status.moving &&
+    this.coordinates.length === 0
+  ) {
+    this.coordinates = [];
+    // If no point in path, set roaming to false.
+    // Reset pathing elements.
+    this.status.pathing = false;
+  }
+};
+
+// Roam in place.
+Moving.prototype.roam = function() {
+  // Roaming action if not roaming.
+  if (!this.status.roaming) {
+    console.log(this.status.prowling);
+    // Set roaming status to true.
+    this.status.roaming = true;
+
+    // Set the roaming path.
+    this.coordinates = [
+      { x: this.x - 100, y: this.y },
+      { x: this.x, y: this.y },
+      { x: this.x + 100, y: this.y },
+      { x: this.x, y: this.y }
+    ];
+  }
+
+  this.path();
+
+  if (this.status.roaming && !this.status.pathing) {
+    // If no point in path, set roaming to false.
+    // Reset pathing elements.
+    this.status.roaming = false;
+  }
+};
+
+// Do prowling.
+// To be implemented by the extending class.
+Moving.prototype.prowling = function(x, y) {};
+
+Moving.prototype.prowl = function() {
+  // Prowling action if not prowling.
+  if (!this.status.prowling) {
+    // Set prowling status to true.
+    this.status.prowling = true;
+
+    this.prowling(this.x, this.y);
+  }
+
+  this.path();
+
+  if (this.status.prowling && !this.status.pathing) {
+    // If no point in path, set roaming to false.
+    // Reset prowling elements.
+    this.status.prowling = false;
   }
 };
 
@@ -173,8 +224,22 @@ Moving.prototype.move = function(
   this.x = this.x + this.speed * dx;
   this.y = this.y + this.speed * dy;
 
-  // Set up change in vector movement in x, y, if a point path exists.
-  this.path();
+  if (this.status.roaming && !this.status.prowling && !this.status.pathing) {
+    this.roam();
+  }
+
+  /*  If (this.status.prowling && !this.status.roaming && !this.status.pathing) {
+    this.prowl();
+  }
+
+  if (this.status.patrolling) {
+    if (this.status.roaming && !this.status.prowling) {
+      this.roam();
+    }
+    if (this.status.prowling && !this.status.roaming) {
+      this.prowl();
+    }
+  }*/
 };
 
 module.exports = Moving;

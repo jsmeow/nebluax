@@ -1,12 +1,11 @@
 const canvas = require('../../../canvas');
 const Bullet = require('../bullet');
-const enemyImageSrc =
-  './main/entities/bullet/standard/assets/images/enemy-standard-bullet.png';
+const enemyImageSrc = './main/entities/bullet/standard/assets/images/enemy.png';
 const alliedImageSrc =
-  './main/entities/bullet/standard/assets/images/allied-standard-bullet.png';
+  './main/entities/bullet/standard/assets/images/allied.png';
 
-function StandardBullet({ x, y, width, height, attack, faction }) {
-  Bullet.call(this, { x, y, width, height, attack, faction });
+function StandardBullet({ creator, x, y, width, height, attack, faction }) {
+  Bullet.call(this, { creator, x, y, width, height, attack, faction });
 
   /** @override **/
   this.imageSrc = {

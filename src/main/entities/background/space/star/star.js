@@ -1,7 +1,7 @@
 const canvas = require('../../../../canvas');
 const { fps } = require('../../../../options');
 const MovingEntity = require('../../../base/moving');
-const { grey } = require('../../../../../static/muiColors');
+const { grey } = require('../../../../../static/mui/muiColors');
 
 // A shooting star comet.
 function Star() {

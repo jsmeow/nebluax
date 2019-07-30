@@ -1,4 +1,4 @@
-const { grey } = require('../static/muiColors');
+const { grey } = require('../static/mui/muiColors');
 
 const canvas = document.getElementById('canvas');
 

@@ -23,9 +23,8 @@ function Entity({ x, y, width, height } = {}) {
 // Types of entities.
 Entity.types = {
   PLAYER: 'player',
-  BULLET: 'bullet',
+  PROJECTILE: 'projectile',
   SHIP: 'ship',
-  BOMB: 'bomb',
   EFFECT: 'effect'
 };
 

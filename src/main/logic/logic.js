@@ -1,8 +1,8 @@
 const canvas = require('../canvas');
 const keyHandler = require('../key-handler');
-const state = require('./state');
-const title = require('./logic/title');
-const game = require('./logic/game');
+const state = require('../loop/state');
+const title = require('./title/title');
+const game = require('./game/game');
 const Player = require('../entities/player/player');
 const Space = require('../entities/background/space');
 
@@ -42,7 +42,7 @@ function logic({ step, delta }) {
 
     // Update the game.
     if (state.current === state.states.GAME) {
-      game.update(entities);
+      game.update(player, entities);
     }
   }
 
@@ -58,7 +58,7 @@ function logic({ step, delta }) {
 
     // Render the game.
     else if (state.current === state.states.GAME) {
-      game.render(entities);
+      game.render(player, entities);
     }
   }
 }

@@ -4,11 +4,14 @@ const Faction = require('../base/faction');
 // An entity without health points that can deal attack point damage.
 // This entity has a physical presence in the game.
 // This entity cannot suffer from status effects.
-function Bomb({ x, y, width, height, explosion, attack, faction }) {
+function Bomb({ creator, x, y, width, height, explosion, attack, faction }) {
   Faction.call(this, { x, y, width, height, attack, faction });
 
+  // The entity that created this entity instance.
+  this.creator = creator;
+
   /** @override **/
-  this.type = Entity.types.BOMB;
+  this.type = Entity.types.PROJECTILE;
 
   /** @override **/
   this.status.invincible = true;

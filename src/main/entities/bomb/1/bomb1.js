@@ -1,9 +1,9 @@
 const Bomb = require('../bomb');
-const enemyImageSrc = './main/entities/bomb/1/assets/images/bomb.png';
-const alliedImageSrc = './main/entities/bomb/1/assets/images/bomb.png';
+const enemyImageSrc = './main/entities/bomb/1/assets/images/default.png';
+const alliedImageSrc = './main/entities/bomb/1/assets/images/default.png';
 
-function Bomb1({ x, y, explosion, attack, faction }) {
-  Bomb.call(this, { x, y, explosion, attack, faction });
+function Bomb1({ creator, x, y, explosion, attack, faction }) {
+  Bomb.call(this, { creator, x, y, explosion, attack, faction });
 
   /** @override **/
   this.imageSrc = {

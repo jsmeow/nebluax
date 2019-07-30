@@ -41,7 +41,7 @@ function health(entity) {
 }
 
 function exchange(entity, challenger) {
-  if (challenger.type !== ('bullet' || 'bomb')) {
+  if (challenger.type !== 'projectile') {
     attack(entity, challenger);
     health(challenger);
     divider();
@@ -49,11 +49,18 @@ function exchange(entity, challenger) {
 }
 
 function death(entity) {
-  console.log(
-    `💀 %c${entity.faction} ${entity.type} has been killed 💀`,
-    'color:#859900;'
-  );
-  divider();
+  if (entity.type !== 'projectile') {
+    console.log(
+      `💀 %c${entity.faction} ${entity.type} has been killed`,
+      'color:#859900;'
+    );
+    console.log(
+      `💯 %c${entity.faction} ${entity.type} yielded ${entity.points.score} score points`,
+      'color:#859900;'
+    );
+
+    divider();
+  }
 }
 
 module.exports = {
