@@ -39,27 +39,13 @@ FactionedEntity.prototype.loadImage = function() {
   } else if (this.faction === FactionedEntity.factions.ALLIED) {
     this.image.src = this.imageSrc.allied;
   }
-};
 
-/** @override **/
-FactionedEntity.prototype.render = function() {
-  if (this.faction === FactionedEntity.factions.ENEMY) {
-    canvas.drawImageRotated({
-      image: this.image,
-      x: this.x,
-      y: this.y,
-      width: this.width,
-      height: this.height,
-      degrees: Math.PI
-    });
-  } else if (this.faction === FactionedEntity.factions.ALLIED) {
-    canvas.drawImage({
-      image: this.image,
-      x: this.x,
-      y: this.y,
-      width: this.width,
-      height: this.height
-    });
+  if (this.status.damaged) {
+    this.image.src = this.imageSrc.damaged;
+  } else if (this.status.powered) {
+    this.image.src = this.imageSrc.powered;
+  } else if (this.status.shielded) {
+    this.image.src = this.imageSrc.shielded;
   }
 };
 
@@ -67,18 +53,6 @@ FactionedEntity.prototype.render = function() {
 FactionedEntity.prototype.render = function() {
   this.loadImage();
 
-  if (this.status.damaged) {
-    console.log(this.timer.damaged.frame);
-    this.image.src = this.imageSrc.damaged;
-  }
-  if (this.status.powered) {
-    this.image.src = this.imageSrc.powered;
-  }
-  if (this.status.shielded) {
-    this.image.src = this.imageSrc.shielded;
-  }
-
-  // Render depending on the entity faction.
   if (this.faction === FactionedEntity.factions.ENEMY) {
     canvas.drawImageRotated({
       image: this.image,

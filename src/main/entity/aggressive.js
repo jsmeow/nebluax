@@ -69,6 +69,17 @@ AggressiveEntity.prototype = Object.create(MovingEntity.prototype);
 
 AggressiveEntity.prototype.loadImage = function() {
   this.image.src = this.imageSrc.default;
+
+  if (this.status.damaged) {
+    console.log(this.timer.damaged.frame);
+    this.image.src = this.imageSrc.damaged;
+  }
+  if (this.status.powered) {
+    this.image.src = this.imageSrc.powered;
+  }
+  if (this.status.shielded) {
+    this.image.src = this.imageSrc.shielded;
+  }
 };
 
 // Activate entity damaged timer for a duration.
@@ -413,17 +424,6 @@ AggressiveEntity.prototype.update = function(idx) {
 /** @override **/
 AggressiveEntity.prototype.render = function() {
   this.loadImage();
-
-  if (this.status.damaged) {
-    console.log(this.timer.damaged.frame);
-    this.image.src = this.imageSrc.damaged;
-  }
-  if (this.status.powered) {
-    this.image.src = this.imageSrc.powered;
-  }
-  if (this.status.shielded) {
-    this.image.src = this.imageSrc.shielded;
-  }
 
   // Render depending on the entity state.
   canvas.drawImage({
