@@ -13,9 +13,7 @@ function Explosion({ x, y, width, height }) {
   this.type = Entity.types.EFFECT;
 
   /** @override **/
-  this.status = {
-    invincible: true
-  };
+  this.status.invincible = true;
 
   /** @override **/
   this.points = {

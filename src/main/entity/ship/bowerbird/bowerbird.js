@@ -1,12 +1,11 @@
 const Ship = require('../ship');
 const FactionedEntity = require('../../base/factioned');
-const StandardBullet = require('../../bullet/standard/standard-bullet');
+const StandardBullet = require('../../projectile/bullet/standard/standard-bullet');
 const enemyImageSrc = './main/entity/ship/bowerbird/assets/images/enemy.png';
 const alliedImageSrc = './main/entity/ship/bowerbird/assets/images/allied.png';
 const damagedImageSrc =
   './main/entity/ship/bowerbird/assets/images/damaged.png';
 
-// An entity with the ability to perform roaming.
 function Bowerbird({ x, y, width, height, faction, player }) {
   Ship.call(this, { x, y, width, height, faction });
 

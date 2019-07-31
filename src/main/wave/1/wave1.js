@@ -1,6 +1,9 @@
 const canvas = require('../../canvas');
 const Wave = require('../wave');
 const FactionedEntity = require('../../entity/base/factioned');
+const Mallard = require('../../entity/ship/mallard/mallard');
+const Flycatcher = require('../../entity/ship/flycatcher/flycatcher');
+const Warbler = require('../../entity/ship/warbler/warbler');
 const Albatross = require('../../entity/ship/albatross/albatross');
 const Bowerbird = require('../../entity/ship/bowerbird/bowerbird');
 
@@ -26,10 +29,27 @@ Wave.prototype.createEntities = function() {
       y: Albatross.height * 3,
       faction: FactionedEntity.factions.ENEMY,
       player: this.player
+    }),
+    new Warbler({
+      x: canvas.width * 0.5 + Albatross.width * 4,
+      y: Albatross.height * 3,
+      faction: FactionedEntity.factions.ENEMY,
+      player: this.player
+    }),
+    new Flycatcher({
+      x: canvas.width * 0.5 + Albatross.width * 4,
+      y: Albatross.height * 5,
+      faction: FactionedEntity.factions.ENEMY,
+      player: this.player
+    }),
+    new Mallard({
+      x: canvas.width * 0.5 + Albatross.width * 4,
+      y: Albatross.height * 7,
+      faction: FactionedEntity.factions.ENEMY,
+      player: this.player,
+      entities: this.entities
     })
   ];
-
-  this.waveEntities[0].patrol();
 };
 
 module.exports = Wave1;

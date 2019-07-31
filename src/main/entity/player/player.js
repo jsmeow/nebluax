@@ -2,8 +2,8 @@ const canvas = require('../../canvas');
 const Entity = require('../entity');
 const AggressiveEntity = require('../base/aggressive');
 const FactionedEntity = require('../base/factioned');
-const StandardBullet = require('../bullet/standard/standard-bullet');
-const Bomb1 = require('../bomb/1/bomb1');
+const StandardBullet = require('../projectile/bullet/standard/standard-bullet');
+const Bomb1 = require('../projectile/bomb/1/bomb1');
 const defaultImageSrc = './main/entity/player/assets/images/default.png';
 const damagedImageSrc = './main/entity/player/assets/images/damaged.png';
 const shieldedImageSrc = './main/entity/player/assets/images/shielded.png';
@@ -54,7 +54,7 @@ function Player(entities) {
   /** @override **/
   this.points = {
     ...this.points,
-    health: 3,
+    health: 5,
     attack: 1,
     value: 0,
     score: 0,
@@ -89,12 +89,12 @@ Player.prototype.shield = function() {
         this.status.invincible = true;
 
         // Adjust image size.
-        this.width = this.width + 27;
-        this.height = this.height + 27;
+        this.width = this.width + 17;
+        this.height = this.height + 17;
 
         // Adjust position.
-        this.x = this.x - 27 * 0.5;
-        this.y = this.y - 27 * 0.5;
+        this.x = this.x - 17 * 0.5;
+        this.y = this.y - 17 * 0.5;
 
         // Set the image to shielded.
         // Consume a power point if player entity.
@@ -109,12 +109,12 @@ Player.prototype.shield = function() {
       this.status.invincible = false;
 
       // Adjust image size.
-      this.width = this.width - 27;
-      this.height = this.height - 27;
+      this.width = this.width - 17;
+      this.height = this.height - 17;
 
       // Adjust position.
-      this.x = this.x + 27 * 0.5;
-      this.y = this.y + 27 * 0.5;
+      this.x = this.x + 17 * 0.5;
+      this.y = this.y + 17 * 0.5;
 
       // Set the image to default.
       this.loadImage();
@@ -126,11 +126,10 @@ Player.prototype.shield = function() {
 Player.prototype.createBullets = function() {
   this.entities.push(
     new StandardBullet({
-      creator: this,
       x: this.x + this.width * 0.5 - StandardBullet.width * 0.5,
       y: this.y - StandardBullet.height,
-      attack: this.points.attack,
-      faction: FactionedEntity.factions.ALLIED
+      faction: FactionedEntity.factions.ALLIED,
+      creator: this
     })
   );
 };
@@ -144,8 +143,8 @@ Player.prototype.createBombs = function() {
         x: this.x + this.width * 0.5 - Bomb1.width * 0.5,
         y: this.y - Bomb1.height,
         explosion: {
-          width: this.width * 3,
-          height: this.height * 3
+          width: this.width * 10,
+          height: this.height * 10
         },
         attack: this.points.attack,
         faction: FactionedEntity.factions.ALLIED

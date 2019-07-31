@@ -9,8 +9,8 @@ const ExplosionDestroy = require('../explosion/destroy/explosion-destroy');
 // An entity with health points that can deal/receive attack point damage.
 // This entity has a physical presence in the game.
 // This entity can deal or suffer from status effects.
-function AggressiveEntity({ x, y, width, height } = {}) {
-  MovingEntity.call(this, { x, y, width, height });
+function AggressiveEntity({ x, y, width, height, entities } = {}) {
+  MovingEntity.call(this, { x, y, width, height, entities });
 
   /** @override **/
   this.imageSrc = {
@@ -35,8 +35,8 @@ function AggressiveEntity({ x, y, width, height } = {}) {
   // Extending classes may add their own points types in addition to this one.
   this.points = {
     health: 1,
-    attack: 1,
-    value: 1,
+    attack: 0,
+    value: 0,
     score: 0
   };
 
@@ -118,110 +118,74 @@ AggressiveEntity.prototype.shield = function() {
   };
 };
 
+// Assert if collision occurred
+AggressiveEntity.prototype.assertEntityCollision = function(entity) {
+  return (
+    this.x < entity.x + entity.width &&
+    this.x + this.width > entity.x &&
+    this.y < entity.y + entity.height &&
+    this.y + this.height > entity.y
+  );
+};
+
+// Validate if collision should occur.
+AggressiveEntity.prototype.validateEntityCollision = function(
+  entity,
+  idx,
+  _idx
+) {
+  return (
+    idx !== _idx &&
+    entity.type !== Entity.types.EFFECT &&
+    this.faction !== entity.faction &&
+    this.type !== Entity.types.EFFECT
+  );
+};
+
+// Entity collision action.
+AggressiveEntity.prototype.collide = function(entities, idx, entity) {
+  if (!this.status.invincible) {
+    // Exchange attack damage points.
+    this.points.health = this.points.health - entity.points.attack;
+
+    // Assert alive status.
+    // Add to the entity score.
+    if (this.points.health <= 0) {
+      this.status.alive = false;
+      entity.points.score = entity.points.score + this.points.value;
+    }
+  }
+  if (!entity.status.invincible) {
+    // Exchange attack damage points.
+    entity.points.health = entity.points.health - this.points.attack;
+
+    // Assert alive status.
+    if (entity.points.health <= 0) {
+      entity.status.alive = false;
+
+      // Add to the entity score.
+      this.points.score = this.points.score + entity.points.value;
+    }
+  }
+};
+
 // Assert entity collision.
-AggressiveEntity.prototype.assertEntityCollision = function(entities, idx) {
+AggressiveEntity.prototype.assertEntitiesCollision = function(entities, idx) {
   // Collision flag.
   let hasCollided = false;
 
   // Cycle through entity collection.
   entities.forEach((entity, _idx) => {
-    // Assert boundary collision for projectile entity type.
-    // Schedule projectile to be disposed.
+    // Assert validate and collision
+    // Set collided flag.
     if (
-      this.type === Entity.types.PROJECTILE &&
-      (this.assertBoundaryCollision().left ||
-        this.assertBoundaryCollision().right ||
-        this.assertBoundaryCollision().top ||
-        this.assertBoundaryCollision().bottom)
+      this.validateEntityCollision(entity, idx, _idx) &&
+      this.assertEntityCollision(entity)
     ) {
-      this.status.alive = false;
-    }
-
-    // Validate collision conditions.
-    if (
-      idx !== _idx &&
-      this.type !== Entity.types.EFFECT &&
-      entity.type !== Entity.types.EFFECT &&
-      entity.faction !== this.faction &&
-      !(
-        this.type === Entity.types.PROJECTILE &&
-        entity.type === Entity.types.PROJECTILE
-      )
-    ) {
-      // Assert if collision occurred.
-      if (
-        this.x < entity.x + entity.width &&
-        this.x + this.width > entity.x &&
-        this.y < entity.y + entity.height &&
-        this.y + this.height > entity.y
-      ) {
-        // Deal damage on entity instance.
-        if (
-          this.status.alive &&
-          entity.status.alive &&
-          !entity.status.invincible
-        ) {
-          // This entity instance deals damage to entity instance.
-          // To log.
-          entity.points.health = entity.points.health - this.points.attack;
-          log.exchange(this, entity);
-
-          // Assert entity type.
-          // Projectiles are set for disposal on collision.
-          // Assert alive status.
-          if (entity.type === Entity.types.PROJECTILE) {
-            entity.status.alive = false;
-          } else if (entity.points.health <= 0) {
-            entity.status.alive = false;
-
-            // Add to the entity score.
-            // Add to the creator entity score if entity is a projectile type.
-            if (this.type === Entity.types.PROJECTILE) {
-              this.creator.points.score =
-                this.creator.points.score + entity.points.value;
-            } else {
-              this.points.score = this.points.score + entity.points.value;
-            }
-          }
-        }
-
-        // Deal damage on entity instance.
-        if (
-          entity.status.alive &&
-          this.status.alive &&
-          !this.status.invincible
-        ) {
-          // Entity instance deals damage to this entity instance.
-          // To log.
-          this.points.health = this.points.health - entity.points.attack;
-          log.exchange(entity, this);
-
-          // Assert entity type.
-          // Projectiles are set for disposal on collision.
-          // Assert alive status.
-          // Projectiles are set for disposal on collision.
-          if (this.type === Entity.types.PROJECTILE) {
-            this.status.alive = false;
-          } else if (this.points.health <= 0) {
-            this.status.alive = false;
-
-            // Add to the entity score.
-            entity.points.score = entity.points.score + this.points.value;
-
-            // Add to the creator entity score if entity is a projectile type.
-            if (entity.type === Entity.types.PROJECTILE) {
-              entity.creator.points.score =
-                entity.creator.points.score + this.points.value;
-            }
-          }
-        }
-
-        // Set collided flag.
-        hasCollided = true;
-      }
+      this.collide(entities, idx, entity);
+      hasCollided = true;
     }
   });
-
   return hasCollided;
 };
 
@@ -260,21 +224,28 @@ AggressiveEntity.prototype.createExplosions = function() {
 };
 
 /** @override **/
+AggressiveEntity.prototype.preUpdate = function(entities, idx) {
+  // Assert an entity collision.
+  if (this.assertEntitiesCollision(entities, idx)) {
+    if (!this.status.damaged || !this.status.invincible) {
+      // Start the damaged image duration timer.
+      this.status.damaged = true;
+
+      // Create a destroy explosion.
+      this.createExplosions().destroy(entities);
+    }
+  }
+};
+
+/** @override **/
 AggressiveEntity.prototype.update = function(entities, idx) {
+  // Do the pre-update action.
+  this.preUpdate(entities, idx);
+
   // Assert alive status.
   if (this.status.alive) {
     // Move in vector.
     this.move();
-
-    // Assert an entity collision.
-    // Start the damaged image duration timer.
-    // Create a destroy explosion.
-    if (this.assertEntityCollision(entities, idx)) {
-      if (this.type !== Entity.types.PROJECTILE) {
-        this.status.damaged = true;
-        this.createExplosions().destroy(entities);
-      }
-    }
 
     // Do damaged logic for a duration.
     if (this.status.damaged) {
@@ -298,7 +269,7 @@ AggressiveEntity.prototype.update = function(entities, idx) {
     }
 
     // Activate entity power for a duration.
-    if (this.status.powered) {
+    if (this.status.powered && this.type === Entity.types.PLAYER) {
       if (this.timer.powered.frame < this.timer.powered.duration) {
         // Perform power.
         // Increment timer.
@@ -313,7 +284,7 @@ AggressiveEntity.prototype.update = function(entities, idx) {
     }
 
     // Activate entity power for a duration.
-    if (this.status.shielded) {
+    if (this.status.shielded && this.type === Entity.types.PLAYER) {
       if (this.timer.shielded.frame < this.timer.shielded.duration) {
         // Perform shield.
         // Increment timer.
@@ -345,6 +316,7 @@ AggressiveEntity.prototype.update = function(entities, idx) {
       log.death(this);
       this.createExplosions().destroy(entities);
     }
+    // Remove from the entities list.
     this.remove(entities, idx);
   }
 };

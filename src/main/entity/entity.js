@@ -1,7 +1,7 @@
 const canvas = require('../canvas');
 
 // Properties to be implemented by the extending class.
-function Entity({ x, y, width, height } = {}) {
+function Entity({ x, y, width, height, entities } = {}) {
   // Position
   this.x = x;
   this.y = y;
@@ -10,14 +10,22 @@ function Entity({ x, y, width, height } = {}) {
   this.width = width;
   this.height = height;
 
+  // The entities list.
+  this.entities = entities;
+
   // Image and image sources used by this entity.
   // To be provided by the extending class.
   this.image = new Image();
   this.imageSrc = null;
 
+  // The statuses an entity can take.
+  // Extending entities may implement more statuses.
+  this.status = {};
+
   // Type of challenger.
   // Optional, allows for additional validation.
   this.type = '';
+  this.subtype = '';
 }
 
 // Types of entities.
@@ -43,9 +51,13 @@ Entity.prototype.remove = function(entities, idx) {
   entities.splice(idx, 1);
 };
 
+// Pre-update action.
+// To be implemented by the extending class.
+Entity.prototype.preUpdate = function(entities, idx) {};
+
 // Update action.
 // To be implemented by the extending class.
-Entity.prototype.update = function() {};
+Entity.prototype.update = function(entities, idx) {};
 
 // Render action.
 Entity.prototype.render = function() {

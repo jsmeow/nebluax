@@ -1,10 +1,29 @@
 const Bullet = require('../bullet');
-const enemyImageSrc = './main/entity/bullet/standard/assets/images/enemy.png';
+const enemyImageSrc =
+  './main/entity/projectile/bullet/standard/assets/images/enemy.png';
 const alliedImageSrc =
-  './main/entity/bullet/standard/assets/images/allied.png';
+  './main/entity/projectile/bullet/standard/assets/images/allied.png';
 
-function StandardBullet({ creator, x, y, width, height, attack, faction }) {
-  Bullet.call(this, { creator, x, y, width, height, attack, faction });
+function StandardBullet({
+  x,
+  y,
+  width,
+  height,
+  entities,
+  faction,
+  creator,
+  attack
+}) {
+  Bullet.call(this, {
+    x,
+    y,
+    width,
+    height,
+    entities,
+    faction,
+    creator,
+    attack
+  });
 
   /** @override **/
   this.imageSrc = {

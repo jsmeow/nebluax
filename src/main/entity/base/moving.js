@@ -3,12 +3,12 @@ const canvas = require('../../canvas');
 const Entity = require('../entity');
 
 // An entity that can move.
-function MovingEntity({ x, y, width, height } = {}) {
-  Entity.call(this, { x, y, width, height });
+function MovingEntity({ x, y, width, height, entities } = {}) {
+  Entity.call(this, { x, y, width, height, entities });
 
-  // The statuses an entity can take.
-  // Extending entities may implement more statuses.
+  /** @override **/
   this.status = {
+    ...this.status,
     moving: false,
     pathing: false,
     roaming: false,
@@ -32,7 +32,12 @@ MovingEntity.prototype.assertBoundaryCollision = function() {
     left: this.x - this.dx <= 0,
     right: this.x + this.dx >= canvas.width + this.width,
     top: this.y - this.dy <= 0,
-    bottom: this.y + this.dy >= canvas.height - this.height
+    bottom: this.y + this.dy >= canvas.height - this.height,
+    all:
+      this.x - this.dx <= 0 ||
+      this.x + this.dx >= canvas.width + this.width ||
+      this.y - this.dy <= 0 ||
+      this.y + this.dy >= canvas.height - this.height
   };
 };
 

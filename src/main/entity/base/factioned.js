@@ -2,8 +2,8 @@ const canvas = require('../../canvas');
 const AggressiveEntity = require('./aggressive');
 
 // An entity that can be affiliated with more than one faction.
-function FactionedEntity({ x, y, width, height, faction }) {
-  AggressiveEntity.call(this, { x, y, width, height });
+function FactionedEntity({ x, y, width, height, entities, faction }) {
+  AggressiveEntity.call(this, { x, y, width, height, entities });
 
   /** @override **/
   this.imageSrc = {
@@ -30,10 +30,14 @@ FactionedEntity.prototype.loadImage = function() {
     this.image.src = this.imageSrc.damaged;
   } else if (this.status.powered) {
     this.image.src = this.imageSrc.powered;
+  } else if (this.status.shielded) {
+    this.image.src = this.imageSrc.shielded;
   } else if (this.faction === FactionedEntity.factions.ENEMY) {
     this.image.src = this.imageSrc.enemy;
   } else if (this.faction === FactionedEntity.factions.ALLIED) {
     this.image.src = this.imageSrc.allied;
+  } else {
+    this.image.src = this.imageSrc.default;
   }
 };
 
