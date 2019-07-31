@@ -1,16 +1,12 @@
 const Ship = require('../ship');
-const FactionedEntity = require('../../base/factioned');
 const StandardBullet = require('../../projectile/bullet/standard/standard-bullet');
 const enemyImageSrc = './main/entity/ship/albatross/assets/images/enemy.png';
 const alliedImageSrc = './main/entity/ship/albatross/assets/images/allied.png';
 const damagedImageSrc =
   './main/entity/ship/albatross/assets/images/damaged.png';
 
-function Albatross({ x, y, width, height, faction, player }) {
-  Ship.call(this, { x, y, width, height, faction });
-
-  // The player entity.
-  this.player = player;
+function Albatross({ x, y, width, height, entities, dx, dy, faction }) {
+  Ship.call(this, { x, y, width, height, entities, dx, dy, faction });
 
   /** @override **/
   this.imageSrc = {
@@ -22,9 +18,6 @@ function Albatross({ x, y, width, height, faction, player }) {
   /** @override **/
   this.width = Albatross.width;
   this.height = Albatross.height;
-
-  /** @override **/
-  this.status.firing = true;
 
   /** @override **/
   this.points = {
@@ -44,16 +37,8 @@ Albatross.width = 60;
 Albatross.height = 60;
 
 /** @override **/
-Albatross.prototype.createBullets = function(entities) {
-  entities.push(
-    new StandardBullet({
-      creator: this,
-      x: this.position().bow.x - StandardBullet.width / 2,
-      y: this.position().bow.y + StandardBullet.height,
-      attack: this.points.attack,
-      faction: FactionedEntity.factions.ENEMY
-    })
-  );
+Albatross.prototype.createBullets = function() {
+  this.entities.push(new StandardBullet({ creator: this }));
 };
 
 /** @override **/

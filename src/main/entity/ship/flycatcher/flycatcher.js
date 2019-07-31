@@ -1,16 +1,12 @@
 const Ship = require('../ship');
-const FactionedEntity = require('../../base/factioned');
 const StandardBullet = require('../../projectile/bullet/standard/standard-bullet');
 const enemyImageSrc = './main/entity/ship/flycatcher/assets/images/enemy.png';
 const alliedImageSrc = './main/entity/ship/flycatcher/assets/images/allied.png';
 const damagedImageSrc =
   './main/entity/ship/flycatcher/assets/images/damaged.png';
 
-function Flycatcher({ x, y, width, height, faction, player }) {
-  Ship.call(this, { x, y, width, height, faction });
-
-  // The player entity.
-  this.player = player;
+function Flycatcher({ x, y, width, height, entities, dx, dy, faction }) {
+  Ship.call(this, { x, y, width, height, entities, dx, dy, faction });
 
   /** @override **/
   this.imageSrc = {
@@ -22,9 +18,6 @@ function Flycatcher({ x, y, width, height, faction, player }) {
   /** @override **/
   this.width = Flycatcher.width;
   this.height = Flycatcher.height;
-
-  /** @override **/
-  this.status.firing = true;
 
   /** @override **/
   this.points = {
@@ -44,16 +37,8 @@ Flycatcher.width = 60;
 Flycatcher.height = 60;
 
 /** @override **/
-Flycatcher.prototype.createBullets = function(entities) {
-  entities.push(
-    new StandardBullet({
-      creator: this,
-      x: this.position().bow.x - StandardBullet.width / 2,
-      y: this.position().bow.y + StandardBullet.height,
-      attack: this.points.attack,
-      faction: FactionedEntity.factions.ENEMY
-    })
-  );
+Flycatcher.prototype.createBullets = function() {
+  this.entities.push(new StandardBullet({ creator: this }));
 };
 
 /** @override **/

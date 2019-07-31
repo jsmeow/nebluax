@@ -1,15 +1,64 @@
 const Entity = require('../entity');
-const FactionedEntity = require('../base/factioned');
+const FactionedEntity = require('../factioned');
 
 // An entity classified as a ship.
-function Projectile({ x, y, width, height, entities, faction, creator }) {
-  FactionedEntity.call(this, { x, y, width, height, entities, faction });
+function ProjectileEntity({
+  x,
+  y,
+  width,
+  height,
+  entities,
+  dx,
+  dy,
+  faction,
+  creator
+}) {
+  FactionedEntity.call(this, {
+    x,
+    y,
+    width,
+    height,
+    entities,
+    dx,
+    dy,
+    faction
+  });
+
+  // The entities list.
+  this.entities = entities;
+
+  // The application user/ / player.
+  this.player = this.entities[0];
+
+  // The entity that created this entity instance.
+  this.creator = creator;
 
   /** @override **/
   this.type = Entity.types.PROJECTILE;
 
-  // The entity that created this entity instance.
-  this.creator = creator;
+  /** @override **/
+  this.faction = this.creator.faction;
+
+  /** @override **/
+  this.x =
+    x ||
+    this.creator.x + this.creator.width * 0.5 - ProjectileEntity.width * 0.5;
+  this.y =
+    y || this.faction === FactionedEntity.factions.ENEMY
+      ? this.creator.y + ProjectileEntity.height
+      : this.creator.y;
+
+  /** @override **/
+  this.width = width || ProjectileEntity.width;
+  this.height = height || ProjectileEntity.height;
+
+  /** @override **/
+
+  this.dx = dx || 0;
+  this.dy =
+    this.faction === FactionedEntity.factions.ENEMY
+      ? dy || ProjectileEntity.d
+      : -dy || -ProjectileEntity.d;
 
   /** @override **/
   this.status.invincible = true;
@@ -24,68 +73,28 @@ function Projectile({ x, y, width, height, entities, faction, creator }) {
   };
 }
 
-Projectile.prototype = Object.create(FactionedEntity.prototype);
+ProjectileEntity.prototype = Object.create(FactionedEntity.prototype);
 
-// Subtypes of entities.
-Projectile.subtypes = {
-  BULLET: 'bullet',
-  BOMB: 'bomb'
-};
+// Size
+ProjectileEntity.width = 6.667;
+ProjectileEntity.height = 6.667;
 
-/** @override **/
-Projectile.prototype.init = function() {
-  this.loadImage();
-
-  // Set the bullet direction.
-  if (this.faction === FactionedEntity.factions.ENEMY) {
-    this.dy = 4;
-  } else if (this.faction === FactionedEntity.factions.ALLIED) {
-    this.dy = -4;
-  }
-};
+// Vector magnitude.
+ProjectileEntity.d = 4;
 
 /** @override **/
-Projectile.prototype.validateEntityCollision = function(entity, idx, _idx) {
-  return (
-    idx !== _idx &&
-    entity.type !== Entity.types.EFFECT &&
-    this.faction !== entity.faction &&
-    this.type !== Entity.types.EFFECT &&
-    this.subtype !== Projectile.subtypes.BULLET
-  );
-};
+ProjectileEntity.prototype.postCollide = function(idx, hasCollided) {};
 
 /** @override **/
-Projectile.prototype.collide = function(entities, idx, entity) {
-  if (!entity.status.invincible) {
-    // Exchange attack damage points.
-    entity.points.health = entity.points.health - this.points.attack;
-
-    if (entity.points.health <= 0) {
-      // Assert alive status.
-      entity.status.alive = false;
-
-      // Add to the entity score.
-      this.creator.points.score =
-        this.creator.points.score + entity.points.value;
-    }
-
-    // Schedule projectile to be disposed.
-    this.status.alive = false;
-  }
-};
+ProjectileEntity.prototype.preUpdate = function(idx) {};
 
 /** @override **/
-Projectile.prototype.preUpdate = function(entities, idx) {
-  // Assert an entity collision.
-  this.assertEntitiesCollision(entities, idx);
+ProjectileEntity.prototype.tick = function(idx) {};
 
-  // Assert boundary collision for projectile entity type.
-  if (this.assertBoundaryCollision().all) {
-    // Schedule projectile to be disposed.
-    // Remove from the entities list.
-    this.status.alive = false;
-  }
+/** @override **/
+ProjectileEntity.prototype.dispose = function(idx) {
+  // Remove from the entities list.
+  this.remove(idx);
 };
 
-module.exports = Projectile;
+module.exports = ProjectileEntity;

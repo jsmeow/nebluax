@@ -1,9 +1,17 @@
-const canvas = require('../../canvas');
+const canvas = require('../canvas');
 const AggressiveEntity = require('./aggressive');
 
 // An entity that can be affiliated with more than one faction.
-function FactionedEntity({ x, y, width, height, entities, faction }) {
-  AggressiveEntity.call(this, { x, y, width, height, entities });
+function FactionedEntity({ x, y, width, height, entities, dx, dy, faction }) {
+  AggressiveEntity.call(this, {
+    x,
+    y,
+    width,
+    height,
+    entities,
+    dx,
+    dy
+  });
 
   /** @override **/
   this.imageSrc = {
@@ -26,23 +34,51 @@ FactionedEntity.factions = {
 
 /** @override **/
 FactionedEntity.prototype.loadImage = function() {
-  if (this.status.damaged) {
-    this.image.src = this.imageSrc.damaged;
-  } else if (this.status.powered) {
-    this.image.src = this.imageSrc.powered;
-  } else if (this.status.shielded) {
-    this.image.src = this.imageSrc.shielded;
-  } else if (this.faction === FactionedEntity.factions.ENEMY) {
+  if (this.faction === FactionedEntity.factions.ENEMY) {
     this.image.src = this.imageSrc.enemy;
   } else if (this.faction === FactionedEntity.factions.ALLIED) {
     this.image.src = this.imageSrc.allied;
-  } else {
-    this.image.src = this.imageSrc.default;
   }
 };
 
 /** @override **/
 FactionedEntity.prototype.render = function() {
+  if (this.faction === FactionedEntity.factions.ENEMY) {
+    canvas.drawImageRotated({
+      image: this.image,
+      x: this.x,
+      y: this.y,
+      width: this.width,
+      height: this.height,
+      degrees: Math.PI
+    });
+  } else if (this.faction === FactionedEntity.factions.ALLIED) {
+    canvas.drawImage({
+      image: this.image,
+      x: this.x,
+      y: this.y,
+      width: this.width,
+      height: this.height
+    });
+  }
+};
+
+/** @override **/
+FactionedEntity.prototype.render = function() {
+  this.loadImage();
+
+  if (this.status.damaged) {
+    console.log(this.timer.damaged.frame);
+    this.image.src = this.imageSrc.damaged;
+  }
+  if (this.status.powered) {
+    this.image.src = this.imageSrc.powered;
+  }
+  if (this.status.shielded) {
+    this.image.src = this.imageSrc.shielded;
+  }
+
+  // Render depending on the entity faction.
   if (this.faction === FactionedEntity.factions.ENEMY) {
     canvas.drawImageRotated({
       image: this.image,

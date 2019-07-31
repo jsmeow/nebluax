@@ -1,16 +1,15 @@
 const canvas = require('../../canvas');
 const Entity = require('../entity');
-const AggressiveEntity = require('../base/aggressive');
-const FactionedEntity = require('../base/factioned');
+const AggressiveEntity = require('../aggressive');
+const FactionedEntity = require('../factioned');
 const StandardBullet = require('../projectile/bullet/standard/standard-bullet');
-const Bomb1 = require('../projectile/bomb/1/bomb1');
 const defaultImageSrc = './main/entity/player/assets/images/default.png';
 const damagedImageSrc = './main/entity/player/assets/images/damaged.png';
 const shieldedImageSrc = './main/entity/player/assets/images/shielded.png';
 
 // The player entity.
-function Player(entities) {
-  AggressiveEntity.call(this);
+function Player({ x, y, width, height, entities, dx, dy }) {
+  AggressiveEntity.call(this, { x, y, width, height, entities, dx, dy });
 
   // The entities list.
   this.entities = entities;
@@ -77,81 +76,24 @@ Player.width = 60;
 Player.height = 60;
 
 /** @override **/
-Player.prototype.shield = function() {
-  return {
-    enable: () => {
-      // Check if power shield are available, then perform shield action.
-      // Check if not shielded already.
-      if (this.points.shield > 0 && !this.status.shielded) {
-        // Make entity shielded.
-        // Set invincible status to true.
-        this.status.shielded = true;
-        this.status.invincible = true;
+Player.prototype.startPoweredTimer = function() {
+  if (!this.status.powered && this.points.power > 0) {
+    this.tickPoweredTimer();
+  }
+};
 
-        // Adjust image size.
-        this.width = this.width + 17;
-        this.height = this.height + 17;
-
-        // Adjust position.
-        this.x = this.x - 17 * 0.5;
-        this.y = this.y - 17 * 0.5;
-
-        // Set the image to shielded.
-        // Consume a power point if player entity.
-        this.loadImage();
-        this.points.shield = this.points.shield - 1;
-      }
-    },
-    disable: () => {
-      // Make entity shielded.
-      // Set invincible status to false.
-      this.status.shielded = false;
-      this.status.invincible = false;
-
-      // Adjust image size.
-      this.width = this.width - 17;
-      this.height = this.height - 17;
-
-      // Adjust position.
-      this.x = this.x + 17 * 0.5;
-      this.y = this.y + 17 * 0.5;
-
-      // Set the image to default.
-      this.loadImage();
-    }
-  };
+/** @override **/
+Player.prototype.startShieldedTimer = function() {
+  if (!this.status.shielded && this.points.shield > 0) {
+    this.tickShieldedTimer();
+  }
 };
 
 /** @override **/
 Player.prototype.createBullets = function() {
   this.entities.push(
-    new StandardBullet({
-      x: this.x + this.width * 0.5 - StandardBullet.width * 0.5,
-      y: this.y - StandardBullet.height,
-      faction: FactionedEntity.factions.ALLIED,
-      creator: this
-    })
+    new StandardBullet({ entities: this.entities, creator: this })
   );
-};
-
-/** @override **/
-Player.prototype.createBombs = function() {
-  if (this.points.bomb > 0) {
-    this.entities.push(
-      new Bomb1({
-        creator: this,
-        x: this.x + this.width * 0.5 - Bomb1.width * 0.5,
-        y: this.y - Bomb1.height,
-        explosion: {
-          width: this.width * 10,
-          height: this.height * 10
-        },
-        attack: this.points.attack,
-        faction: FactionedEntity.factions.ALLIED
-      })
-    );
-    this.points.bomb = this.points.bomb - 1;
-  }
 };
 
 module.exports = Player;

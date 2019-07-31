@@ -37,7 +37,7 @@ function onKeydown(player, state, event) {
     },
     // Q key
     [keyCodes.KEYQ]() {
-      player.shield().enable();
+      player.startShieldedTimer();
     }
   };
 

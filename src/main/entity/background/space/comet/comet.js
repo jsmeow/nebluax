@@ -1,10 +1,10 @@
 const canvas = require('../../../../canvas');
-const MovingEntity = require('../../../base/moving');
+const MovingEntity = require('../../../moving');
 const { grey } = require('../../../../../static/mui/muiColors');
 
 // A shooting star comet.
-function Comet() {
-  MovingEntity.call(this);
+function Comet({ x, y, width, height, entities, dx, dy } = {}) {
+  MovingEntity.call(this, { x, y, width, height, entities, dx, dy });
 
   /** @override **/
   this.x = Math.random() * canvas.width;

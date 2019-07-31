@@ -3,8 +3,8 @@ const Entity = require('../entity');
 const Comet = require('./space/comet/comet');
 const Star = require('./space/star/star');
 
-function Space() {
-  Entity.call(this);
+function Space({ x, y, width, height, entities }) {
+  Entity.call(this, { x, y, width, height, entities });
 
   /** @override **/
   this.x = 0;

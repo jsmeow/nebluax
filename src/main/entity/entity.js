@@ -1,7 +1,15 @@
 const canvas = require('../canvas');
 
 // Properties to be implemented by the extending class.
-function Entity({ x, y, width, height, entities } = {}) {
+function Entity(
+  { x = 0, y = 0, width = 0, height = 0, entities = [] } = {
+    x: 0,
+    y: 0,
+    width: 0,
+    height: 0,
+    entities: []
+  }
+) {
   // Position
   this.x = x;
   this.y = y;
@@ -12,6 +20,9 @@ function Entity({ x, y, width, height, entities } = {}) {
 
   // The entities list.
   this.entities = entities;
+
+  // The application user/ / player.
+  this.player = this.entities[0];
 
   // Image and image sources used by this entity.
   // To be provided by the extending class.
@@ -36,28 +47,41 @@ Entity.types = {
   EFFECT: 'effect'
 };
 
+// Subtypes of entities.
+Entity.subtypes = {
+  BULLET: 'bullet',
+  BOMB: 'bomb'
+};
+
 // Initializer.
 Entity.prototype.init = function() {
   this.loadImage();
 };
 
 // Load an image source into the image object.
-Entity.prototype.loadImage = function() {
-  this.image.src = this.imageSrc;
-};
-
-// Remove this entity instance from the entities list.
-Entity.prototype.remove = function(entities, idx) {
-  entities.splice(idx, 1);
-};
+// To be implemented by the extending class.
+Entity.prototype.loadImage = function() {};
 
 // Pre-update action.
 // To be implemented by the extending class.
-Entity.prototype.preUpdate = function(entities, idx) {};
+Entity.prototype.preUpdate = function(idx) {};
+
+// Start or tick any entity timer action.
+// To be implemented by the extending class.
+Entity.prototype.tick = function(idx) {};
+
+// Dispose entity action.
+// To be implemented by the extending class.
+Entity.prototype.dispose = function(idx) {};
+
+// Remove this entity instance from the entities list.
+Entity.prototype.remove = function(idx) {
+  this.entities.splice(idx, 1);
+};
 
 // Update action.
 // To be implemented by the extending class.
-Entity.prototype.update = function(entities, idx) {};
+Entity.prototype.update = function(idx) {};
 
 // Render action.
 Entity.prototype.render = function() {

@@ -11,7 +11,7 @@ const Space = require('../entity/background/space');
 const entities = [];
 
 // The application user/player.
-const player = new Player(entities);
+const player = new Player({ entities });
 entities.push(player);
 
 // Send the player to the key handler to handle user key events.

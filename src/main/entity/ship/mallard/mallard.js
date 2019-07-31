@@ -1,6 +1,6 @@
 const Ship = require('../ship');
 const Wigeon = require('../wigeon/wigeon');
-const FactionedEntity = require('../../base/factioned');
+const FactionedEntity = require('../../factioned');
 const StandardBullet = require('../../projectile/bullet/standard/standard-bullet');
 const enemyImageSrc = './main/entity/ship/mallard/assets/images/enemy.png';
 const alliedImageSrc = './main/entity/ship/mallard/assets/images/allied.png';
@@ -8,14 +8,8 @@ const damagedImageSrc = './main/entity/ship/mallard/assets/images/damaged.png';
 const shieldedImageSrc =
   './main/entity/ship/mallard/assets/images/shielded.png';
 
-function Mallard({ x, y, width, height, faction, player, entities }) {
-  Ship.call(this, { x, y, width, height, faction });
-
-  // The entities list.
-  this.entities = entities;
-
-  // The player entity.
-  this.player = player;
+function Mallard({ x, y, width, height, entities, dx, dy, faction }) {
+  Ship.call(this, { x, y, width, height, entities, dx, dy, faction });
 
   /** @override **/
   this.imageSrc = {
@@ -28,9 +22,6 @@ function Mallard({ x, y, width, height, faction, player, entities }) {
   /** @override **/
   this.width = Mallard.width;
   this.height = Mallard.height;
-
-  /** @override **/
-  this.status.firing = true;
 
   /** @override **/
   this.points = {
@@ -92,20 +83,12 @@ Mallard.prototype.init = function() {
 };
 
 /** @override **/
-Mallard.prototype.createBullets = function(entities) {
-  entities.push(
-    new StandardBullet({
-      creator: this,
-      x: this.position().bow.x - StandardBullet.width / 2,
-      y: this.position().bow.y + StandardBullet.height,
-      attack: this.points.attack,
-      faction: FactionedEntity.factions.ENEMY
-    })
-  );
+Mallard.prototype.createBullets = function() {
+  this.entities.push(new StandardBullet({ creator: this }));
 };
 
 /** @override **/
-Mallard.prototype.preUpdate = function(entities, idx) {
+Mallard.prototype.preUpdate = function() {
   // Wigeons mirror the mallard movement.
   this.wigeons[0].x = this.x - 114;
   this.wigeons[0].y = this.y;

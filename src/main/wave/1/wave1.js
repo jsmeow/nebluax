@@ -1,6 +1,6 @@
 const canvas = require('../../canvas');
 const Wave = require('../wave');
-const FactionedEntity = require('../../entity/base/factioned');
+const FactionedEntity = require('../../entity/factioned');
 const Oriole = require('../../entity/ship/oriole/oriole');
 const Mallard = require('../../entity/ship/mallard/mallard');
 const Flycatcher = require('../../entity/ship/flycatcher/flycatcher');
@@ -22,41 +22,41 @@ Wave.prototype.createEntities = function() {
     new Bowerbird({
       x: canvas.width * 0.5 - Bowerbird.width * 0.5,
       y: Bowerbird.height * 3,
-      faction: FactionedEntity.factions.ENEMY,
-      player: this.player
-    }),
-    new Albatross({
+      entities: this.entities,
+      faction: FactionedEntity.factions.ENEMY
+    })
+    /* New Albatross({
       x: canvas.width * 0.5 - Albatross.width * 4,
       y: Albatross.height * 3,
       faction: FactionedEntity.factions.ENEMY,
       player: this.player
-    }),
-    new Warbler({
+    }),*/
+    /* New Warbler({
       x: canvas.width * 0.5 + Albatross.width * 4,
       y: Albatross.height * 3,
       faction: FactionedEntity.factions.ENEMY,
       player: this.player
-    }),
-    new Flycatcher({
+    }),*/
+    /* New Flycatcher({
       x: canvas.width * 0.5 + Albatross.width * 4,
       y: Albatross.height * 5,
       faction: FactionedEntity.factions.ENEMY,
       player: this.player
-    }),
-    new Mallard({
+    }),*/
+    /* New Mallard({
       x: canvas.width * 0.5 + Albatross.width * 4,
       y: Albatross.height * 7,
       faction: FactionedEntity.factions.ENEMY,
       player: this.player,
       entities: this.entities
-    }),
-    new Oriole({
+    }),*/
+    /*    New Oriole({
       x: canvas.width * 0.5 + -Albatross.width * 4,
       y: Albatross.height * 7,
       faction: FactionedEntity.factions.ENEMY,
       player: this.player,
       entities: this.entities
-    })
+    })*/
   ];
 };
 

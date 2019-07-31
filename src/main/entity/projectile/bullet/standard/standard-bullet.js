@@ -4,26 +4,8 @@ const enemyImageSrc =
 const alliedImageSrc =
   './main/entity/projectile/bullet/standard/assets/images/allied.png';
 
-function StandardBullet({
-  x,
-  y,
-  width,
-  height,
-  entities,
-  faction,
-  creator,
-  attack
-}) {
-  Bullet.call(this, {
-    x,
-    y,
-    width,
-    height,
-    entities,
-    faction,
-    creator,
-    attack
-  });
+function StandardBullet({ x, y, width, height, entities, dx, dy, creator }) {
+  Bullet.call(this, { x, y, width, height, entities, dx, dy, creator });
 
   /** @override **/
   this.imageSrc = {

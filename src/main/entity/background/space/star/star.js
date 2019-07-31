@@ -1,10 +1,10 @@
 const canvas = require('../../../../canvas');
 const { fps } = require('../../../../options');
-const MovingEntity = require('../../../base/moving');
+const MovingEntity = require('../../../moving');
 
 // A shooting star comet.
-function Star() {
-  MovingEntity.call(this);
+function Star({ x, y, width, height, entities, dx, dy } = {}) {
+  MovingEntity.call(this, { x, y, width, height, entities, dx, dy });
 
   /** @override **/
   this.x = Math.random() * canvas.width;

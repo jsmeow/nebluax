@@ -1,24 +1,37 @@
-const Projectile = require('../projectile');
+const Entity = require('../../entity');
+const ProjectileEntity = require('../projectile');
 
 // An entity without health points that can deal attack point damage.
 // This entity has a physical presence in the game.
 // This entity cannot suffer from status effects.
-function Bullet({ x, y, width, height, entities, faction, creator, attack }) {
-  Projectile.call(this, {
+function BulletEntity({
+  x,
+  y,
+  width,
+  height,
+  entities,
+  dx,
+  dy,
+  faction,
+  creator
+}) {
+  ProjectileEntity.call(this, {
     x,
     y,
     width,
     height,
     entities,
+    dx,
+    dy,
     faction,
-    creator,
-    attack
+    creator
   });
 
   /** @override **/
-  this.subtype = Projectile.subtypes.BULLET;
+
+  this.subtype = Entity.subtypes.BULLET;
 }
 
-Bullet.prototype = Object.create(Projectile.prototype);
+BulletEntity.prototype = Object.create(ProjectileEntity.prototype);
 
-module.exports = Bullet;
+module.exports = BulletEntity;

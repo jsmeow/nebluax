@@ -3,8 +3,25 @@ const Entity = require('../entity');
 
 // This entity has no physical presence in the game.
 // This entity cannot suffer from status effects.
-function Explosion({ x, y, width, height }) {
-  Entity.call(this, { x, y, width, height });
+function ExplosionEntity({ x, y, width, height, entities, creator }) {
+  Entity.call(this, { x, y, width, height, entities });
+
+  // The entities list.
+  this.entities = entities;
+
+  // The application user/ / player.
+  this.player = this.entities[0];
+
+  // The entity that created this entity instance.
+  this.creator = creator;
+
+  /** @override **/
+  this.x = x || this.creator.x;
+  this.y = y || this.creator.y;
+
+  /** @override **/
+  this.width = width || this.creator.width;
+  this.height = height || this.creator.height;
 
   /** @override **/
   this.imageSrc = [];
@@ -26,10 +43,10 @@ function Explosion({ x, y, width, height }) {
   this.duration = fps / 4;
 }
 
-Explosion.prototype = Object.create(Entity.prototype);
+ExplosionEntity.prototype = Object.create(Entity.prototype);
 
 /** @override **/
-Explosion.prototype.loadImage = function() {
+ExplosionEntity.prototype.loadImage = function() {
   if (this.frame < this.duration * 0.25) {
     this.image.src = this.imageSrc[0];
   }
@@ -45,7 +62,7 @@ Explosion.prototype.loadImage = function() {
 };
 
 /** @override **/
-Explosion.prototype.update = function(entities, idx) {
+ExplosionEntity.prototype.update = function(idx) {
   // Animate for a duration.
   if (this.frame < this.duration) {
     // Set the image.
@@ -54,8 +71,8 @@ Explosion.prototype.update = function(entities, idx) {
     this.frame = this.frame + 1;
   } else {
     // Remove from the entities list.
-    this.remove(entities, idx);
+    this.remove(idx);
   }
 };
 
-module.exports = Explosion;
+module.exports = ExplosionEntity;

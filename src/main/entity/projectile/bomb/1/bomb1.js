@@ -4,28 +4,8 @@ const enemyImageSrc =
 const alliedImageSrc =
   './main/entity/projectile/bomb/1/assets/images/default.png';
 
-function Bomb1({
-  x,
-  y,
-  width,
-  height,
-  entities,
-  faction,
-  creator,
-  attack,
-  explosion
-}) {
-  Bomb.call(this, {
-    x,
-    y,
-    width,
-    height,
-    entities,
-    faction,
-    creator,
-    attack,
-    explosion
-  });
+function Bomb1({ x, y, width, height, entities, dx, dy, faction, creator }) {
+  Bomb.call(this, { x, y, width, height, entities, dx, dy, faction, creator });
 
   /** @override **/
 

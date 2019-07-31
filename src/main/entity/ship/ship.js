@@ -1,14 +1,26 @@
 const { fps } = require('../../options');
 const canvas = require('../../canvas');
 const Entity = require('../entity');
-const FactionedEntity = require('../base/factioned');
+const FactionedEntity = require('../factioned');
 
 // An entity classified as a ship.
-function Ship({ x, y, width, height, faction }) {
-  FactionedEntity.call(this, { x, y, width, height, faction });
+function Ship({ x, y, width, height, entities, dx, dy, faction }) {
+  FactionedEntity.call(this, {
+    x,
+    y,
+    width,
+    height,
+    entities,
+    dx,
+    dy,
+    faction
+  });
 
   /** @override **/
   this.type = Entity.types.SHIP;
+
+  /** @override **/
+  this.status.firing = true;
 }
 
 Ship.prototype = Object.create(FactionedEntity.prototype);

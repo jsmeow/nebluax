@@ -1,9 +1,19 @@
-const { fps } = require('../../options');
-const canvas = require('../../canvas');
-const Entity = require('../entity');
+const { fps } = require('../options');
+const canvas = require('../canvas');
+const Entity = require('./entity');
 
 // An entity that can move.
-function MovingEntity({ x, y, width, height, entities } = {}) {
+function MovingEntity(
+  { x = 0, y = 0, width = 0, height = 0, entities = [], dx = 0, dy = 0 } = {
+    x: 0,
+    y: 0,
+    width: 0,
+    height: 0,
+    entities: [],
+    dx: 0,
+    dy: 0
+  }
+) {
   Entity.call(this, { x, y, width, height, entities });
 
   /** @override **/
@@ -20,8 +30,8 @@ function MovingEntity({ x, y, width, height, entities } = {}) {
   this.speed = 1;
 
   // The vector movement magnitude in the x, y direction.
-  this.dx = 0;
-  this.dy = 0;
+  this.dx = dx || 0;
+  this.dy = dy || 0;
 }
 
 MovingEntity.prototype = Object.create(Entity.prototype);

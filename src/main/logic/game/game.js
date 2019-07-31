@@ -16,7 +16,7 @@ function update(player, entities) {
 
   // Iterate through the entities list.
   entities.forEach((entity, idx) => {
-    entity.update(entities, idx);
+    entity.update(idx);
   });
 }
 
