@@ -1,37 +1,37 @@
 const canvas = require('../../canvas');
-const Entity = require('../entity');
-const AggressiveEntity = require('../aggressive');
-const FactionedEntity = require('../factioned');
-const StandardBullet = require('../projectile/bullet/standard/standard-bullet');
+const types = require('../entity-types');
+const ShipEntity = require('../ship/ship');
 const defaultImageSrc = './main/entity/player/assets/images/default.png';
 const damagedImageSrc = './main/entity/player/assets/images/damaged.png';
 const shieldedImageSrc = './main/entity/player/assets/images/shielded.png';
 
-// The player entity.
-function Player({ x, y, width, height, entities, dx, dy }) {
-  AggressiveEntity.call(this, { x, y, width, height, entities, dx, dy });
+// The PlayerEntity entity.
+function PlayerEntity(entities, factory) {
+  ShipEntity.call(this, { entities, faction: types.faction.ALLIED });
 
   // The entities list.
   this.entities = entities;
 
   /** @override **/
   this.imageSrc = {
-    ...this.imageSrc,
     default: defaultImageSrc,
+    enemy: null,
+    allied: defaultImageSrc,
     damaged: damagedImageSrc,
+    powered: null,
     shielded: shieldedImageSrc
   };
 
   /** @override **/
-  this.width = Player.width;
-  this.height = Player.height;
+  this.x = canvas.width * 0.5 - PlayerEntity.width * 0.5;
+  this.y = canvas.height - PlayerEntity.height * 2;
 
   /** @override **/
-  this.x = canvas.width * 0.5 - this.width * 0.5;
-  this.y = canvas.height - this.height * 2;
+  this.width = PlayerEntity.width;
+  this.height = PlayerEntity.height;
 
   /** @override **/
-  this.type = Entity.types.PLAYER;
+  this.subtype = types.subtype.ships.PLAYER;
 
   /** @override **/
   this.speed = 1.5;
@@ -48,12 +48,24 @@ function Player({ x, y, width, height, entities, dx, dy }) {
   };
 
   /** @override **/
-  this.status.firing = true;
+  this.status = {
+    alive: true,
+    firing: true,
+    invincible: false,
+    damaged: false,
+    powered: false,
+    shielded: false,
+    moving: false,
+    pathing: false,
+    roaming: false,
+    prowling: false,
+    patrolling: false
+  };
 
   /** @override **/
   this.points = {
     ...this.points,
-    health: 5,
+    health: 3,
     attack: 1,
     value: 0,
     score: 0,
@@ -64,36 +76,45 @@ function Player({ x, y, width, height, entities, dx, dy }) {
   };
 
   /** @override **/
-  this.faction = FactionedEntity.factions.ALLIED;
+  this.factory = factory;
 
   this.init();
 }
 
-Player.prototype = Object.create(AggressiveEntity.prototype);
+PlayerEntity.prototype = Object.create(ShipEntity.prototype);
 
 // Size
-Player.width = 60;
-Player.height = 60;
+PlayerEntity.width = 60;
+PlayerEntity.height = 60;
 
 /** @override **/
-Player.prototype.startPoweredTimer = function() {
+PlayerEntity.prototype.startPoweredTimer = function() {
   if (!this.status.powered && this.points.power > 0) {
     this.tickPoweredTimer();
   }
 };
 
 /** @override **/
-Player.prototype.startShieldedTimer = function() {
+PlayerEntity.prototype.startShieldedTimer = function() {
   if (!this.status.shielded && this.points.shield > 0) {
     this.tickShieldedTimer();
   }
 };
 
 /** @override **/
-Player.prototype.createBullets = function() {
-  this.entities.push(
-    new StandardBullet({ entities: this.entities, creator: this })
-  );
+PlayerEntity.prototype.createBullets = function() {
+  this.factory({
+    entities: this.entities,
+    creator: this
+  }).projectile.bullet.standard();
 };
 
-module.exports = Player;
+/** @override **/
+PlayerEntity.prototype.createBombs = function() {
+  this.factory({
+    entities: this.entities,
+    creator: this
+  }).projectile.bomb[1]();
+};
+
+module.exports = PlayerEntity;

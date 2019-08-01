@@ -1,11 +1,21 @@
-const Ship = require('../ship');
-const StandardBullet = require('../../projectile/bullet/standard/standard-bullet');
+const types = require('../../entity-types');
+const ShipEntity = require('../ship');
 const enemyImageSrc = './main/entity/ship/oriole/assets/images/enemy.png';
 const alliedImageSrc = './main/entity/ship/oriole/assets/images/allied.png';
 const damagedImageSrc = './main/entity/ship/oriole/assets/images/damaged.png';
 
-function Oriole({ x, y, width, height, entities, dx, dy, faction }) {
-  Ship.call(this, { x, y, width, height, entities, dx, dy, faction });
+function OrioleEntity({
+  x,
+  y,
+  width,
+  height,
+  entities,
+  faction,
+  dx,
+  dy,
+  factory
+}) {
+  ShipEntity.call(this, { x, y, width, height, entities, faction, dx, dy });
 
   /** @override **/
   this.imageSrc = {
@@ -15,33 +25,61 @@ function Oriole({ x, y, width, height, entities, dx, dy, faction }) {
   };
 
   /** @override **/
-  this.width = Oriole.width;
-  this.height = Oriole.height;
+  this.width = OrioleEntity.width;
+  this.height = OrioleEntity.height;
+
+  /** @override **/
+  this.status = {
+    alive: true,
+    firing: true,
+    invincible: false,
+    damaged: false,
+    powered: false,
+    shielded: false,
+    moving: false,
+    pathing: false,
+    roaming: false,
+    prowling: false,
+    patrolling: false
+  };
 
   /** @override **/
   this.points = {
-    ...this.points,
-    health: 2,
+    health: 3,
     attack: 1,
-    value: 1
+    value: 0,
+    score: 0,
+    shield: 0,
+    bomb: 0,
+    power: 0,
+    life: 0
   };
+
+  /** @override **/
+  this.subtype = types.subtype.OrioleEntity;
+
+  /** @override **/
+  this.factory = factory;
 
   this.init();
 }
 
-Oriole.prototype = Object.create(Ship.prototype);
+OrioleEntity.prototype = Object.create(ShipEntity.prototype);
 
 // Size
-Oriole.width = 60;
-Oriole.height = 60;
+OrioleEntity.width = 60;
+OrioleEntity.height = 60;
 
 /** @override **/
-Oriole.prototype.createBullets = function() {
-  this.entities.push(new StandardBullet({ creator: this }));
+OrioleEntity.prototype.createBullets = function() {
+  this.factory({
+    entities: this.entities,
+    creator: this
+  }).projectile.bullet.standard();
 };
 
 /** @override **/
-Oriole.prototype.prowl = function() {
+OrioleEntity.prototype.prowl = function() {
   // Set prowling flag.
   this.status.prowling = true;
 
@@ -78,4 +116,4 @@ Oriole.prototype.prowl = function() {
     });
 };
 
-module.exports = Oriole;
+module.exports = OrioleEntity;

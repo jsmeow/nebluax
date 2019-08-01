@@ -1,30 +1,50 @@
-const Bomb = require('../bomb');
-const enemyImageSrc =
-  './main/entity/projectile/bomb/1/assets/images/default.png';
+const BombEntity = require('../bomb');
+const enemyImageSrc = './main/entity/projectile/bomb/1/assets/images/enemy.png';
 const alliedImageSrc =
-  './main/entity/projectile/bomb/1/assets/images/default.png';
+  './main/entity/projectile/bomb/1/assets/images/allied.png';
 
-function Bomb1({ x, y, width, height, entities, dx, dy, faction, creator }) {
-  Bomb.call(this, { x, y, width, height, entities, dx, dy, faction, creator });
+function Bomb1Entity({
+  x,
+  y,
+  width,
+  height,
+  entities,
+  faction,
+  dx,
+  dy,
+  factory,
+  creator
+}) {
+  BombEntity.call(this, {
+    x,
+    y,
+    width,
+    height,
+    entities,
+    faction,
+    dx,
+    dy,
+    factory,
+    creator
+  });
 
   /** @override **/
-
   this.imageSrc = {
     enemy: enemyImageSrc,
     allied: alliedImageSrc
   };
 
   /** @override **/
-  this.width = Bomb1.width;
-  this.height = Bomb1.height;
+  this.width = Bomb1Entity.width;
+  this.height = Bomb1Entity.height;
 
   this.init();
 }
 
-Bomb1.prototype = Object.create(Bomb.prototype);
+Bomb1Entity.prototype = Object.create(BombEntity.prototype);
 
 // Size
-Bomb1.width = 30;
-Bomb1.height = 30;
+Bomb1Entity.width = 6.667 * 5;
+Bomb1Entity.height = 6.667 * 5;
 
-module.exports = Bomb1;
+module.exports = Bomb1Entity;

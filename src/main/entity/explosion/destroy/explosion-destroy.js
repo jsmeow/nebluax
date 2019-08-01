@@ -4,13 +4,41 @@ const default2 = './main/entity/explosion/destroy/assets/images/default2.png';
 const default3 = './main/entity/explosion/destroy/assets/images/default3.png';
 const default4 = './main/entity/explosion/destroy/assets/images/default4.png';
 
-function ExplosionDestroy({ x, y, width, height, entities }) {
-  ExplosionEntity.call(this, { x, y, width, height, entities });
+function ExplosionDestroyEntity({
+  x,
+  y,
+  width,
+  height,
+  entities,
+  faction,
+  dx,
+  dy,
+  creator
+}) {
+  ExplosionEntity.call(this, {
+    x,
+    y,
+    width,
+    height,
+    entities,
+    faction,
+    dx,
+    dy,
+    creator
+  });
 
   /** @override **/
-  this.imageSrc = [default1, default2, default3, default4];
+  this.width = width || ExplosionDestroyEntity.width;
+  this.height = height || ExplosionDestroyEntity.height;
+
+  /** @override **/
+  this.imageSrcs = [default1, default2, default3, default4];
 }
 
-ExplosionDestroy.prototype = Object.create(ExplosionEntity.prototype);
+ExplosionDestroyEntity.prototype = Object.create(ExplosionEntity.prototype);
 
-module.exports = ExplosionDestroy;
+// Size
+ExplosionDestroyEntity.width = 60;
+ExplosionDestroyEntity.height = 60;
+
+module.exports = ExplosionDestroyEntity;

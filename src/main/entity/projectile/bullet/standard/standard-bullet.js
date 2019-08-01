@@ -1,11 +1,33 @@
-const Bullet = require('../bullet');
+const BulletEntity = require('../bullet');
 const enemyImageSrc =
   './main/entity/projectile/bullet/standard/assets/images/enemy.png';
 const alliedImageSrc =
   './main/entity/projectile/bullet/standard/assets/images/allied.png';
 
-function StandardBullet({ x, y, width, height, entities, dx, dy, creator }) {
-  Bullet.call(this, { x, y, width, height, entities, dx, dy, creator });
+function StandardBulletEntity({
+  x,
+  y,
+  width,
+  height,
+  entities,
+  faction,
+  dx,
+  dy,
+  factory,
+  creator
+}) {
+  BulletEntity.call(this, {
+    x,
+    y,
+    width,
+    height,
+    entities,
+    faction,
+    dx,
+    dy,
+    factory,
+    creator
+  });
 
   /** @override **/
   this.imageSrc = {
@@ -14,16 +36,16 @@ function StandardBullet({ x, y, width, height, entities, dx, dy, creator }) {
   };
 
   /** @override **/
-  this.width = StandardBullet.width;
-  this.height = StandardBullet.height;
+  this.width = StandardBulletEntity.width;
+  this.height = StandardBulletEntity.height;
 
   this.init();
 }
 
-StandardBullet.prototype = Object.create(Bullet.prototype);
+StandardBulletEntity.prototype = Object.create(BulletEntity.prototype);
 
 // Size
-StandardBullet.width = 6.667;
-StandardBullet.height = 6.667;
+StandardBulletEntity.width = 6.667;
+StandardBulletEntity.height = 6.667;
 
-module.exports = StandardBullet;
+module.exports = StandardBulletEntity;

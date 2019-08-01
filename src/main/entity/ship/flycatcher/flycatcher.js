@@ -1,12 +1,22 @@
-const Ship = require('../ship');
-const StandardBullet = require('../../projectile/bullet/standard/standard-bullet');
+const types = require('../../entity-types');
+const ShipEntity = require('../ship');
 const enemyImageSrc = './main/entity/ship/flycatcher/assets/images/enemy.png';
 const alliedImageSrc = './main/entity/ship/flycatcher/assets/images/allied.png';
 const damagedImageSrc =
   './main/entity/ship/flycatcher/assets/images/damaged.png';
 
-function Flycatcher({ x, y, width, height, entities, dx, dy, faction }) {
-  Ship.call(this, { x, y, width, height, entities, dx, dy, faction });
+function FlycatcherEntity({
+  x,
+  y,
+  width,
+  height,
+  entities,
+  faction,
+  dx,
+  dy,
+  factory
+}) {
+  ShipEntity.call(this, { x, y, width, height, entities, faction, dx, dy });
 
   /** @override **/
   this.imageSrc = {
@@ -16,33 +26,61 @@ function Flycatcher({ x, y, width, height, entities, dx, dy, faction }) {
   };
 
   /** @override **/
-  this.width = Flycatcher.width;
-  this.height = Flycatcher.height;
+  this.width = FlycatcherEntity.width;
+  this.height = FlycatcherEntity.height;
+
+  /** @override **/
+  this.status = {
+    alive: true,
+    firing: true,
+    invincible: false,
+    damaged: false,
+    powered: false,
+    shielded: false,
+    moving: false,
+    pathing: false,
+    roaming: false,
+    prowling: false,
+    patrolling: false
+  };
 
   /** @override **/
   this.points = {
-    ...this.points,
-    health: 2,
+    health: 3,
     attack: 1,
-    value: 1
+    value: 0,
+    score: 0,
+    shield: 0,
+    bomb: 0,
+    power: 0,
+    life: 0
   };
+
+  /** @override **/
+  this.subtype = types.subtype.ships.FLYCATCHER;
+
+  /** @override **/
+  this.factory = factory;
 
   this.init();
 }
 
-Flycatcher.prototype = Object.create(Ship.prototype);
+FlycatcherEntity.prototype = Object.create(ShipEntity.prototype);
 
 // Size
-Flycatcher.width = 60;
-Flycatcher.height = 60;
+FlycatcherEntity.width = 60;
+FlycatcherEntity.height = 60;
 
 /** @override **/
-Flycatcher.prototype.createBullets = function() {
-  this.entities.push(new StandardBullet({ creator: this }));
+FlycatcherEntity.prototype.createBullets = function() {
+  this.factory({
+    entities: this.entities,
+    creator: this
+  }).projectile.bullet.standard();
 };
 
 /** @override **/
-Flycatcher.prototype.prowl = function() {
+FlycatcherEntity.prototype.prowl = function() {
   // Set prowling flag.
   this.status.prowling = true;
 
@@ -79,4 +117,4 @@ Flycatcher.prototype.prowl = function() {
     });
 };
 
-module.exports = Flycatcher;
+module.exports = FlycatcherEntity;

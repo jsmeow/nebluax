@@ -1,12 +1,22 @@
-const Ship = require('../ship');
-const StandardBullet = require('../../projectile/bullet/standard/standard-bullet');
+const types = require('../../entity-types');
+const ShipEntity = require('../ship');
 const enemyImageSrc = './main/entity/ship/albatross/assets/images/enemy.png';
 const alliedImageSrc = './main/entity/ship/albatross/assets/images/allied.png';
 const damagedImageSrc =
   './main/entity/ship/albatross/assets/images/damaged.png';
 
-function Albatross({ x, y, width, height, entities, dx, dy, faction }) {
-  Ship.call(this, { x, y, width, height, entities, dx, dy, faction });
+function AlbatrossEntity({
+  x,
+  y,
+  width,
+  height,
+  entities,
+  faction,
+  dx,
+  dy,
+  factory
+}) {
+  ShipEntity.call(this, { x, y, width, height, entities, faction, dx, dy });
 
   /** @override **/
   this.imageSrc = {
@@ -16,33 +26,61 @@ function Albatross({ x, y, width, height, entities, dx, dy, faction }) {
   };
 
   /** @override **/
-  this.width = Albatross.width;
-  this.height = Albatross.height;
+  this.width = AlbatrossEntity.width;
+  this.height = AlbatrossEntity.height;
+
+  /** @override **/
+  this.status = {
+    alive: true,
+    firing: true,
+    invincible: false,
+    damaged: false,
+    powered: false,
+    shielded: false,
+    moving: false,
+    pathing: false,
+    roaming: false,
+    prowling: false,
+    patrolling: false
+  };
 
   /** @override **/
   this.points = {
-    ...this.points,
-    health: 2,
+    health: 3,
     attack: 1,
-    value: 1
+    value: 0,
+    score: 0,
+    shield: 0,
+    bomb: 0,
+    power: 0,
+    life: 0
   };
+
+  /** @override **/
+  this.subtype = types.subtype.ships.ALBATROSS;
+
+  /** @override **/
+  this.factory = factory;
 
   this.init();
 }
 
-Albatross.prototype = Object.create(Ship.prototype);
+AlbatrossEntity.prototype = Object.create(ShipEntity.prototype);
 
 // Size
-Albatross.width = 60;
-Albatross.height = 60;
+AlbatrossEntity.width = 60;
+AlbatrossEntity.height = 60;
 
 /** @override **/
-Albatross.prototype.createBullets = function() {
-  this.entities.push(new StandardBullet({ creator: this }));
+AlbatrossEntity.prototype.createBullets = function() {
+  this.factory({
+    entities: this.entities,
+    creator: this
+  }).projectile.bullet.standard();
 };
 
 /** @override **/
-Albatross.prototype.prowl = function() {
+AlbatrossEntity.prototype.prowl = function() {
   // Set prowling flag.
   this.status.prowling = true;
 
@@ -79,4 +117,4 @@ Albatross.prototype.prowl = function() {
     });
 };
 
-module.exports = Albatross;
+module.exports = AlbatrossEntity;

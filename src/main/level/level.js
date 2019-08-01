@@ -1,9 +1,9 @@
-function Level(player, entities) {
-  // The player entity.
-  this.player = player;
-
+function Level(entities) {
   // The entities list.
   this.entities = entities;
+
+  // The application user/ / player.
+  this.player = this.entities[0];
 
   // The level waves list.
   this.waves = [];

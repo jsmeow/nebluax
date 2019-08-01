@@ -1,11 +1,21 @@
-const Ship = require('../ship');
-const StandardBullet = require('../../projectile/bullet/standard/standard-bullet');
+const types = require('../../entity-types');
+const ShipEntity = require('../ship');
 const enemyImageSrc = './main/entity/ship/warbler/assets/images/enemy.png';
 const alliedImageSrc = './main/entity/ship/warbler/assets/images/allied.png';
 const damagedImageSrc = './main/entity/ship/warbler/assets/images/damaged.png';
 
-function Warbler({ x, y, width, height, entities, dx, dy, faction }) {
-  Ship.call(this, { x, y, width, height, entities, dx, dy, faction });
+function WarblerEntity({
+  x,
+  y,
+  width,
+  height,
+  entities,
+  faction,
+  dx,
+  dy,
+  factory
+}) {
+  ShipEntity.call(this, { x, y, width, height, entities, faction, dx, dy });
 
   /** @override **/
   this.imageSrc = {
@@ -15,33 +25,61 @@ function Warbler({ x, y, width, height, entities, dx, dy, faction }) {
   };
 
   /** @override **/
-  this.width = Warbler.width;
-  this.height = Warbler.height;
+  this.width = WarblerEntity.width;
+  this.height = WarblerEntity.height;
+
+  /** @override **/
+  this.status = {
+    alive: true,
+    firing: true,
+    invincible: false,
+    damaged: false,
+    powered: false,
+    shielded: false,
+    moving: false,
+    pathing: false,
+    roaming: false,
+    prowling: false,
+    patrolling: false
+  };
 
   /** @override **/
   this.points = {
-    ...this.points,
-    health: 2,
+    health: 3,
     attack: 1,
-    value: 1
+    value: 0,
+    score: 0,
+    shield: 0,
+    bomb: 0,
+    power: 0,
+    life: 0
   };
+
+  /** @override **/
+  this.subtype = types.subtype.WarblerEntity;
+
+  /** @override **/
+  this.factory = factory;
 
   this.init();
 }
 
-Warbler.prototype = Object.create(Ship.prototype);
+WarblerEntity.prototype = Object.create(ShipEntity.prototype);
 
 // Size
-Warbler.width = 60;
-Warbler.height = 60;
+WarblerEntity.width = 60;
+WarblerEntity.height = 60;
 
 /** @override **/
-Warbler.prototype.createBullets = function() {
-  this.entities.push(new StandardBullet({ creator: this }));
+WarblerEntity.prototype.createBullets = function() {
+  this.factory({
+    entities: this.entities,
+    creator: this
+  }).projectile.bullet.standard();
 };
 
 /** @override **/
-Warbler.prototype.prowl = function() {
+WarblerEntity.prototype.prowl = function() {
   // Set prowling flag.
   this.status.prowling = true;
 
@@ -78,4 +116,4 @@ Warbler.prototype.prowl = function() {
     });
 };
 
-module.exports = Warbler;
+module.exports = WarblerEntity;

@@ -1,9 +1,10 @@
 const canvas = require('../../canvas');
+const types = require('../entity-types');
 const Entity = require('../entity');
 const Comet = require('./space/comet/comet');
 const Star = require('./space/star/star');
 
-function Space({ x, y, width, height, entities }) {
+function SpaceEntity({ x, y, width, height, entities }) {
   Entity.call(this, { x, y, width, height, entities });
 
   /** @override **/
@@ -14,6 +15,10 @@ function Space({ x, y, width, height, entities }) {
   this.width = canvas.width;
   this.height = canvas.height;
 
+  /** @override **/
+  this.type = types.type.EFFECT;
+  this.subtype = types.subtype.effect.SPACE;
+
   // The comet entities list.
   this.comets = [];
 
@@ -23,10 +28,10 @@ function Space({ x, y, width, height, entities }) {
   this.init();
 }
 
-Space.prototype = Object.create(Entity.prototype);
+SpaceEntity.prototype = Object.create(Entity.prototype);
 
 // Initialize.
-Space.prototype.init = function() {
+SpaceEntity.prototype.init = function() {
   // Create the comets entities.
   this.comets = [...Array(30)].map(() => {
     return new Comet();
@@ -39,7 +44,7 @@ Space.prototype.init = function() {
 };
 
 /** @override **/
-Space.prototype.update = function() {
+SpaceEntity.prototype.update = function() {
   this.comets.forEach(comet => {
     comet.update();
   });
@@ -50,8 +55,8 @@ Space.prototype.update = function() {
 };
 
 /** @override **/
-Space.prototype.render = function() {
-  // Draw the space background.
+SpaceEntity.prototype.render = function() {
+  // Draw the SpaceEntity background.
   canvas.drawRect({
     x: this.x,
     y: this.y,
@@ -71,4 +76,4 @@ Space.prototype.render = function() {
   });
 };
 
-module.exports = Space;
+module.exports = SpaceEntity;

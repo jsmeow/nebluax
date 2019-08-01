@@ -1,6 +1,6 @@
+const types = require('../../../entity/entity-types');
 const Ship = require('../ship');
 const Wigeon = require('../wigeon/wigeon');
-const FactionedEntity = require('../../factioned');
 const StandardBullet = require('../../projectile/bullet/standard/standard-bullet');
 const enemyImageSrc = './main/entity/ship/mallard/assets/images/enemy.png';
 const alliedImageSrc = './main/entity/ship/mallard/assets/images/allied.png';
@@ -8,8 +8,8 @@ const damagedImageSrc = './main/entity/ship/mallard/assets/images/damaged.png';
 const shieldedImageSrc =
   './main/entity/ship/mallard/assets/images/shielded.png';
 
-function Mallard({ x, y, width, height, entities, dx, dy, faction }) {
-  Ship.call(this, { x, y, width, height, entities, dx, dy, faction });
+function Mallard({ x, y, width, height, entities, faction, dx, dy }) {
+  Ship.call(this, { x, y, width, height, entities, faction, dx, dy });
 
   /** @override **/
   this.imageSrc = {
@@ -53,14 +53,14 @@ Mallard.prototype.init = function() {
     new Wigeon({
       x: this.x - 114,
       y: this.y,
-      faction: FactionedEntity.factions.ENEMY,
+      faction: types.faction.ENEMY,
       player: this.player,
       entities: this.entities
     }),
     new Wigeon({
       x: this.x + this.width + 114,
       y: this.y,
-      faction: FactionedEntity.factions.ENEMY,
+      faction: types.faction.ENEMY,
       player: this.player,
       entities: this.entities
     })

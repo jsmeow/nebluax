@@ -8,10 +8,10 @@ const Level1 = require('../../level/1/level1');
 // The current level.
 let level;
 
-function update(player, entities) {
+function update(entities) {
   // Create a new level.
   if (!level) {
-    level = new Level1(player, entities);
+    level = new Level1(entities);
   }
 
   // Iterate through the entities list.
@@ -20,7 +20,7 @@ function update(player, entities) {
   });
 }
 
-function render(player, entities) {
+function render(entities, player) {
   // Render the heads-up display.
   life.render(player);
   shield.render(player);

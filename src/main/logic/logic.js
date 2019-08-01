@@ -1,33 +1,25 @@
-const canvas = require('../canvas');
 const keyHandler = require('../key-handler');
 const state = require('../state');
 const title = require('./title/title');
 const game = require('./game/game');
-const Player = require('../entity/player/player');
-const Space = require('../entity/background/space');
+const factory = require('../entity/entity-factory');
 
 // The application entities list.
 // All entities have lifecycles inside this list.
 const entities = [];
 
 // The application user/player.
-const player = new Player({ entities });
-entities.push(player);
+const player = factory({ entities }).player();
+
+// The space background.
+// Will render regardless of application state.
+const space = factory({ entities }).space();
 
 // Send the player to the key handler to handle user key events.
 // Send the state to the key handler to handle state events.
 // Add keydown and keyup event listeners.
 keyHandler.addKeydownEventListener(player, state);
 keyHandler.addKeyupEventListener(player, state);
-
-// The space background.
-// Will render regardless of application state.
-const space = new Space({
-  x: 0,
-  y: 0,
-  width: canvas.width,
-  height: canvas.height
-});
 
 function logic({ step, delta }) {
   // Update the application.
@@ -42,7 +34,7 @@ function logic({ step, delta }) {
 
     // Update the game.
     if (state.current === state.states.GAME) {
-      game.update(player, entities);
+      game.update(entities);
     }
   }
 
@@ -58,7 +50,7 @@ function logic({ step, delta }) {
 
     // Render the game.
     else if (state.current === state.states.GAME) {
-      game.render(player, entities);
+      game.render(entities, player);
     }
   }
 }

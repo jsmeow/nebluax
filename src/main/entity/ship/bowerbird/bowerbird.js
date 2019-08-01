@@ -1,12 +1,22 @@
-const Ship = require('../ship');
-const StandardBullet = require('../../projectile/bullet/standard/standard-bullet');
+const types = require('../../entity-types');
+const ShipEntity = require('../ship');
 const enemyImageSrc = './main/entity/ship/bowerbird/assets/images/enemy.png';
 const alliedImageSrc = './main/entity/ship/bowerbird/assets/images/allied.png';
 const damagedImageSrc =
   './main/entity/ship/bowerbird/assets/images/damaged.png';
 
-function Bowerbird({ x, y, width, height, entities, dx, dy, faction }) {
-  Ship.call(this, { x, y, width, height, entities, dx, dy, faction });
+function BowerbirdEntity({
+  x,
+  y,
+  width,
+  height,
+  entities,
+  faction,
+  dx,
+  dy,
+  factory
+}) {
+  ShipEntity.call(this, { x, y, width, height, entities, faction, dx, dy });
 
   /** @override **/
   this.imageSrc = {
@@ -16,35 +26,61 @@ function Bowerbird({ x, y, width, height, entities, dx, dy, faction }) {
   };
 
   /** @override **/
-  this.width = Bowerbird.width;
-  this.height = Bowerbird.height;
+  this.width = BowerbirdEntity.width;
+  this.height = BowerbirdEntity.height;
+
+  /** @override **/
+  this.status = {
+    alive: true,
+    firing: true,
+    invincible: false,
+    damaged: false,
+    powered: false,
+    shielded: false,
+    moving: false,
+    pathing: false,
+    roaming: false,
+    prowling: false,
+    patrolling: false
+  };
 
   /** @override **/
   this.points = {
-    ...this.points,
-    health: 2,
+    health: 3,
     attack: 1,
-    value: 1
+    value: 0,
+    score: 0,
+    shield: 0,
+    bomb: 0,
+    power: 0,
+    life: 0
   };
+
+  /** @override **/
+  this.subtype = types.subtype.ships.BOWERBIRD;
+
+  /** @override **/
+  this.factory = factory;
 
   this.init();
 }
 
-Bowerbird.prototype = Object.create(Ship.prototype);
+BowerbirdEntity.prototype = Object.create(ShipEntity.prototype);
 
 // Size
-Bowerbird.width = 60;
-Bowerbird.height = 60;
+BowerbirdEntity.width = 60;
+BowerbirdEntity.height = 60;
 
 /** @override **/
-Bowerbird.prototype.createBullets = function() {
-  this.entities.push(
-    new StandardBullet({ entities: this.entities, creator: this })
-  );
+BowerbirdEntity.prototype.createBullets = function() {
+  this.factory({
+    entities: this.entities,
+    creator: this
+  }).projectile.bullet.standard();
 };
 
 /** @override **/
-Bowerbird.prototype.prowl = function() {
+BowerbirdEntity.prototype.prowl = function() {
   // Set prowling flag.
   this.status.prowling = true;
 
@@ -81,4 +117,4 @@ Bowerbird.prototype.prowl = function() {
     });
 };
 
-module.exports = Bowerbird;
+module.exports = BowerbirdEntity;

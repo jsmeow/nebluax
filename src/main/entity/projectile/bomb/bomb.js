@@ -1,4 +1,4 @@
-const Entity = require('../../entity');
+const types = require('../../entity-types');
 const ProjectileEntity = require('../projectile');
 
 // An entity without health points that can deal attack point damage.
@@ -10,9 +10,10 @@ function BombEntity({
   width,
   height,
   entities,
+  faction,
   dx,
   dy,
-  faction,
+  factory,
   creator
 }) {
   ProjectileEntity.call(this, {
@@ -21,70 +22,69 @@ function BombEntity({
     width,
     height,
     entities,
+    faction,
     dx,
     dy,
-    faction,
+    factory,
     creator
   });
 
   /** @override **/
-  this.subtype = ProjectileEntity.subtypes.BOMB;
+  this.x =
+    x || this.creator.x + this.creator.width * 0.5 - BombEntity.width * 0.5;
+  this.y =
+    y || this.faction === types.faction.ENEMY
+      ? this.creator.y + BombEntity.height * 2
+      : this.creator.y - BombEntity.height;
 
   /** @override **/
-  this.status.invincible = true;
-
-  this.x = x || creator.x + creator.width * 0.5 - this.width * 0.5;
-  this.y = y || creator.y;
+  this.width = BombEntity.width;
+  this.height = BombEntity.height;
 
   /** @override **/
-  this.points.attack = this.creator.points.attack * 3;
+  this.points = {
+    ...this.points,
+    health: 1,
+    attack: 0,
+    value: 0,
+    score: 0,
+    shield: 0,
+    bomb: 0,
+    power: 0,
+    life: 0
+  };
 
-  // TODO: add detonated as a param
-  // Create exploded when detonated = true
+  /** @override **/
+  this.subtype = types.subtype.projectile.BOMB;
 }
 
-/** @override **/
-BombEntity.prototype.validateEntityCollision = function(entity, idx, _idx) {
-  return (
-    idx !== _idx &&
-    entity.type !== Entity.types.EFFECT &&
-    this.faction !== entity.faction &&
-    this.type !== Entity.types.EFFECT &&
-    this.subtype !== ProjectileEntity.subtypes.BULLET
-  );
-};
+BombEntity.prototype = Object.create(ProjectileEntity.prototype);
+
+// Size
+BombEntity.width = 6.667 * 5;
+BombEntity.height = 6.667 * 5;
+
+// Detonated size
+BombEntity.detonatedWidth = 6.667 * 15;
+BombEntity.detonatedHeight = 6.667 * 15;
 
 /** @override **/
-BombEntity.prototype.collide = function(entities, idx, entity) {
-  if (!entity.status.invincible) {
-    // Exchange attack damage points.
-    entity.points.health = entity.points.health - this.points.attack;
-
-    if (entity.points.health <= 0) {
-      // Assert alive status.
-      entity.status.alive = false;
-
-      // Add to the entity score.
-      this.creator.points.score =
-        this.creator.points.score + entity.points.value;
-    }
-
-    // Schedule projectile to be disposed.
+BombEntity.prototype.preUpdate = function(idx) {
+  if (this.assertCollision().boundary.all) {
     this.status.alive = false;
   }
-};
 
-/** @override **/
-BombEntity.prototype.preUpdate = function(entities, idx) {
+  console.log(console.log(this.status));
+
   // Assert an entity collision.
-  this.assertEntitiesCollision(entities, idx);
-
-  // Assert boundary collision for projectile entity type.
-  if (this.assertBoundaryCollision().all) {
-    // Schedule projectile to be disposed.
-    // Remove from the entities list.
-    this.status.alive = false;
+  if (this.assertEntitiesCollision(idx)) {
+    this.factory({
+      width: BombEntity.detonatedWidth,
+      height: BombEntity.detonatedHeight,
+      entities: this.entities,
+      creator: this
+    }).explosion.destroy();
   }
 };
 
-module.exports = ProjectileEntity;
+module.exports = BombEntity;

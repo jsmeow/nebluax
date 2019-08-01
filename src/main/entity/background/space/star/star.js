@@ -1,25 +1,27 @@
 const canvas = require('../../../../canvas');
 const { fps } = require('../../../../options');
-const MovingEntity = require('../../../moving');
+const types = require('../../../entity-types');
+const Entity = require('../../../entity');
 
 // A shooting star comet.
-function Star({ x, y, width, height, entities, dx, dy } = {}) {
-  MovingEntity.call(this, { x, y, width, height, entities, dx, dy });
+function Star() {
+  Entity.call(this);
 
   /** @override **/
   this.x = Math.random() * canvas.width;
-
-  /** @override **/
   this.y = Math.random() * -canvas.height + canvas.height;
 
   /** @override **/
   this.width = canvas.width / 550;
-
-  /** @override **/
   this.height = canvas.width / 550;
 
   /** @override **/
+  this.dx = 0;
   this.dy = 1;
+
+  /** @override **/
+  this.type = types.type.EFFECT;
+  this.subtype = types.subtype.effect.STAR;
 
   // Blinking duration timer.
   this.blink = {
@@ -31,7 +33,7 @@ function Star({ x, y, width, height, entities, dx, dy } = {}) {
   this.color = null;
 }
 
-Star.prototype = Object.create(MovingEntity.prototype);
+Star.prototype = Object.create(Entity.prototype);
 
 // Opacity hex gradient. Obtained from
 // https://gist.github.com/lopspower/03fb1cc0ac9f32ef38f4
@@ -46,7 +48,7 @@ Star.prototype.reset = function() {
 /** @override **/
 Star.prototype.update = function() {
   // Get new random position on bottom boundary collision.
-  if (this.assertBoundaryCollision().bottom) {
+  if (this.assertCollision().boundary.bottom) {
     this.reset();
   }
 
