@@ -306,11 +306,7 @@ Entity.prototype.roam = function() {
     d: 0.5
   })
     .then(() => {
-      return new Promise(resolve => {
-        setTimeout(() => {
-          resolve();
-        }, fps * 10);
-      });
+      return this.pause(10);
     })
     .then(() => {
       return this.point({
@@ -320,11 +316,7 @@ Entity.prototype.roam = function() {
       });
     })
     .then(() => {
-      return new Promise(resolve => {
-        setTimeout(() => {
-          resolve();
-        }, fps * 10);
-      });
+      return this.pause(10);
     })
     .then(() => {
       return this.point({
@@ -355,11 +347,52 @@ Entity.prototype.prowl = function() {
 
 // Patrolling movement/action.
 // Loops between roaming and prowling.
-Entity.prototype.patrol = function() {
+// Param = 0/undefined = loop between roam and prowl.
+// Param = 1 = only roam.
+// Param = 2 = only prowl.
+Entity.prototype.patrol = function(flag) {
   // Set patrolling flag.
   this.status.patrolling = true;
 
-  return this.roam()
+  if (flag === 1) {
+    return this.pause(10)
+      .then(() => {
+        return this.roam();
+      })
+      .then(() => {
+        return this.pause(10);
+      })
+      .then(() => {
+        if (this.status.patrolling) {
+          return this.patrol(1);
+        }
+        return Promise.resolve();
+      });
+  }
+
+  if (flag === 2) {
+    return this.pause(10)
+      .then(() => {
+        return this.prowl();
+      })
+      .then(() => {
+        return this.pause(10);
+      })
+      .then(() => {
+        if (this.status.patrolling) {
+          return this.patrol(2);
+        }
+        return Promise.resolve();
+      });
+  }
+
+  return this.pause(10)
+    .then(() => {
+      return this.roam();
+    })
+    .then(() => {
+      return this.pause(10);
+    })
     .then(() => {
       return this.prowl();
     })
@@ -537,14 +570,16 @@ Entity.prototype.createBullets = function() {};
 
 // Create bullets at an interval.
 Entity.prototype.tickBulletTimer = function() {
-  if (this.timer.bullet.frame < this.timer.bullet.delay) {
+  if (this.status.firing) {
     // Increment timer.
     this.timer.bullet.frame = this.timer.bullet.frame + 1;
-  } else {
-    // Create bullets.
-    // Reset timer.
-    this.createBullets();
-    this.timer.bullet.frame = 0;
+
+    if (this.timer.bullet.frame > this.timer.bullet.delay) {
+      // Create bullets.
+      // Reset timer.
+      this.createBullets();
+      this.timer.bullet.frame = 0;
+    }
   }
 };
 
@@ -664,7 +699,9 @@ Entity.prototype.tick = function(idx) {
   }
 
   // Tick the create bullet timer.
-  this.tickBulletTimer();
+  if (this.status.firing) {
+    this.tickBulletTimer();
+  }
 };
 
 // Dispose action.

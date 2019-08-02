@@ -51,7 +51,6 @@ ShipEntity.prototype.pause = function(delay) {
 };
 
 /** @override **/
-
 ShipEntity.prototype.postCollide = function(idx, hasCollided) {
   if (hasCollided && !this.status.damaged) {
     this.startDamagedTimer();

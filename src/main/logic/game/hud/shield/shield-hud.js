@@ -1,6 +1,6 @@
 const canvas = require('../../../../canvas');
 const { grey } = require('../../../../../static/mui/muiColors');
-const shield = './main/logic/game/hud/shield/assets/images/shield.png';
+const shield = './main/logic/game/hud/shield/assets/images/default.png';
 
 // Set the image source.
 const image = new Image();

@@ -18,6 +18,7 @@ const subtype = {
   },
   ships: {
     ALBATROSS: 'albatross',
+    ASTEROID: 'asteroid',
     BOWERBIRD: 'bowerbird',
     CONDOR: 'condor',
     FLYCATCHER: 'flycatcher',

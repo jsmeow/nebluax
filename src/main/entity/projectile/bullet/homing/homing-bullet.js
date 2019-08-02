@@ -11,6 +11,7 @@ function HomingBulletEntity({
   height,
   entities,
   faction,
+  d,
   dx,
   dy,
   factory,
@@ -23,6 +24,7 @@ function HomingBulletEntity({
     height,
     entities,
     faction,
+    d,
     dx,
     dy,
     factory,
@@ -41,23 +43,13 @@ function HomingBulletEntity({
 
   this.dx =
     (this.getQuadrant().x *
-      (HomingBulletEntity.d * (1 + Math.abs(this.player.x - this.creator.x)))) /
+      (this.d * (1 + Math.abs(this.player.x - this.creator.x)))) /
     (1 - Math.abs(this.creator.y + this.player.y));
 
   this.dy =
     (this.getQuadrant().y *
-      (HomingBulletEntity.d * (1 + Math.abs(this.player.y + this.creator.y)))) /
+      (this.d * (1 + Math.abs(this.player.y + this.creator.y)))) /
     (1 - Math.abs(this.creator.x + this.player.x));
-
-  /* This.dx =
-    (this.getQuadrant().x *
-      (HomingBulletEntity.d * (1 + Math.abs(this.player.x - this.creator.x)))) /
-    (1 - Math.abs(this.creator.y + this.player.y));
-
-  this.dy =
-    (this.getQuadrant().y *
-      (HomingBulletEntity.d * (1 + Math.abs(this.player.y + this.creator.y)))) /
-    (1 - Math.abs(this.creator.x + this.player.x));*/
 
   this.init();
 }
@@ -67,9 +59,6 @@ HomingBulletEntity.prototype = Object.create(BulletEntity.prototype);
 // Size
 HomingBulletEntity.width = 6.667;
 HomingBulletEntity.height = 6.667;
-
-// Vector magnitude.
-HomingBulletEntity.d = 4;
 
 // Get the cartesian plane quadrant the homing target is in, and the
 // Corresponding vector direction to move in.
@@ -94,8 +83,7 @@ HomingBulletEntity.prototype.preUpdate = function() {
   ) {
     this.dx =
       (this.getQuadrant().x *
-        (HomingBulletEntity.d *
-          (1 + Math.abs(this.player.x - this.creator.x)))) /
+        (this.d * (1 + Math.abs(this.player.x - this.creator.x)))) /
       (1 - Math.abs(this.creator.y + this.player.y));
   }
 };

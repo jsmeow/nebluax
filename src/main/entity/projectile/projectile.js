@@ -8,6 +8,7 @@ function ProjectileEntity({
   height,
   entities,
   faction,
+  d,
   dx,
   dy,
   factory,
@@ -55,16 +56,19 @@ function ProjectileEntity({
   this.width = width || ProjectileEntity.width;
   this.height = height || ProjectileEntity.height;
 
+  // Vector magnitude.
+  this.d = d || ProjectileEntity.d;
+
   /** @override **/
   this.dx = dx || 0;
   this.dy =
     this.faction === types.faction.ENEMY
       ? typeof dy === 'number'
         ? dy
-        : ProjectileEntity.d
+        : this.d
       : typeof dy === 'number'
       ? -dy
-      : -ProjectileEntity.d;
+      : -this.d;
 
   /** @override **/
   this.type = types.type.PROJECTILE;

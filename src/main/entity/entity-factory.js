@@ -2,6 +2,7 @@ const PlayerEntity = require('./player/player');
 const SpaceEntity = require('./background/space');
 const ExplosionDamageEntity = require('./explosion/damage/explosion-damage');
 const ExplosionDestroyEntity = require('./explosion/destroy/explosion-destroy');
+const Asteroid1Entity = require('./ship/asteroid/asteroid');
 const StandardBulletEntity = require('./projectile/bullet/standard/standard-bullet');
 const HomingBulletEntity = require('./projectile/bullet/homing/homing-bullet');
 const Bomb1Entity = require('./projectile/bomb/1/bomb1');
@@ -14,7 +15,18 @@ const HeronEntity = require('./ship/heron/heron');
 const SwallowEntity = require('./ship/swallow/swallow');
 const WarblerEntity = require('./ship/warbler/warbler');
 
-function factory({ x, y, width, height, entities, faction, dx, dy, creator }) {
+function factory({
+  x,
+  y,
+  width,
+  height,
+  entities,
+  faction,
+  d,
+  dx,
+  dy,
+  creator
+}) {
   return {
     player: () => {
       const player = new PlayerEntity(entities, factory);
@@ -75,6 +87,7 @@ function factory({ x, y, width, height, entities, faction, dx, dy, creator }) {
             height,
             entities,
             faction,
+            d,
             dx,
             dy,
             factory,
@@ -90,6 +103,7 @@ function factory({ x, y, width, height, entities, faction, dx, dy, creator }) {
             width,
             height,
             entities,
+            d,
             faction,
             dx,
             dy,
@@ -109,6 +123,7 @@ function factory({ x, y, width, height, entities, faction, dx, dy, creator }) {
             height,
             entities,
             faction,
+            d,
             dx,
             dy,
             factory,
@@ -153,7 +168,24 @@ function factory({ x, y, width, height, entities, faction, dx, dy, creator }) {
         entities.push(ship);
         return ship;
       },
-
+      asteroid: {
+        1: () => {
+          const asteroid = new Asteroid1Entity({
+            x,
+            y,
+            width,
+            height,
+            entities,
+            faction,
+            dx,
+            dy,
+            factory,
+            creator
+          });
+          entities.push(asteroid);
+          return asteroid;
+        }
+      },
       bowerbird: () => {
         const ship = new BowerbirdEntity({
           x,

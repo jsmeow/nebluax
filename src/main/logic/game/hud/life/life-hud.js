@@ -1,6 +1,6 @@
 const canvas = require('../../../../canvas');
 const { grey } = require('../../../../../static/mui/muiColors');
-const life = './main/logic/game/hud/life/assets/images/life.png';
+const life = './main/logic/game/hud/life/assets/images/default.png';
 
 // Set the image source.
 const image = new Image();
