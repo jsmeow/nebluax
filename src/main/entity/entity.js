@@ -77,7 +77,12 @@ function Entity(
     health: 1,
     attack: 0,
     value: 0,
-    score: 0
+    score: 0,
+    shield: 0,
+    bomb: 0,
+    mine: 0,
+    power: 0,
+    life: 0
   };
 
   // Vector movement unit magnitude.
@@ -108,6 +113,10 @@ function Entity(
     bullet: {
       frame: 0,
       delay: fps
+    },
+    mine: {
+      frame: 0,
+      duration: fps / 4
     }
   };
 
@@ -507,8 +516,10 @@ Entity.prototype.startExplosionTimer = function(amount) {
         // Create destroy explosion.
         this.factory({
           x: this.util().range(this.x, this.x + this.width),
-          y: this.util().range(this.y, this.y - this.height),
+          y: this.util().range(this.y, this.y + this.height),
           entities: this.entities,
+          faction: types.faction.NONE,
+          factory: this.factory,
           creator: this
         }).explosion.destroy();
 
@@ -541,6 +552,10 @@ Entity.prototype.tickBulletTimer = function() {
 // To be implemented by the extending class.
 Entity.prototype.createBombs = function() {};
 
+// Create any number and types of mines.
+// To be implemented by the extending class.
+Entity.prototype.createMines = function() {};
+
 // Validate if collision should occur.
 Entity.prototype.validateEntityCollision = function(entity, idx, _idx) {
   return (
@@ -561,9 +576,6 @@ Entity.prototype.validateEntityCollision = function(entity, idx, _idx) {
 
 // Entity collision action.
 Entity.prototype.collide = function(idx, entity) {
-  if (this.subtype === types.subtype.ships.PLAYER) {
-    console.log(entity);
-  }
   if (this.status.alive && entity.status.alive) {
     // Exchange attack damage points.
     if (!this.status.invincible) {
@@ -601,6 +613,13 @@ Entity.prototype.assertEntitiesCollision = function(idx) {
   // Collision flag.
   let hasCollided = false;
 
+  if (
+    this.subtype === types.subtype.effect.EXPLOSION &&
+    this.faction === types.faction.ALLIED
+  ) {
+    console.log(this);
+  }
+
   // Cycle through entity collection.
   this.entities.forEach((entity, _idx) => {
     // Validate collision.
@@ -609,8 +628,10 @@ Entity.prototype.assertEntitiesCollision = function(idx) {
       this.validateEntityCollision(entity, idx, _idx) &&
       this.assertCollision().entity(entity)
     ) {
-      // Set collided flag.
-      hasCollided = true;
+      // Set collided flag if entity has attack points.
+      if (entity.points.attack > 0) {
+        hasCollided = true;
+      }
 
       // Do collision action.
       this.collide(idx, entity);

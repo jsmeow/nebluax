@@ -45,7 +45,7 @@ function HeronEntity({
 
   /** @override **/
   this.points = {
-    health: 3,
+    health: 2,
     attack: 1,
     value: 0,
     score: 0,
@@ -56,7 +56,7 @@ function HeronEntity({
   };
 
   /** @override **/
-  this.subtype = types.subtype.HeronEntity;
+  this.subtype = types.subtype.ships.BOWERBIRD;
 
   /** @override **/
   this.factory = factory;
@@ -74,8 +74,18 @@ HeronEntity.height = 60;
 HeronEntity.prototype.createBullets = function() {
   this.factory({
     entities: this.entities,
+    factory: this.factory,
     creator: this
   }).projectile.bullet.standard();
+};
+
+/** @override **/
+HeronEntity.prototype.createMines = function() {
+  this.factory({
+    entities: this.entities,
+    factory: this.factory,
+    creator: this
+  }).projectile.mine[1]();
 };
 
 /** @override **/
@@ -87,27 +97,30 @@ HeronEntity.prototype.prowl = function() {
   const x = this.x;
   const y = this.y;
 
-  return this.point({ x: this.player.x, y: y + 150 })
+  return this.point({ x: x + 200, y: y + 150 })
+    .then(() => {
+      return this.pause(10).then(() => {
+        this.createMines();
+        return Promise.resolve();
+      });
+    })
     .then(() => {
       return this.pause(10);
     })
     .then(() => {
-      return this.point({ x: this.player.x, y: this.y });
+      return this.point({ x: x - 200, y: y + 150 });
     })
     .then(() => {
-      return this.pause(10);
-    })
-    .then(() => {
-      return this.point({ x: this.player.x, y: this.y });
+      return this.pause(10).then(() => {
+        this.createMines();
+        return Promise.resolve();
+      });
     })
     .then(() => {
       return this.pause(10);
     })
     .then(() => {
       return this.point({ x, y });
-    })
-    .then(() => {
-      return this.pause(10);
     })
     .then(() => {
       // Set prowling flag.

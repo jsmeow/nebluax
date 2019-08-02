@@ -105,6 +105,7 @@ PlayerEntity.prototype.startShieldedTimer = function() {
 PlayerEntity.prototype.createBullets = function() {
   this.factory({
     entities: this.entities,
+    factory: this.factory,
     creator: this
   }).projectile.bullet.standard();
 };
@@ -113,8 +114,18 @@ PlayerEntity.prototype.createBullets = function() {
 PlayerEntity.prototype.createBombs = function() {
   this.factory({
     entities: this.entities,
+    factory: this.factory,
     creator: this
   }).projectile.bomb[1]();
+};
+
+/** @override **/
+PlayerEntity.prototype.createMines = function() {
+  this.factory({
+    entities: this.entities,
+    factory: this.factory,
+    creator: this
+  }).projectile.mine[1]();
 };
 
 module.exports = PlayerEntity;

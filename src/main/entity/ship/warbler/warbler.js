@@ -45,7 +45,7 @@ function WarblerEntity({
 
   /** @override **/
   this.points = {
-    health: 3,
+    health: 2,
     attack: 1,
     value: 0,
     score: 0,
@@ -56,7 +56,7 @@ function WarblerEntity({
   };
 
   /** @override **/
-  this.subtype = types.subtype.WarblerEntity;
+  this.subtype = types.subtype.ships.WARBLER;
 
   /** @override **/
   this.factory = factory;
@@ -74,8 +74,9 @@ WarblerEntity.height = 60;
 WarblerEntity.prototype.createBullets = function() {
   this.factory({
     entities: this.entities,
+    factory: this.factory,
     creator: this
-  }).projectile.bullet.standard();
+  }).projectile.bullet.homing();
 };
 
 /** @override **/

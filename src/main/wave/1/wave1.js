@@ -14,18 +14,36 @@ Wave1.prototype = Object.create(Wave.prototype);
 /** @override **/
 Wave.prototype.createEntities = function() {
   this.waveEntities = [
-    factory({
+    /*    Factory({
       x: canvas.width * 0.5 - 60 * 2,
       y: 60 * 3,
       entities: this.entities,
       faction: types.faction.ENEMY
-    }).ship.bowerbird(),
-    factory({
+    }).ship.bowerbird(),*/
+    /*    Factory({
       x: canvas.width * 0.5 + 60 * 2,
       y: 60 * 3,
       entities: this.entities,
       faction: types.faction.ENEMY
-    }).ship.gull()
+    }).ship.warbler(),
+    factory({
+      x: canvas.width * 0.5 + 60 * 4,
+      y: 60 * 3,
+      entities: this.entities,
+      faction: types.faction.ENEMY
+    }).ship.heron(),
+    factory({
+      x: canvas.width * 0.5 - 60 * 4,
+      y: 60 * 3,
+      entities: this.entities,
+      faction: types.faction.ENEMY
+    }).ship.swallow(),*/
+    factory({
+      x: canvas.width * 0.5 - 60 * 6,
+      y: 60 * 6,
+      entities: this.entities,
+      faction: types.faction.ENEMY
+    }).ship.condor()
     /*    Factory({
       x: canvas.width * 0.5 + 60 * 2,
       y: 60 * 3,
@@ -50,43 +68,11 @@ Wave.prototype.createEntities = function() {
       entities: this.entities,
       faction: types.faction.ENEMY
     }).ship.gull()*/
-
-    /* New Albatross({
-      x: canvas.width * 0.5 - Albatross.width * 4,
-      y: Albatross.height * 3,
-      faction: FactionedEntity.factions.ENEMY,
-      player: this.player
-    }),*/
-    /* New Warbler({
-      x: canvas.width * 0.5 + Albatross.width * 4,
-      y: Albatross.height * 3,
-      faction: FactionedEntity.factions.ENEMY,
-      player: this.player
-    }),*/
-    /* New Flycatcher({
-      x: canvas.width * 0.5 + Albatross.width * 4,
-      y: Albatross.height * 5,
-      faction: FactionedEntity.factions.ENEMY,
-      player: this.player
-    }),*/
-    /* New Mallard({
-      x: canvas.width * 0.5 + Albatross.width * 4,
-      y: Albatross.height * 7,
-      faction: FactionedEntity.factions.ENEMY,
-      player: this.player,
-      entities: this.entities
-    }),*/
-    /*    New Oriole({
-      x: canvas.width * 0.5 + -Albatross.width * 4,
-      y: Albatross.height * 7,
-      faction: FactionedEntity.factions.ENEMY,
-      player: this.player,
-      entities: this.entities
-    })*/
   ];
 
   this.waveEntities[0].prowl();
-  this.waveEntities[1].prowl();
+  /* This.waveEntities[1].prowl();
+  this.waveEntities[2].patrol();*/
 };
 
 module.exports = Wave1;

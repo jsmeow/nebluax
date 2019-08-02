@@ -1,11 +1,10 @@
 const types = require('../../entity-types');
 const ShipEntity = require('../ship');
-const enemyImageSrc = './main/entity/ship/bowerbird/assets/images/enemy.png';
-const alliedImageSrc = './main/entity/ship/bowerbird/assets/images/allied.png';
-const damagedImageSrc =
-  './main/entity/ship/bowerbird/assets/images/damaged.png';
+const enemyImageSrc = './main/entity/ship/condor/assets/images/enemy.png';
+const alliedImageSrc = './main/entity/ship/condor/assets/images/allied.png';
+const damagedImageSrc = './main/entity/ship/condor/assets/images/damaged.png';
 
-function BowerbirdEntity({
+function CondorEntity({
   x,
   y,
   width,
@@ -26,8 +25,8 @@ function BowerbirdEntity({
   };
 
   /** @override **/
-  this.width = BowerbirdEntity.width;
-  this.height = BowerbirdEntity.height;
+  this.width = CondorEntity.width;
+  this.height = CondorEntity.height;
 
   /** @override **/
   this.status = {
@@ -46,7 +45,7 @@ function BowerbirdEntity({
 
   /** @override **/
   this.points = {
-    health: 2,
+    health: 150,
     attack: 1,
     value: 0,
     score: 0,
@@ -65,14 +64,14 @@ function BowerbirdEntity({
   this.init();
 }
 
-BowerbirdEntity.prototype = Object.create(ShipEntity.prototype);
+CondorEntity.prototype = Object.create(ShipEntity.prototype);
 
 // Size
-BowerbirdEntity.width = 60;
-BowerbirdEntity.height = 60;
+CondorEntity.width = 360;
+CondorEntity.height = 240;
 
 /** @override **/
-BowerbirdEntity.prototype.createBullets = function() {
+CondorEntity.prototype.createBullets = function() {
   this.factory({
     entities: this.entities,
     factory: this.factory,
@@ -81,7 +80,7 @@ BowerbirdEntity.prototype.createBullets = function() {
 };
 
 /** @override **/
-BowerbirdEntity.prototype.prowl = function() {
+CondorEntity.prototype.prowl = function() {
   // Set prowling flag.
   this.status.prowling = true;
 
@@ -118,4 +117,4 @@ BowerbirdEntity.prototype.prowl = function() {
     });
 };
 
-module.exports = BowerbirdEntity;
+module.exports = CondorEntity;

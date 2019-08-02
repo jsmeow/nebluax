@@ -13,6 +13,7 @@ function ExplosionEntity({
   faction,
   dx,
   dy,
+  factory,
   creator
 }) {
   Entity.call(this, {
@@ -23,7 +24,8 @@ function ExplosionEntity({
     entities,
     faction,
     dx,
-    dy
+    dy,
+    factory
   });
 
   // The entities list.
@@ -40,20 +42,22 @@ function ExplosionEntity({
   this.imageSrc.default = this.imageSrcs[0];
 
   /** @override **/
-  this.x = x || this.creator.x;
-  this.y = y || this.creator.y;
+  this.x = x ? x : this.creator.x;
+  this.y = y ? y : this.creator.y;
 
   /** @override **/
-  this.width = width || ExplosionEntity.width;
-  this.height = height || ExplosionEntity.height;
+  this.width = width ? width : ExplosionEntity.width;
+  this.height = height ? height : ExplosionEntity.height;
 
   /** @override **/
-  this.faction = faction || types.faction.NONE;
+  this.faction = faction ? faction : types.faction.NONE;
 
   /** @override **/
   this.type = types.type.EFFECT;
+  this.subtype = types.subtype.effect.EXPLOSION;
 
   /** @override **/
+
   this.status = {
     alive: true,
     firing: false,
@@ -79,6 +83,9 @@ function ExplosionEntity({
   // Frame and animation duration.
   this.frame = 0;
   this.duration = fps / 8;
+
+  /** @override **/
+  this.factory = factory;
 }
 
 ExplosionEntity.prototype = Object.create(Entity.prototype);

@@ -3,12 +3,16 @@ const SpaceEntity = require('./background/space');
 const ExplosionDamageEntity = require('./explosion/damage/explosion-damage');
 const ExplosionDestroyEntity = require('./explosion/destroy/explosion-destroy');
 const StandardBulletEntity = require('./projectile/bullet/standard/standard-bullet');
+const HomingBulletEntity = require('./projectile/bullet/homing/homing-bullet');
 const Bomb1Entity = require('./projectile/bomb/1/bomb1');
+const Mine1Entity = require('./projectile/mine/1/mine1');
 const AlbatrossEntity = require('./ship/albatross/albatross');
 const BowerbirdEntity = require('./ship/bowerbird/bowerbird');
+const CondorEntity = require('./ship/condor/condor');
 const GullEntity = require('./ship/gull/gull');
 const HeronEntity = require('./ship/heron/heron');
 const SwallowEntity = require('./ship/swallow/swallow');
+const WarblerEntity = require('./ship/warbler/warbler');
 
 function factory({ x, y, width, height, entities, faction, dx, dy, creator }) {
   return {
@@ -26,8 +30,8 @@ function factory({ x, y, width, height, entities, faction, dx, dy, creator }) {
       });
     },
     explosion: {
-      damage: () => {
-        const damageExplosion = new ExplosionDamageEntity({
+      damage: ({ attack }) => {
+        const explosion = new ExplosionDamageEntity({
           x,
           y,
           width,
@@ -36,13 +40,15 @@ function factory({ x, y, width, height, entities, faction, dx, dy, creator }) {
           faction,
           dx,
           dy,
+          factory,
           creator
         });
-        entities.push(damageExplosion);
-        return damageExplosion;
+        explosion.points.attack = attack;
+        entities.push(explosion);
+        return explosion;
       },
-      destroy: () => {
-        const destroyExplosion = new ExplosionDestroyEntity({
+      destroy: ({ attack } = { attack: 0 }) => {
+        const explosion = new ExplosionDestroyEntity({
           x,
           y,
           width,
@@ -51,16 +57,18 @@ function factory({ x, y, width, height, entities, faction, dx, dy, creator }) {
           faction,
           dx,
           dy,
+          factory,
           creator
         });
-        entities.push(destroyExplosion);
-        return destroyExplosion;
+        explosion.points.attack = attack;
+        entities.push(explosion);
+        return explosion;
       }
     },
     projectile: {
       bullet: {
         standard: () => {
-          const standardBullet = new StandardBulletEntity({
+          const bullet = new StandardBulletEntity({
             x,
             y,
             width,
@@ -72,13 +80,29 @@ function factory({ x, y, width, height, entities, faction, dx, dy, creator }) {
             factory,
             creator
           });
-          entities.push(standardBullet);
-          return standardBullet;
+          entities.push(bullet);
+          return bullet;
+        },
+        homing: () => {
+          const bullet = new HomingBulletEntity({
+            x,
+            y,
+            width,
+            height,
+            entities,
+            faction,
+            dx,
+            dy,
+            factory,
+            creator
+          });
+          entities.push(bullet);
+          return bullet;
         }
       },
       bomb: {
         1: () => {
-          const bomb1 = new Bomb1Entity({
+          const bomb = new Bomb1Entity({
             x,
             y,
             width,
@@ -90,14 +114,32 @@ function factory({ x, y, width, height, entities, faction, dx, dy, creator }) {
             factory,
             creator
           });
-          entities.push(bomb1);
-          return bomb1;
+          entities.push(bomb);
+          return bomb;
+        }
+      },
+      mine: {
+        1: () => {
+          const mine = new Mine1Entity({
+            x,
+            y,
+            width,
+            height,
+            entities,
+            faction,
+            dx,
+            dy,
+            factory,
+            creator
+          });
+          entities.push(mine);
+          return mine;
         }
       }
     },
     ship: {
       albatross: () => {
-        const albatross = new AlbatrossEntity({
+        const ship = new AlbatrossEntity({
           x,
           y,
           width,
@@ -108,11 +150,12 @@ function factory({ x, y, width, height, entities, faction, dx, dy, creator }) {
           dy,
           factory
         });
-        entities.push(albatross);
-        return albatross;
+        entities.push(ship);
+        return ship;
       },
+
       bowerbird: () => {
-        const bowerbird = new BowerbirdEntity({
+        const ship = new BowerbirdEntity({
           x,
           y,
           width,
@@ -123,11 +166,26 @@ function factory({ x, y, width, height, entities, faction, dx, dy, creator }) {
           dy,
           factory
         });
-        entities.push(bowerbird);
-        return bowerbird;
+        entities.push(ship);
+        return ship;
+      },
+      condor: () => {
+        const ship = new CondorEntity({
+          x,
+          y,
+          width,
+          height,
+          entities,
+          faction,
+          dx,
+          dy,
+          factory
+        });
+        entities.push(ship);
+        return ship;
       },
       gull: () => {
-        const gull = new GullEntity({
+        const ship = new GullEntity({
           x,
           y,
           width,
@@ -138,11 +196,11 @@ function factory({ x, y, width, height, entities, faction, dx, dy, creator }) {
           dy,
           factory
         });
-        entities.push(gull);
-        return gull;
+        entities.push(ship);
+        return ship;
       },
       heron: () => {
-        const heron = new HeronEntity({
+        const ship = new HeronEntity({
           x,
           y,
           width,
@@ -153,11 +211,11 @@ function factory({ x, y, width, height, entities, faction, dx, dy, creator }) {
           dy,
           factory
         });
-        entities.push(heron);
-        return heron;
+        entities.push(ship);
+        return ship;
       },
       swallow: () => {
-        const swallow = new SwallowEntity({
+        const ship = new SwallowEntity({
           x,
           y,
           width,
@@ -168,8 +226,23 @@ function factory({ x, y, width, height, entities, faction, dx, dy, creator }) {
           dy,
           factory
         });
-        entities.push(swallow);
-        return swallow;
+        entities.push(ship);
+        return ship;
+      },
+      warbler: () => {
+        const ship = new WarblerEntity({
+          x,
+          y,
+          width,
+          height,
+          entities,
+          faction,
+          dx,
+          dy,
+          factory
+        });
+        entities.push(ship);
+        return ship;
       }
     }
   };

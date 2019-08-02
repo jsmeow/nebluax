@@ -51,6 +51,7 @@ ShipEntity.prototype.pause = function(delay) {
 };
 
 /** @override **/
+
 ShipEntity.prototype.postCollide = function(idx, hasCollided) {
   if (hasCollided && !this.status.damaged) {
     this.startDamagedTimer();
@@ -63,7 +64,7 @@ ShipEntity.prototype.postCollide = function(idx, hasCollided) {
 /** @override **/
 ShipEntity.prototype.dispose = function(idx) {
   // Create destroy explosions.
-  this.startExplosionTimer(4).then(() => {
+  this.startExplosionTimer(3).then(() => {
     this.status.disposing = true;
   });
 

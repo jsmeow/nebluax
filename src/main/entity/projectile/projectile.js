@@ -1,7 +1,6 @@
 const types = require('../entity-types');
 const Entity = require('../entity');
 
-// An entity classified as a ship.
 function ProjectileEntity({
   x,
   y,
@@ -88,7 +87,7 @@ function ProjectileEntity({
   /** @override **/
   this.points = {
     ...this.points,
-    health: 1,
+    health: 0,
     attack: this.creator.points.attack,
     value: 0,
     score: 0,
@@ -97,6 +96,9 @@ function ProjectileEntity({
     power: 0,
     life: 0
   };
+
+  /** @override **/
+  this.factory = factory;
 }
 
 ProjectileEntity.prototype = Object.create(Entity.prototype);
@@ -112,7 +114,7 @@ ProjectileEntity.d = 4;
 ProjectileEntity.prototype.postCollide = function() {};
 
 /** @override **/
-ProjectileEntity.prototype.preUpdate = function(idx) {
+ProjectileEntity.prototype.preUpdate = function() {
   if (this.assertCollision().boundary.all) {
     this.status.alive = false;
   }

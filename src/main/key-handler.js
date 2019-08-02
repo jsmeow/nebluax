@@ -38,6 +38,10 @@ function onKeydown(player, state, event) {
     // Q key
     [keyCodes.KEYQ]() {
       player.startShieldedTimer();
+    },
+    // E key
+    [keyCodes.KEYE]() {
+      player.createMines();
     }
   };
 

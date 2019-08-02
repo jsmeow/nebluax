@@ -1,3 +1,4 @@
+const canvas = require('../../../canvas');
 const types = require('../../entity-types');
 const ShipEntity = require('../ship');
 const enemyImageSrc = './main/entity/ship/swallow/assets/images/enemy.png';
@@ -24,7 +25,6 @@ function SwallowEntity({
     damaged: damagedImageSrc
   };
 
-  /** @override **/
   this.width = SwallowEntity.width;
   this.height = SwallowEntity.height;
 
@@ -45,7 +45,7 @@ function SwallowEntity({
 
   /** @override **/
   this.points = {
-    health: 3,
+    health: 2,
     attack: 1,
     value: 0,
     score: 0,
@@ -56,7 +56,7 @@ function SwallowEntity({
   };
 
   /** @override **/
-  this.subtype = types.subtype.SwallowEntity;
+  this.subtype = types.subtype.ships.BOWERBIRD;
 
   /** @override **/
   this.factory = factory;
@@ -74,6 +74,7 @@ SwallowEntity.height = 60;
 SwallowEntity.prototype.createBullets = function() {
   this.factory({
     entities: this.entities,
+    factory: this.factory,
     creator: this
   }).projectile.bullet.standard();
 };
@@ -87,29 +88,27 @@ SwallowEntity.prototype.prowl = function() {
   const x = this.x;
   const y = this.y;
 
-  return this.point({ x: this.player.x, y: y + 150 })
+  // Set speed.
+  this.speed = 2;
+
+  return this.point({ x: this.player.x, y: this.player.y })
     .then(() => {
-      return this.pause(10);
+      return this.point({ x: this.player.x, y: canvas.height + this.height });
     })
     .then(() => {
-      return this.point({ x: this.player.x, y: this.y });
+      return this.pause(30);
     })
     .then(() => {
-      return this.pause(10);
-    })
-    .then(() => {
-      return this.point({ x: this.player.x, y: this.y });
-    })
-    .then(() => {
-      return this.pause(10);
-    })
-    .then(() => {
+      this.x = x;
+      this.y = -this.height;
       return this.point({ x, y });
     })
     .then(() => {
-      return this.pause(10);
+      return this.pause(30);
     })
     .then(() => {
+      // Set speed.
+      this.speed = 1;
       // Set prowling flag.
       this.status.prowling = false;
       return Promise.resolve();

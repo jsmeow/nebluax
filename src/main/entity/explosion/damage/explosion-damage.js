@@ -14,6 +14,7 @@ function ExplosionDamageEntity({
   faction,
   dx,
   dy,
+  factory,
   creator
 }) {
   ExplosionEntity.call(this, {
@@ -25,6 +26,7 @@ function ExplosionDamageEntity({
     faction,
     dx,
     dy,
+    factory,
     creator
   });
 

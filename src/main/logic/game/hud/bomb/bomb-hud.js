@@ -1,6 +1,6 @@
 const canvas = require('../../../../canvas');
 const { grey } = require('../../../../../static/mui/muiColors');
-const bomb = './main/logic/game/hud/bomb/assets/images/bomb.png';
+const bomb = './main/logic/game/hud/bomb/assets/images/default.png';
 
 // Set the image source.
 const image = new Image();

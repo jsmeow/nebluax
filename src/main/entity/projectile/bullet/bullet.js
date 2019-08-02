@@ -1,9 +1,6 @@
 const types = require('../../entity-types');
 const ProjectileEntity = require('../projectile');
 
-// An entity without health points that can deal attack point damage.
-// This entity has a physical presence in the game.
-// This entity cannot suffer from status effects.
 function BulletEntity({
   x,
   y,

@@ -7,16 +7,19 @@ const type = {
 const subtype = {
   effect: {
     COMET: 'comet',
+    EXPLOSION: 'explosion',
     SPACE: 'space',
     STAR: 'star'
   },
   projectile: {
+    BOMB: 'bomb',
     BULLET: 'bullet',
-    BOMB: 'bomb'
+    MINE: 'mine'
   },
   ships: {
     ALBATROSS: 'albatross',
     BOWERBIRD: 'bowerbird',
+    CONDOR: 'condor',
     FLYCATCHER: 'flycatcher',
     GULL: 'gull',
     HERON: 'heron',
