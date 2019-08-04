@@ -13,35 +13,35 @@ function onKeydown(player, state, event) {
     },
     // A key
     [keyCodes.KEYA]() {
-      player.dx = -player.speed;
+      player.dx = -player.d;
       player.ddx.left = true;
     },
     // D key
     [keyCodes.KEYD]() {
-      player.dx = player.speed;
+      player.dx = player.d;
       player.ddx.right = true;
     },
     // W key
     [keyCodes.KEYW]() {
-      player.dy = -player.speed;
+      player.dy = -player.d;
       player.ddy.up = true;
     },
     // S key
     [keyCodes.KEYS]() {
-      player.dy = player.speed;
+      player.dy = player.d;
       player.ddy.down = true;
     },
     // Spacebar key
     [keyCodes.SPACE]() {
-      player.createBombs();
+      player.bombsCreate();
     },
     // Q key
     [keyCodes.KEYQ]() {
-      player.startShieldedTimer();
+      player.shieldStart();
     },
     // E key
     [keyCodes.KEYE]() {
-      player.createMines();
+      player.minesCreate();
     }
   };
 
@@ -58,7 +58,7 @@ function onKeyup(player, state, event) {
     // A key
     [keyCodes.KEYA]() {
       if (player.ddx.right) {
-        player.dx = player.speed;
+        player.dx = player.d;
       } else {
         player.dx = 0;
       }
@@ -67,7 +67,7 @@ function onKeyup(player, state, event) {
     // D key
     [keyCodes.KEYD]() {
       if (player.ddx.left) {
-        player.dx = -player.speed;
+        player.dx = -player.d;
       } else {
         player.dx = 0;
       }
@@ -76,7 +76,7 @@ function onKeyup(player, state, event) {
     // W key
     [keyCodes.KEYW]() {
       if (player.ddy.down) {
-        player.dy = player.speed;
+        player.dy = player.d;
       } else {
         player.dy = 0;
       }
@@ -85,7 +85,7 @@ function onKeyup(player, state, event) {
     // S key
     [keyCodes.KEYS]() {
       if (player.ddy.up) {
-        player.dy = -player.speed;
+        player.dy = -player.d;
       } else {
         player.dy = 0;
       }

@@ -17,6 +17,9 @@ const height =
     .getPropertyValue('height')
     .split('px')[0] - 25;
 
+// Set the <canvas> element application pixel size.
+const pixel = 6.667;
+
 // Set the <canvas> element width, height to the <body> element width, height.
 canvas.width = width;
 canvas.height = height;
@@ -82,6 +85,7 @@ module.exports = {
   context,
   width,
   height,
+  pixel,
   aspectRatio,
   drawText,
   drawImage,

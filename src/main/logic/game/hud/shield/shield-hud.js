@@ -1,10 +1,10 @@
 const canvas = require('../../../../canvas');
 const { grey } = require('../../../../../static/mui/muiColors');
-const shield = './main/logic/game/hud/shield/assets/images/default.png';
+const basic = './main/logic/game/hud/shield/assets/images/basic.png';
 
 // Set the image source.
 const image = new Image();
-image.src = shield;
+image.src = basic;
 
 function render(player) {
   canvas.drawText({
@@ -14,10 +14,10 @@ function render(player) {
     size: 25,
     fillStyle: grey[50].main
   });
-  for (let idx = 0; idx < player.points.shield; idx += 1) {
+  for (let index = 0; index < player.points.shield; index += 1) {
     canvas.drawImage({
       image,
-      x: canvas.width * 0.5 - 196 - 45 * idx,
+      x: canvas.width * 0.5 - 196 - 45 * index,
       y: 70,
       width: 30,
       height: 30

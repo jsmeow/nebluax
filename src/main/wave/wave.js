@@ -1,12 +1,8 @@
-function Wave(entities) {
-  // The entities list.
-  this.entities = entities;
+const entities = require('../entity/entities');
 
-  // The application user/ / player.
-  this.player = this.entities[0];
-
+function Wave() {
   // The wave entities list.
-  this.waveEntities = [];
+  this.entities = [];
 
   // The wave entities path list.
   this.paths = [];
@@ -16,7 +12,7 @@ function Wave(entities) {
 }
 
 // Initializer.
-Wave.prototype.init = function() {
+Wave.prototype.initialize = function() {
   this.createEntities();
   this.createPaths();
 };
@@ -34,11 +30,7 @@ Wave.prototype.createPaths = function() {};
 Wave.prototype.clear = function() {};
 
 // Begin the wave.
-Wave.prototype.begin = function() {
-  this.waveEntities.forEach(entity => {
-    this.entities.push(entity);
-  });
-};
+Wave.prototype.begin = function() {};
 
 // Update action.
 Wave.prototype.update = function() {};

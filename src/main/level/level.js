@@ -1,10 +1,4 @@
-function Level(entities) {
-  // The entities list.
-  this.entities = entities;
-
-  // The application user/ / player.
-  this.player = this.entities[0];
-
+function Level() {
   // The level waves list.
   this.waves = [];
 
@@ -16,7 +10,7 @@ function Level(entities) {
 }
 
 // Initializer.
-Level.prototype.init = function() {
+Level.prototype.initialize = function() {
   this.createWaves();
   this.nextWave();
 };
