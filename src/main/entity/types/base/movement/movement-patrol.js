@@ -14,7 +14,7 @@ function patrol(action) {
   if (action === 1) {
     return this.roamStart()
       .then(() => {
-        return this.asyncPause(10);
+        return this.pause(10);
       })
       .then(() => {
         // Assert status flag.
@@ -31,7 +31,7 @@ function patrol(action) {
   if (action === 2) {
     return this.prowlStart()
       .then(() => {
-        return this.asyncPause(10);
+        return this.pause(10);
       })
       .then(() => {
         // Assert status flag.
@@ -47,13 +47,13 @@ function patrol(action) {
   // Roam and prowl.
   return this.roamStart()
     .then(() => {
-      return this.asyncPause(10);
+      return this.pause(10);
     })
     .then(() => {
       return this.prowlStart(10);
     })
     .then(() => {
-      return this.asyncPause(10);
+      return this.pause(10);
     })
     .then(() => {
       // Assert status flag.

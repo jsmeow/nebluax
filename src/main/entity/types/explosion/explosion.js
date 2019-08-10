@@ -39,12 +39,8 @@ function ExplosionEntity({
   });
 
   /** @override **/
-  this.width = width ? width : creator ? creator.width : ExplosionEntity.WIDTH;
-  this.height = height
-    ? height
-    : creator
-    ? creator.height
-    : ExplosionEntity.HEIGHT;
+  this.width = width ? width : ExplosionEntity.WIDTH;
+  this.height = height ? height : ExplosionEntity.WIDTH;
 
   /** @override **/
   this.faction = faction || properties.factions.NONE;

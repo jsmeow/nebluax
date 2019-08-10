@@ -10,6 +10,8 @@ function vectorMove(index) {
     // Enable and perform collision event action, if collided.
     return this.collisionStart(index);
   }
+
+  return false;
 }
 
 // Perform movement in a vector line towards a point.
@@ -19,16 +21,16 @@ function vectorPoint({ x = this.x, y = this.y }) {
   this.status.moving = true;
 
   // Set vector movement magnitude in x, y.
-  if (!this.validatePoint.left(x)) {
+  if (!this.validatePoint().left(x)) {
     this.dx = -this.speed;
   }
-  if (!this.validatePoint.right(x)) {
+  if (!this.validatePoint().right(x)) {
     this.dx = this.speed;
   }
-  if (!this.validatePoint.up(y)) {
+  if (!this.validatePoint().up(y)) {
     this.dy = -this.speed;
   }
-  if (!this.validatePoint.down(y)) {
+  if (!this.validatePoint().down(y)) {
     this.dy = this.speed;
   }
 
@@ -38,16 +40,16 @@ function vectorPoint({ x = this.x, y = this.y }) {
     // Timer delay is set to 1/fps^2.
     const timer = setInterval(() => {
       // Evaluate vector movement direction.
-      if (this.dx < 0 && this.validatePoint.left(x)) {
+      if (this.dx < 0 && this.validatePoint().left(x)) {
         this.dx = 0;
       }
-      if (this.dx > 0 && this.validatePoint.right(x)) {
+      if (this.dx > 0 && this.validatePoint().right(x)) {
         this.dx = 0;
       }
-      if (this.dy < 0 && this.validatePoint.up(y)) {
+      if (this.dy < 0 && this.validatePoint().up(y)) {
         this.dy = 0;
       }
-      if (this.dy > 0 && this.validatePoint.down(y)) {
+      if (this.dy > 0 && this.validatePoint().down(y)) {
         this.dy = 0;
       }
 

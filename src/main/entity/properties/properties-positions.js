@@ -7,11 +7,11 @@ const validation = require('../types/base/validation/validation');
 const positions = {
   canvas: {
     center: {
-      x: ({ width }) => {
-        return canvas.width * 0.5 - width * 0.5;
+      x: ({ width } = {}) => {
+        return canvas.width * 0.5 - (width || 0) * 0.5;
       },
-      y: ({ height }) => {
-        return canvas.height * 0.5 - height * 0.5;
+      y: ({ height } = {}) => {
+        return canvas.height * 0.5 - (height || 0) * 0.5;
       }
     },
     playerSpawn: {

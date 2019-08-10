@@ -12,10 +12,16 @@ Wave1.prototype = Object.create(Wave.prototype);
 
 /** @override **/
 Wave.prototype.createEntities = function() {
-  factory.ship.bowerbird({
-    x: properties.positions.canvas.center.x(properties.sizes.SHIP.SMALL.WIDTH),
-    y: properties.positions.canvas.center.y(properties.sizes.SHIP.SMALL.HEIGHT)
+  const bowerbird = factory.ship.bowerbird({
+    x: properties.positions.canvas.center.x(),
+    y: properties.positions.canvas.center.y()
   });
+  /* Const condor = factory.ship.condor({
+    x: properties.positions.canvas.center.x(),
+    y: properties.positions.canvas.center.y()
+  });
+
+  condor.patrol();*/
   /* This.waveEntities = [
     factory({
       x: canvas.width * 0.425,

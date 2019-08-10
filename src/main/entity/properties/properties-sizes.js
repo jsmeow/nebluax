@@ -66,14 +66,14 @@ const sizes = {
   },
   SHIP: {
     SMALL: {
-      WIDTH: canvas.pixel * 9,
-      HEIGHT: canvas.pixel * 9
-    }
-  },
-  BOSS: {
-    SMALL: {
-      WIDTH: canvas.pixel * 27,
-      HEIGHT: canvas.pixel * 18
+      WIDTH: canvas.pixel * 15,
+      HEIGHT: canvas.pixel * 15
+    },
+    BOSS: {
+      SMALL: {
+        WIDTH: canvas.pixel * 27,
+        HEIGHT: canvas.pixel * 18
+      }
     }
   }
 };

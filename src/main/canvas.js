@@ -11,24 +11,17 @@ const width = window
   .getComputedStyle(document.body)
   .getPropertyValue('width')
   .split('px')[0];
-const height =
-  window
-    .getComputedStyle(document.body)
-    .getPropertyValue('height')
-    .split('px')[0] - 25;
-
-// Set the <canvas> element application pixel size.
-const pixel = 6.667;
+const height = window
+  .getComputedStyle(document.body)
+  .getPropertyValue('height')
+  .split('px')[0];
 
 // Set the <canvas> element width, height to the <body> element width, height.
 canvas.width = width;
 canvas.height = height;
 
-// Set the <canvas> element aspect ratio, for reference.
-aspectRatio = {
-  width: canvas.width / 4,
-  height: canvas.height / 3
-};
+// Set the <canvas> element application pixel size.
+const pixel = canvas.width / 320;
 
 // Draw <canvas> element text.
 function drawText({ text, x, y, size, fillStyle = grey[50].light }) {
@@ -86,7 +79,6 @@ module.exports = {
   width,
   height,
   pixel,
-  aspectRatio,
   drawText,
   drawImage,
   drawImageRotated,

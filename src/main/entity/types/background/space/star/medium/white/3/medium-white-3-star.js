@@ -10,7 +10,7 @@ function MediumWhite3StarEntity() {
 
   /** @override **/
   this.x = Math.random() * canvas.width;
-  this.y = Math.random() * -canvas.height + canvas.height;
+  this.y = Math.random() * canvas.height;
 
   /** @override **/
   this.width = properties.sizes.BACKGROUND.SPACE.STAR.MEDIUM[3].WIDTH;

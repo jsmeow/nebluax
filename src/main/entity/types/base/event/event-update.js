@@ -24,7 +24,6 @@ function updateTimers(index) {
 
   // Update the projectile bullets timer.
   if (this.status.firing) {
-    console.log(this);
     this.bulletsFrame();
   }
 }
