@@ -42,7 +42,7 @@ function createWindow() {
   });
 
   // Open the developer tools console.
-  mainWindow.webContents.openDevTools();
+  // MainWindow.webContents.openDevTools();
 }
 
 /*
