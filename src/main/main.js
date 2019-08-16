@@ -1,8 +1,7 @@
 const loop = require('./loop');
 
-// Application logic entry point.
+// Application entry point.
 function run() {
-  // Begin the application loop.
   loop();
 }
 

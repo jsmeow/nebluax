@@ -1,4 +1,4 @@
-const factoryBackground = require('./factory-background');
+const factoryBackground = require('./background/background-factory');
 const factoryExplosion = require('./factory-explosion');
 const factoryProjectile = require('./factory-projectile');
 const factoryShip = require('./factory-ship');

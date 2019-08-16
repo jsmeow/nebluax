@@ -1,6 +1,6 @@
 const canvas = require('../../canvas');
 const factions = require('./properties-factions');
-const validation = require('../types/base/validation/validation');
+const validation = require('../event/validate/validate-entity-collision');
 
 // Entity position relative to places on the html5 canvas.
 // Used mostly as a utility for positioning entities quickly.

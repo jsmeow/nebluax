@@ -1,4 +1,4 @@
-const entities = require('../../entity/entities');
+const entities = require('../../entities');
 const life = require('./hud/life/life-hud');
 const shield = require('./hud/shield/shield-hud');
 const health = require('./hud/health/health-hud');
@@ -12,7 +12,7 @@ let level;
 function update() {
   // Create a new level.
   if (!level) {
-    level = new Level1();
+    // Level = new Level1();
   }
 
   // Iterate through the entities list.
@@ -21,13 +21,13 @@ function update() {
   });
 }
 
-function render(player) {
+function render(/* Player*/) {
   // Render the heads-up display.
-  life.render(player);
+  /*  Life.render(player);
   shield.render(player);
   health.render(player);
   bomb.render(player);
-  score.render(player);
+  score.render(player);*/
 
   // Iterate through the entities list.
   entities.forEach(entity => {

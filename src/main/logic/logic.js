@@ -4,22 +4,23 @@ const title = require('./title/title');
 const game = require('./game/game');
 const factory = require('../entity/factory/factory-entity');
 
-// The application user/player.
-const player = factory.ship.player();
-
 // The space background.
-// Will render regardless of application state.
-const space = factory.background.space();
+// Will update and render regardless of application state.
+const space = factory.background.space.space();
 
-// Send the player to the key handler to handle user key events.
-// Send the state to the key handler to handle state events.
+// The game/application player/user.
+// Const player = factory.ship.player();
+
 // Add keydown and keyup event listeners.
-keyHandler.addKeydownEventListener(player, state);
-keyHandler.addKeyupEventListener(player, state);
+// Send the player and state to the key handler to handle user key events.
+// KeyHandler.addKeydownEventListener(player, state);
+// KeyHandler.addKeyupEventListener(player, state);
 
-function logic({ step, delta }) {
+// Application logic while the loop is running.
+// The space entity will update and render regardless of application state.
+function logic() {
   // Update the application.
-  // Update the space background.
+
   space.update();
 
   // Update the title.
@@ -33,7 +34,7 @@ function logic({ step, delta }) {
   }
 
   // Render the application.
-  // Render the space background.
+
   space.render();
 
   // Render the title.
@@ -43,7 +44,7 @@ function logic({ step, delta }) {
 
   // Render the game.
   else if (state.current === state.states.GAME) {
-    game.render(player);
+    game.render(/* Player*/);
   }
 }
 
