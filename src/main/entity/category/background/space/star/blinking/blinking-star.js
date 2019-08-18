@@ -6,11 +6,11 @@ function BlinkingStar() {
   Star.call(this, {
     width: canvas.pixel,
     height: canvas.pixel,
-    dy: 1
+    dy: 1.5
   });
 
   /** @override **/
-  this.type = [...this.type, 'blinking'];
+  this.type = [...this.type, 'small', 'blinking'];
 
   // Render colors
   this.colors = ['red', 'blue', 'yellow'];

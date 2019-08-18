@@ -1,119 +1,94 @@
 const { fps } = require('../../../options');
 const canvas = require('../../../canvas');
-const properties = require('../../properties/properties-entity');
 const Entity = require('../../entity');
 
-// This entity has no physical presence in the game.
-// This entity cannot suffer from status effects.
-function ExplosionEntity({
+function Explosion({
   x,
   y,
   width,
   height,
   faction,
-  speed,
-  dx,
-  dy,
-  type,
-  status,
   points,
-  timers,
   imageSources,
-  creator
+  list
 }) {
   Entity.call(this, {
     x,
     y,
     width,
     height,
-    faction,
-    speed,
-    dx,
-    dy,
-    type,
-    status,
+    type: ['explosion'],
+    faction: faction || 'neutral',
     points,
-    timers,
-    imageSources,
-    creator
+    list
   });
 
   /** @override **/
-  this.width = width ? width : ExplosionEntity.WIDTH;
-  this.height = height ? height : ExplosionEntity.WIDTH;
+  this.status = {
+    ...this.status,
+    alive: true,
+    invincible: true
+  };
 
   /** @override **/
-  this.faction = faction || properties.factions.NONE;
+  this.points = {
+    ...this.points
+  };
 
+  // Preload the image source objects onto the image objects
+  // The image source objects are preloaded to buffer and optimize performance.
+  // Extending entity classes are expected to implement the image source
+  // Objects.
   /** @override **/
-  this.type = [
-    properties.types.EFFECT.ID,
-    properties.types.EFFECT.EXPLOSION.ID
-  ];
+  this.image = [...Array(imageSources.length)].map((_, index) => {
+    const image = new Image();
+    image.src = imageSources[index];
+    return image;
+  });
 
-  /** @override **/
+  // The image to render in the image list
+  let imageIndex = 0;
 
-  this.status.invincible = true;
-
-  // Explosion timer.
-  this.timer = {
+  // Animation timer
+  const animationTimer = {
     frame: 0,
-    delay: this.timers.status.damaged.delay
+    delay: fps * 0.5
   };
 
   /** @override **/
-  this.loadImage = function() {
-    if (this.timer.frame < this.timer.delay * 0.25) {
-      this.image.src = this.imageSources.explosions[0];
-    }
-    if (
-      this.timer.frame >= this.timer.delay * 0.25 &&
-      this.timer.frame < this.timer.delay * 0.5
-    ) {
-      this.image.src = this.imageSources.explosions[1];
-    }
-    if (
-      this.timer.frame >= this.timer.delay * 0.5 &&
-      this.timer.frame < this.timer.delay * 0.75
-    ) {
-      this.image.src = this.imageSources.explosions[2];
-    }
-    if (
-      this.timer.frame >= this.timer.delay * 0.75 &&
-      this.timer.frame < this.timer.delay
-    ) {
-      this.image.src = this.imageSources.explosions[3];
-    }
+  this.updateTimers = function() {
+    if (animationTimer.frame >= animationTimer.delay) {
+      animationTimer.frame = 0;
 
-    this.timer.frame = this.timer.frame + 1;
-  };
-
-  /** @override **/
-  this.updatePre = function() {
-    if (this.timer.frame > this.timer.delay) {
       this.status.alive = false;
+      this.status.dispose = true;
+    } else {
+      animationTimer.frame = animationTimer.frame + 1;
     }
   };
 
   /** @override **/
   this.render = function() {
-    this.loadImage();
+    if (imageIndex < this.image.length) {
+      canvas.drawImage({
+        image: this.image[imageIndex],
+        x: this.x,
+        y: this.y,
+        width: this.width,
+        height: this.height,
+        degrees: this.degrees
+      });
 
-    // Render a the basic default image.
-    canvas.drawImage({
-      image: this.image,
-      x: this.x,
-      y: this.y,
-      width: this.width,
-      height: this.height
-    });
+      if (
+        animationTimer.frame >= animationTimer.delay * 0.125 * imageIndex &&
+        animationTimer.frame < animationTimer.delay * 0.125 * (imageIndex + 1)
+      ) {
+        imageIndex += 1;
+      }
+    }
   };
 }
 
-ExplosionEntity.prototype = Object.create(Entity.prototype);
+Explosion.prototype = Object.create(Entity.prototype);
 
-// Size
-ExplosionEntity.WIDTH = properties.sizes.EXPLOSION.SMALL.WIDTH;
-ExplosionEntity.HEIGHT = properties.sizes.EXPLOSION.SMALL.HEIGHT;
-
-module.exports = ExplosionEntity;
+module.exports = Explosion;

@@ -1,12 +1,14 @@
-// The possible application states object.
+// The possible application states object
 const states = {
   TITLE: 0,
   GAME: 1,
   PAUSED: 2
 };
 
-// The initial application state.
+// The initial application state
 const current = states.GAME;
 
-module.exports.current = current;
-module.exports.states = states;
+module.exports = {
+  current,
+  states
+};

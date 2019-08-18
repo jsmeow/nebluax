@@ -1,6 +1,6 @@
 const moveToPoint = require('./move-to-point');
 
-// Perform movement in the x and y plane in a vector line path.
+// Perform movement in the x and y plane in a vector line path
 // !Warning! This is an async action.
 function moveInPath(path) {
   this.status.pathing = true;

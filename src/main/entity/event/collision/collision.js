@@ -1,15 +1,12 @@
-const entities = require('../../../entities');
 const validateEntityCollision = require('../validate/validate-entity-collision');
 const validateEntityCollisionEvent = require('../validate/validate-entity-collision-event');
 
 // Cycle through the entities list and perform an entity collision event action
 // If the event occurs.
 function collision(index) {
-  this.status.collided = false;
-
   // Cycle through the entities list and perform collision event action, if
   // Collision assertions hold.
-  entities.forEach((entity, _index) => {
+  this.list.forEach((entity, _index) => {
     // On collision, exchange attack damage and health points if applicable.
     // On collision, if the entity is explosive type, always set alive status to
     // False and skip the points exchange.
@@ -18,23 +15,25 @@ function collision(index) {
     // On collision, alive or dead status is always set after the the points
     // Exchange.
     if (
-      validateEntityCollisionEvent(entity, index, _index) &&
-      validateEntityCollision(entity)
+      validateEntityCollisionEvent(this, entity, index, _index) &&
+      validateEntityCollision(this, entity)
     ) {
-      if (this.type.includes('explosive')) {
-        this.status.invincible = false;
-        this.status.alive = false;
-        this.status.dispose = true;
-      } else if (!this.status.invincible) {
+      if (!this.status.invincible) {
         this.points.health = this.points.health - entity.points.attack;
+
+        if (entity.type.includes('bullet')) {
+          entity.status.alive = false;
+          entity.status.dispose = true;
+        }
       }
 
-      if (entity.type.includes('explosive')) {
-        entity.status.invincible = false;
-        entity.status.alive = false;
-        entity.status.dispose = true;
-      } else if (!entity.status.invincible) {
+      if (!entity.status.invincible) {
         entity.points.health = entity.points.health - this.points.attack;
+
+        if (this.type.includes('bullet')) {
+          this.status.alive = false;
+          this.status.dispose = true;
+        }
       }
 
       if (this.points.health <= 0) {
@@ -59,7 +58,13 @@ function collision(index) {
         entity.status.dispose = true;
       }
 
-      this.status.collided = true;
+      if (!this.status.collided) {
+        this.status.collided = true;
+      }
+
+      if (!entity.status.collided) {
+        entity.status.collided = true;
+      }
     }
   });
 }

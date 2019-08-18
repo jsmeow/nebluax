@@ -1,124 +1,149 @@
-const entities = require('../../../entities');
-const factory = require('../../factory/factory-entity');
-const properties = require('../../properties/properties-entity');
+const { fps } = require('../../../options');
 const Entity = require('../../entity');
 
-function ShipEntity({
+function Ship({
   x,
   y,
   width,
   height,
-  explosionAmount,
-  faction,
   speed,
   dx,
   dy,
-  type,
+  faction,
   status,
   points,
-  timers,
   imageSources,
-  creator
+  degrees,
+  factory,
+  list
 }) {
   Entity.call(this, {
     x,
     y,
     width,
     height,
-    faction,
     speed,
     dx,
     dy,
-    type,
+    type: ['ship'],
+    faction,
     status,
     points,
-    timers,
-    imageSources,
-    creator
+    degrees,
+    factory,
+    list
   });
 
   /** @override **/
-  this.width = width || ShipEntity.WIDTH;
-  this.height = height || ShipEntity.HEIGHT;
-
-  /** @override **/
-  this.faction = properties.factions.ENEMY;
-
-  /** @override **/
-  this.status.firing = true;
-
-  /** @override **/
-  this.points.health = 3;
-  this.points.attack = 1;
-
-  // Amount of explosions to create when the ship entity takes damage.
-  this.explosionAmount = explosionAmount || ShipEntity.EXPLOSION_AMOUNT;
-
-  /** @override **/
-  this.type = [properties.types.SHIP.ID];
-
-  /** @override **/
-  this.bombsCreate = function() {
-    factory.projectile.standardBomb({ creator: this });
+  this.status = {
+    ...this.status,
+    alive: true,
+    firing: true,
+    invincible: false,
+    damaged: false,
+    shielded: false,
+    powered: false,
+    roaming: false,
+    prowling: false,
+    patrolling: false
   };
 
   /** @override **/
-  this.bulletsCreate = function() {
-    factory.projectile.standardBullet({ creator: this });
+  this.points = {
+    health: 1,
+    attack: 0,
+    score: 0,
+    value: 0
   };
 
-  /** @override **/
-  this.minesCreate = function() {
-    factory.projectile.standardMine({ creator: this });
+  // Bullet fire/creation timer
+  this.bulletTimer = {
+    frame: 0,
+    delay: fps
   };
 
-  /** @override **/
-  this.collisionPost = function(hasCollisionOccurred) {
-    if (hasCollisionOccurred && !this.status.damaged) {
-      this.damageStart();
+  // Bullet creation method.
+  // Creates bullet(s) entities at an interval.
+  // Extending ship entity classes are expected to implement this method if
+  // They are to fire bullets.
+  this.createBullets = function() {};
 
-      if (!this.status.exploding) {
-        this.status.exploding = true;
+  // Bomb creation method.
+  // Creates bomb(s) entities.
+  // Extending ship entity classes are expected to implement this method if
+  // They are to fire bullets.
+  this.createBombs = function() {};
 
-        // Create detonation explosions.
-        this.explosionsStart({
-          creator: this,
-          amount: this.explosionAmount - 1
-        }).then(() => {
-          this.status.exploding = false;
-        });
-      }
+  // Mine creation method.
+  // Creates mine(s) entities.
+  // Extending ship entity classes are expected to implement this method if
+  // They are to fire bullets.
+  this.createMines = function() {};
+
+  // Update the bullet timer
+  // Separate method implemented rather than including it in the updateTimers
+  // Method because some ship entity classes may override the updateTimers
+  // Method and and may need to create/fire bullets.
+  this.updateBulletTimer = function() {
+    if (
+      this.status.firing &&
+      this.bulletTimer.frame >= this.bulletTimer.delay
+    ) {
+      this.createBullets();
+      this.bulletTimer.frame = 0;
+    } else {
+      this.bulletTimer.frame = this.bulletTimer.frame + 1;
     }
   };
 
   /** @override **/
-  this.disposeStart = function(index) {
-    if (!this.status.exploding) {
-      this.status.exploding = true;
+  this.updateTimers = function() {
+    this.updateBulletTimer();
+  };
 
-      // Create detonation explosions.
-      this.explosionsStart({
-        creator: this,
-        amount: this.explosionAmount
-      }).then(() => {
-        this.status.disposing = true;
+  /** @override **/
+  this.postUpdate = function() {
+    if (this.status.collided) {
+      factory.explosion.destroyExplosion({
+        x: this.x,
+        y: this.y,
+        faction: this.faction
       });
     }
+  };
 
-    // Assert and perform event action.
-    if (this.status.disposing) {
-      this.dispose(index);
+  /** @override **/
+  this.loadImage = function() {
+    // This entity can use multiple images sources
+    // On render, the entity will be conditionally assigned one of the image
+    // Sources depending on the entity status/event.
+
+    if (this.faction === 'allied') {
+      this.image.src = imageSources.allied;
+    }
+
+    if (this.faction === 'enemy') {
+      this.image.src = imageSources.enemy;
+    }
+
+    if (this.faction === 'neutral') {
+      this.image.src = imageSources.neutral;
+    }
+
+    if (this.status.damaged) {
+      this.image.src = imageSources.damaged;
+    }
+
+    if (this.status.shielded) {
+      this.image.src = imageSources.shielded;
+    }
+
+    if (this.status.powered) {
+      this.image.src = imageSources.powered;
     }
   };
 }
 
-ShipEntity.prototype = Object.create(Entity.prototype);
+Ship.prototype = Object.create(Entity.prototype);
 
-// Size
-ShipEntity.WIDTH = properties.sizes.SHIP.SMALL.WIDTH;
-ShipEntity.HEIGHT = properties.sizes.SHIP.SMALL.HEIGHT;
-
-// Number of explosions to create.
-ShipEntity.EXPLOSION_AMOUNT = 3;
-
-module.exports = ShipEntity;
+module.exports = Ship;

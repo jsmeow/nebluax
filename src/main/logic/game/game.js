@@ -1,36 +1,44 @@
-const entities = require('../../entities');
-const life = require('./hud/life/life-hud');
-const shield = require('./hud/shield/shield-hud');
-const health = require('./hud/health/health-hud');
-const bomb = require('./hud/bomb/bomb-hud');
-const score = require('./hud/score/score-hud');
-const Level1 = require('../../level/level-1/level1');
+const { factory, list } = require('../../entities');
 
-// The current level.
+// The application/game life hud
+const lifeHud = factory.hud.lifeHud();
+
+// The application/game shield hud
+const shieldHud = factory.hud.shieldHud();
+
+// The application/game health hud
+const healthHud = factory.hud.healthHud();
+
+// The application/game bomb hud
+const bombHud = factory.hud.bombHud();
+
+// The application/game score hud
+const scoreHud = factory.hud.scoreHud();
+
+// The current level
 let level;
 
 function update() {
-  // Create a new level.
+  // Create a new level
   if (!level) {
     // Level = new Level1();
   }
 
-  // Iterate through the entities list.
-  entities.forEach((entity, index) => {
+  // Iterate through the entities list
+  list.forEach((entity, index) => {
     entity.update(index);
   });
 }
 
-function render(/* Player*/) {
-  // Render the heads-up display.
-  /*  Life.render(player);
-  shield.render(player);
-  health.render(player);
-  bomb.render(player);
-  score.render(player);*/
+function render() {
+  lifeHud.render();
+  shieldHud.render();
+  healthHud.render();
+  bombHud.render();
+  scoreHud.render();
 
-  // Iterate through the entities list.
-  entities.forEach(entity => {
+  // Iterate through the entities list
+  list.forEach(entity => {
     entity.render();
   });
 }

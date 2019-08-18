@@ -1,23 +1,23 @@
 const { fps } = require('../../../options');
 const validatePointCollision = require('../validate/validate-point-collision');
 
-// Perform movement in a vector line towards a point.
+// Perform movement in a vector line towards a point
 // !Warning! This is an async action.
 function moveToPoint({ x = this.x, y = this.y }) {
   this.status.moving = true;
 
   // Set vector movement magnitude in x, y.
   if (!validatePointCollision().left(x)) {
-    this.dx = -this.speed;
+    this.dx = -1;
   }
   if (!validatePointCollision().right(x)) {
-    this.dx = this.speed;
+    this.dx = 1;
   }
   if (!validatePointCollision().up(y)) {
-    this.dy = -this.speed;
+    this.dy = -1;
   }
   if (!validatePointCollision().down(y)) {
-    this.dy = this.speed;
+    this.dy = 1;
   }
 
   // Perform movement in the x and y plane towards point.

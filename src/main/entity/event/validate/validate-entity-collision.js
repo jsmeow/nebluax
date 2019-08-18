@@ -1,10 +1,10 @@
 // Returns an entity collision assertion.
-function validateEntityCollision(entity) {
+function validateEntityCollision(entity, _entity) {
   return (
-    this.x <= entity.x + entity.width &&
-    this.x + this.width >= entity.x &&
-    this.y <= entity.y + entity.height &&
-    this.y + this.height >= entity.y
+    entity.x <= _entity.x + _entity.width &&
+    entity.x + entity.width >= _entity.x &&
+    entity.y <= _entity.y + _entity.height &&
+    entity.y + entity.height >= _entity.y
   );
 }
 

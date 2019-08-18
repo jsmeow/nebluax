@@ -1,131 +1,112 @@
+const { list } = require('./entities');
+const state = require('./state');
 const keyCodes = require('../static/key-codes/key-event-codes');
 
-// On keydown event.
-function onKeydown(player, state, event) {
-  // Key actions
+// The game/application player/user entity
+const player = list[0];
+
+// On keydown event actions
+function onKeydown(event) {
   const actions = {
-    // Enter key
     [keyCodes.ENTER]() {
-      // Start the game if state = title.
       if (state.current === state.states.TITLE) {
         state.current = state.states.GAME;
       }
     },
-    // A key
     [keyCodes.KEYA]() {
-      player.dx = -player.d;
-      player.ddx.left = true;
+      player.dx = -1;
+      player.moveVectorDirection.left = true;
     },
-    // D key
     [keyCodes.KEYD]() {
-      player.dx = player.d;
-      player.ddx.right = true;
+      player.dx = 1;
+      player.moveVectorDirection.right = true;
     },
-    // W key
     [keyCodes.KEYW]() {
-      player.dy = -player.d;
-      player.ddy.up = true;
+      player.dy = -1;
+      player.moveVectorDirection.up = true;
     },
-    // S key
     [keyCodes.KEYS]() {
-      player.dy = player.d;
-      player.ddy.down = true;
+      player.dy = 1;
+      player.moveVectorDirection.down = true;
     },
-    // Spacebar key
     [keyCodes.SPACE]() {
-      player.bombsCreate();
+      player.createBombs();
     },
-    // Q key
-    [keyCodes.KEYQ]() {
+    /* [keyCodes.KEYQ]() {
       player.shieldStart();
-    },
-    // E key
+    }*/
     [keyCodes.KEYE]() {
-      player.minesCreate();
+      player.createMines();
     }
   };
 
-  // If key corresponds to an action, do key event action.
+  // If key corresponds to an action, perform the keydown event action.
   if (Object.keys(actions).includes(event.keyCode.toString())) {
     actions[event.keyCode]();
   }
 }
 
-// On keyup event.
-function onKeyup(player, state, event) {
-  // Key actions
+// On keyup event actions
+function onKeyup(event) {
   const actions = {
-    // A key
     [keyCodes.KEYA]() {
-      if (player.ddx.right) {
-        player.dx = player.d;
+      if (player.moveVectorDirection.right) {
+        player.dx = 1;
       } else {
         player.dx = 0;
       }
-      player.ddx.left = false;
+      player.moveVectorDirection.left = false;
     },
-    // D key
     [keyCodes.KEYD]() {
-      if (player.ddx.left) {
-        player.dx = -player.d;
+      if (player.moveVectorDirection.left) {
+        player.dx = -1;
       } else {
         player.dx = 0;
       }
-      player.ddx.right = false;
+      player.moveVectorDirection.right = false;
     },
-    // W key
     [keyCodes.KEYW]() {
-      if (player.ddy.down) {
-        player.dy = player.d;
+      if (player.moveVectorDirection.down) {
+        player.dy = 1;
       } else {
         player.dy = 0;
       }
-      player.ddy.up = false;
+      player.moveVectorDirection.up = false;
     },
-    // S key
     [keyCodes.KEYS]() {
-      if (player.ddy.up) {
-        player.dy = -player.d;
+      if (player.moveVectorDirection.up) {
+        player.dy = -1;
       } else {
         player.dy = 0;
       }
-      player.ddy.down = false;
+      player.moveVectorDirection.down = false;
     }
   };
 
-  // If key corresponds to an action, do key event action.
+  // If key corresponds to an action, perform the keyup event action.
   if (Object.keys(actions).includes(event.keyCode.toString())) {
     actions[event.keyCode]();
   }
 }
 
-// Add keydown event listener.
-function addKeydownEventListener(player, state) {
-  document.body.addEventListener(
-    'keydown',
-    onKeydown.bind(this, player, state)
-  );
+// Add keydown event listener
+function addKeydownEventListener() {
+  document.body.addEventListener('keydown', onKeydown.bind(this));
 }
 
-// Add keyup event listener.
-function addKeyupEventListener(player, state) {
-  document.body.addEventListener('keyup', onKeyup.bind(this, player, state));
+// Add keyup event listener
+function addKeyupEventListener() {
+  document.body.addEventListener('keyup', onKeyup.bind(this));
 }
 
-// Remove keydown event listener.
-function removeKeydownEventListener(player, state) {
-  document.body.removeEventListener(
-    'keydown',
-    this.onKeydown.bind(this, player, state)
-  );
+// Remove keydown event listener
+function removeKeydownEventListener() {
+  document.body.removeEventListener('keydown', onKeydown.bind(this));
 }
 
-// Remove keyup event listener.
-function removeKeyupEventListener(player, state) {
-  document.body.removeEventListener(
-    'keyup',
-    this.onKeyup.bind(this, player, state)
-  );
+// Remove keyup event listener
+function removeKeyupEventListener() {
+  document.body.removeEventListener('keyup', onKeyup.bind(this));
 }
 
 module.exports = {
