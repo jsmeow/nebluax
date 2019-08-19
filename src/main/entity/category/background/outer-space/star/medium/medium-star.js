@@ -12,7 +12,7 @@ function MediumStar({ x, y, width, height, imageSource }) {
     maxDy: 0.8
   });
 
-  this.type = [...this.type, 'medium'];
+  this.props.type = [...this.props.type, 'medium'];
 
   /** @override **/
   this.animationTimer.delay = fps;

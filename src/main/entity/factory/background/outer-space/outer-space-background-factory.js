@@ -3,7 +3,7 @@ const OuterSpaceBackgroundStarFactory = require('./star/outer-space-background-s
 
 function OuterSpaceBackgroundFactory(factory, list) {
   this.space = new OuterSpaceBackgroundSpaceFactory(factory, list);
-  this.star = new OuterSpaceBackgroundStarFactory();
+  this.star = new OuterSpaceBackgroundStarFactory(factory, list);
 }
 
 module.exports = OuterSpaceBackgroundFactory;

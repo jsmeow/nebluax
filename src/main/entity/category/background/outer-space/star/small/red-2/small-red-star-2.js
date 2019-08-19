@@ -12,7 +12,7 @@ function SmallRedStar2({ x, y, width, height }) {
   });
 
   /** @override **/
-  this.type = [...this.type, 'red'];
+  this.props.type = [...this.props.type, 'red'];
 }
 
 SmallRedStar2.prototype = Object.create(SmallStar.prototype);

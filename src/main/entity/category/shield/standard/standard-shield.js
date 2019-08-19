@@ -7,7 +7,7 @@ function StandardShield({ creator, list }) {
   });
 
   /** @override **/
-  this.type = [...this.type, 'standard'];
+  this.props.type = [...this.props.type, 'standard'];
 }
 
 StandardShield.prototype = Object.create(Shield.prototype);

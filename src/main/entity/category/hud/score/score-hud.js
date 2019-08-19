@@ -16,16 +16,16 @@ function ScoreHud(list) {
   this.render = function() {
     canvas.drawText({
       text: 'Score',
-      x: this.x,
-      y: this.y,
+      x: this.pos.x,
+      y: this.pos.y,
       size: 25,
       fillStyle: '#ffffff'
     });
 
     canvas.drawText({
       text: `${player.points.score}`,
-      x: this.x + canvas.pixel * 13,
-      y: this.y + canvas.pixel * 10,
+      x: this.pos.x + canvas.pixel * 13,
+      y: this.pos.y + canvas.pixel * 10,
       size: 25,
       fillStyle: '#ffffff'
     });

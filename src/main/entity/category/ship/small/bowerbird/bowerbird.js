@@ -30,7 +30,7 @@ function Bowerbird({ degrees, faction, factory, list }) {
   });
 
   /** @override **/
-  this.type = [...this.type, 'bowerbird'];
+  this.props.type = [...this.props.type, 'bowerbird'];
 
   /** @override **/
   this.points = {
@@ -43,8 +43,8 @@ function Bowerbird({ degrees, faction, factory, list }) {
   /** @override **/
   this.createBullets = function() {
     factory.bullet.standardBullet({
-      x: this.x + this.width * 0.5 - StandardBullet.width * 0.5,
-      y: this.y + this.height,
+      x: this.pos.x + this.dims.width * 0.5 - StandardBullet.width * 0.5,
+      y: this.pos.y + this.dims.height,
       degrees: Math.PI,
       creator: this
     });

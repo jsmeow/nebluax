@@ -1,3 +1,4 @@
+const { fps } = require('../../../../../../../options');
 const SmallStar = require('../small-star');
 const imageSource1 =
   './main/entity/category/background/outer-space/star/small/multicolor-blinking-1/assets/images/image-source-1.png';
@@ -6,17 +7,33 @@ const imageSource2 =
 const imageSource3 =
   './main/entity/category/background/outer-space/star/small/multicolor-blinking-1/assets/images/image-source-3.png';
 
-function SmallBlinkingMulticolorStar1({ x, y, width, height }) {
+function SmallBlinkingMulticolorStar1({
+  pos,
+  dims,
+  vector,
+  props,
+  status,
+  points,
+  image,
+  meta
+}) {
   SmallStar.call(this, {
-    x,
-    y,
-    width,
-    height,
-    imageSource: [imageSource1, imageSource2, imageSource3, imageSource2]
+    pos,
+    dims,
+    vector,
+    props: {
+      ...props,
+      type: ['multicolor-blinking']
+    },
+    status,
+    points,
+    image: {
+      ...image,
+      src: [imageSource1, imageSource2, imageSource3],
+      delay: fps * 0.2
+    },
+    meta
   });
-
-  /** @override **/
-  this.type = [...this.type, 'multicolor', 'blinking'];
 }
 
 SmallBlinkingMulticolorStar1.prototype = Object.create(SmallStar.prototype);

@@ -55,8 +55,8 @@ function Explosive({
 
     if (!this.status.alive && this.status.dispose) {
       this.factory.explosion.destroyExplosion({
-        x: this.x + this.width - DestroyExplosion.width * 5 * 0.5,
-        y: this.y - this.height - DestroyExplosion.height * 5 * 0.5,
+        x: this.pos.x + this.dims.width - DestroyExplosion.width * 5 * 0.5,
+        y: this.pos.y - this.dims.height - DestroyExplosion.height * 5 * 0.5,
         width: DestroyExplosion.width * 5,
         height: DestroyExplosion.height * 5,
         faction: this.creator.faction,

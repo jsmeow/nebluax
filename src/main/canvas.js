@@ -5,14 +5,20 @@ const canvas = document.getElementById('canvas');
 const context = canvas.getContext('2d');
 
 // Get the width, height to the document <body> element
-const width = window
-  .getComputedStyle(document.body)
-  .getPropertyValue('width')
-  .split('px')[0];
-const height = window
-  .getComputedStyle(document.body)
-  .getPropertyValue('height')
-  .split('px')[0];
+
+const width = Number(
+  window
+    .getComputedStyle(document.body)
+    .getPropertyValue('width')
+    .split('px')[0]
+);
+
+const height = Number(
+  window
+    .getComputedStyle(document.body)
+    .getPropertyValue('height')
+    .split('px')[0]
+);
 
 // Set the <canvas> element width, height to the <body> element width, height
 canvas.width = width;
@@ -29,11 +35,11 @@ function drawText({ text, x, y, size, fillStyle = '#ffffff' }) {
 }
 
 // Draw a <canvas> element image or specify degrees to draw rotated image
-function drawImage({ image, x, y, width, height, degrees }) {
-  if (degrees && typeof degrees === 'number') {
+function drawImage({ image, x, y, width, height, deg }) {
+  if (deg && typeof deg === 'number') {
     context.save();
     context.translate(x + width / 2, y + height / 2);
-    context.rotate((degrees * Math.PI) / 180.0);
+    context.rotate((deg * Math.PI) / 180.0);
     context.translate(-x - width / 2, -y - height / 2);
     context.drawImage(image, x, y, width, height);
     context.restore();

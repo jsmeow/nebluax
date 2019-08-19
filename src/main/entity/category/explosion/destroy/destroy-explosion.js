@@ -36,7 +36,7 @@ function DestroyExplosion({ x, y, width, height, faction, points, list }) {
   });
 
   /** @override **/
-  this.type = [...this.type, 'destroy'];
+  this.props.type = [...this.props.type, 'destroy'];
 }
 
 DestroyExplosion.prototype = Object.create(Explosion.prototype);

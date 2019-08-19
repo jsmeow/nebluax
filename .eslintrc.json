@@ -52,6 +52,7 @@
       "allowClassStart": false,
       "allowClassEnd": false
     }],
+    "capitalized-comments": "off",
     "no-nested-ternary": "off",
     "no-invalid-this": "off",
     "operator-assignment": "off",

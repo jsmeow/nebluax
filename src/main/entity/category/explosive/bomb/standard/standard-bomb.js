@@ -61,7 +61,7 @@ function StandardBomb({
     list
   });
 
-  this.type = [...this.type, 'standard'];
+  this.props.type = [...this.props.type, 'standard'];
 }
 
 StandardBomb.prototype = Object.create(Bomb.prototype);

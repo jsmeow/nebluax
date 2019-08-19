@@ -27,8 +27,8 @@ function Shield({ creator, list }) {
 
   /** @override **/
   this.updatePosition = function() {
-    this.x = creator.x - canvas.pixel * 3;
-    this.y = creator.y - canvas.pixel * 3;
+    this.pos.x = creator.x - canvas.pixel * 3;
+    this.pos.y = creator.y - canvas.pixel * 3;
   };
 }
 

@@ -16,7 +16,7 @@ function SmallBlinkingRedStar1({ x, y, width, height }) {
   });
 
   /** @override **/
-  this.type = [...this.type, 'red', 'blinking'];
+  this.props.type = [...this.props.type, 'red', 'blinking'];
 }
 
 SmallBlinkingRedStar1.prototype = Object.create(SmallStar.prototype);

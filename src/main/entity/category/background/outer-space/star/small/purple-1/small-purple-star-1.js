@@ -2,17 +2,32 @@ const SmallStar = require('../small-star');
 const imageSource =
   './main/entity/category/background/outer-space/star/small/purple-1/assets/images/image-source.png';
 
-function SmallPurpleStar1({ x, y, width, height }) {
+function SmallPurpleStar1({
+  pos,
+  dims,
+  vector,
+  props,
+  status,
+  points,
+  image,
+  meta
+}) {
   SmallStar.call(this, {
-    x,
-    y,
-    width,
-    height,
-    imageSource
+    pos,
+    dims,
+    vector,
+    props: {
+      ...props,
+      type: ['purple']
+    },
+    status,
+    points,
+    image: {
+      ...image,
+      src: imageSource
+    },
+    meta
   });
-
-  /** @override **/
-  this.type = [...this.type, 'purple'];
 }
 
 SmallPurpleStar1.prototype = Object.create(SmallStar.prototype);

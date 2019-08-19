@@ -2,8 +2,8 @@
 // Can be overridden by the extending entity for a different roaming movement.
 function moveRoam() {
   // Save reference of the entity position.
-  const x = this.x;
-  const y = this.y;
+  const x = this.pos.x;
+  const y = this.pos.y;
 
   return this.vectorPoint({
     x: x - 100,

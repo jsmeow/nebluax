@@ -16,7 +16,7 @@ function LargeWideBlinkingWhiteStar1({ x, y, width, height }) {
   });
 
   /** @override **/
-  this.type = [...this.type, 'white'];
+  this.props.type = [...this.props.type, 'white'];
 }
 
 LargeWideBlinkingWhiteStar1.prototype = Object.create(LargeStar.prototype);

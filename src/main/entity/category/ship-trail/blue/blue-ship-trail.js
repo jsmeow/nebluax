@@ -18,7 +18,7 @@ function BlueShipTrail({ degrees, creator, list, getX, getY }) {
   });
 
   /** @override **/
-  this.type = [...this.type, 'blue'];
+  this.props.type = [...this.props.type, 'blue'];
 }
 
 BlueShipTrail.prototype = Object.create(ShipTrail.prototype);

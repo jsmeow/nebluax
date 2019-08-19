@@ -1,8 +1,7 @@
-// Perform movement in a vector direction with magnitude dx, dy multiplied by
-// The entity speed.
+// Perform movement in a vector directions dx, dy with vector magnitude speed
 function move() {
-  this.x = this.x + this.speed * this.dx;
-  this.y = this.y + this.speed * this.dy;
+  this.pos.x = this.pos.x + this.vector.dx * this.vector.speed;
+  this.pos.y = this.pos.y + this.vector.dy * this.vector.speed;
 }
 
 module.exports = move;

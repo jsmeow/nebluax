@@ -18,81 +18,252 @@ const SmallWhiteStar4 = require('../../../../../../entity/category/background/ou
 const SmallWhiteStar5 = require('../../../../../../entity/category/background/outer-space/star/small/white-5/small-white-star-5');
 const SmallBlinkingWhiteStar1 = require('../../../../../../entity/category/background/outer-space/star/small/white-blinking-1/small-blinking-white-star-1');
 
-function OuterSpaceBackgroundSmallStarFactory() {
+function OuterSpaceBackgroundSmallStarFactory(factory, list) {
   this.smallBlinkingMulticolorStar1 = function(args) {
-    return new SmallBlinkingMulticolorStar1({ ...args });
+    const entity = new SmallBlinkingMulticolorStar1({
+      ...args,
+      meta: {
+        ...(args && args.meta ? args.meta : {}),
+        factory,
+        list
+      }
+    });
+    list[0].push(entity);
+    return entity;
   };
 
   this.smallPurpleStar1 = function(args) {
-    return new SmallPurpleStar1({ ...args });
+    const entity = new SmallPurpleStar1({
+      ...args,
+      meta: {
+        ...(args && args.meta ? args.meta : {}),
+        factory,
+        list
+      }
+    });
+    list[0].push(entity);
+    return entity;
   };
 
   this.smallPurpleStar2 = function(args) {
-    return new SmallPurpleStar2({ ...args });
+    const entity = new SmallPurpleStar2({
+      ...args,
+      meta: {
+        ...(args && args.meta ? args.meta : {}),
+        factory,
+        list
+      }
+    });
+    list[0].push(entity);
+    return entity;
   };
 
   this.smallPurpleStar3 = function(args) {
-    return new SmallPurpleStar3({ ...args });
+    const entity = new SmallPurpleStar3({
+      ...args,
+      meta: {
+        ...(args && args.meta ? args.meta : {}),
+        factory,
+        list
+      }
+    });
+    list[0].push(entity);
+    return entity;
   };
 
   this.smallPurpleStar4 = function(args) {
-    return new SmallPurpleStar4({ ...args });
+    const entity = new SmallPurpleStar4({
+      ...args,
+      meta: {
+        ...(args && args.meta ? args.meta : {}),
+        factory,
+        list
+      }
+    });
+    list[0].push(entity);
+    return entity;
   };
 
   this.smallPurpleStar5 = function(args) {
-    return new SmallPurpleStar5({ ...args });
+    const entity = new SmallPurpleStar5({
+      ...args,
+      meta: {
+        ...(args && args.meta ? args.meta : {}),
+        factory,
+        list
+      }
+    });
+    list[0].push(entity);
+    return entity;
   };
 
   this.smallBlinkingPurpleStar1 = function(args) {
-    return new SmallBlinkingPurpleStar1({ ...args });
+    const entity = new SmallBlinkingPurpleStar1({
+      ...args,
+      meta: {
+        ...(args && args.meta ? args.meta : {}),
+        factory,
+        list
+      }
+    });
+    list[0].push(entity);
+    return entity;
   };
 
   this.smallRedStar1 = function(args) {
-    return new SmallRedStar1({ ...args });
+    const entity = new SmallRedStar1({
+      ...args,
+      meta: {
+        ...(args && args.meta ? args.meta : {}),
+        factory,
+        list
+      }
+    });
+    list[0].push(entity);
+    return entity;
   };
 
   this.smallRedStar2 = function(args) {
-    return new SmallRedStar2({ ...args });
+    const entity = new SmallRedStar2({
+      ...args,
+      meta: {
+        ...(args && args.meta ? args.meta : {}),
+        factory,
+        list
+      }
+    });
+    list[0].push(entity);
+    return entity;
   };
 
   this.smallRedStar3 = function(args) {
-    return new SmallRedStar3({ ...args });
+    const entity = new SmallRedStar3({
+      ...args,
+      meta: {
+        ...(args && args.meta ? args.meta : {}),
+        factory,
+        list
+      }
+    });
+    list[0].push(entity);
+    return entity;
   };
 
   this.smallRedStar4 = function(args) {
-    return new SmallRedStar4({ ...args });
+    const entity = new SmallRedStar4({
+      ...args,
+      meta: {
+        ...(args && args.meta ? args.meta : {}),
+        factory,
+        list
+      }
+    });
+    list[0].push(entity);
+    return entity;
   };
 
   this.smallRedStar5 = function(args) {
-    return new SmallRedStar5({ ...args });
+    const entity = new SmallRedStar5({
+      ...args,
+      meta: {
+        ...(args && args.meta ? args.meta : {}),
+        factory,
+        list
+      }
+    });
+    list[0].push(entity);
+    return entity;
   };
 
   this.smallBlinkingRedStar1 = function(args) {
-    return new SmallBlinkingRedStar1({ ...args });
+    const entity = new SmallBlinkingRedStar1({
+      ...args,
+      meta: {
+        ...(args && args.meta ? args.meta : {}),
+        factory,
+        list
+      }
+    });
+    list[0].push(entity);
+    return entity;
   };
 
   this.smallWhiteStar1 = function(args) {
-    return new SmallWhiteStar1({ ...args });
+    const entity = new SmallWhiteStar1({
+      ...args,
+      meta: {
+        ...(args && args.meta ? args.meta : {}),
+        factory,
+        list
+      }
+    });
+    list[0].push(entity);
+    return entity;
   };
 
   this.smallWhiteStar2 = function(args) {
-    return new SmallWhiteStar2({ ...args });
+    const entity = new SmallWhiteStar2({
+      ...args,
+      meta: {
+        ...(args && args.meta ? args.meta : {}),
+        factory,
+        list
+      }
+    });
+    list[0].push(entity);
+    return entity;
   };
 
   this.smallWhiteStar3 = function(args) {
-    return new SmallWhiteStar3({ ...args });
+    const entity = new SmallWhiteStar3({
+      ...args,
+      meta: {
+        ...(args && args.meta ? args.meta : {}),
+        factory,
+        list
+      }
+    });
+    list[0].push(entity);
+    return entity;
   };
 
   this.smallWhiteStar4 = function(args) {
-    return new SmallWhiteStar4({ ...args });
+    const entity = new SmallWhiteStar4({
+      ...args,
+      meta: {
+        ...(args && args.meta ? args.meta : {}),
+        factory,
+        list
+      }
+    });
+    list[0].push(entity);
+    return entity;
   };
 
   this.smallWhiteStar5 = function(args) {
-    return new SmallWhiteStar5({ ...args });
+    const entity = new SmallWhiteStar5({
+      ...args,
+      meta: {
+        ...(args && args.meta ? args.meta : {}),
+        factory,
+        list
+      }
+    });
+    list[0].push(entity);
+    return entity;
   };
 
   this.smallBlinkingWhiteStar1 = function(args) {
-    return new SmallBlinkingWhiteStar1({ ...args });
+    const entity = new SmallBlinkingWhiteStar1({
+      ...args,
+      meta: {
+        ...(args && args.meta ? args.meta : {}),
+        factory,
+        list
+      }
+    });
+    list[0].push(entity);
+    return entity;
   };
 }
 

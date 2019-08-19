@@ -2,16 +2,44 @@ const MediumBlinkingPurpleStar1 = require('../../../../../../entity/category/bac
 const MediumBlinkingRedStar1 = require('../../../../../../entity/category/background/outer-space/star/medium/red-blinking-1/medium-blinking-red-star-1');
 const MediumBlinkingWhiteStar1 = require('../../../../../../entity/category/background/outer-space/star/medium/white-blinking-1/medium-blinking-white-star-1');
 
-function OuterSpaceBackgroundMediumStarFactory() {
+function OuterSpaceBackgroundMediumStarFactory(factory, list) {
   this.mediumBlinkingPurpleStar1 = function(args) {
-    return new MediumBlinkingPurpleStar1({ ...args });
+    const entity = new MediumBlinkingPurpleStar1({
+      ...args,
+      meta: {
+        ...(args && args.meta ? args.meta : {}),
+        factory,
+        list
+      }
+    });
+    list[0].push(entity);
+    return entity;
   };
 
   this.mediumBlinkingRedStar1 = function(args) {
-    return new MediumBlinkingRedStar1({ ...args });
+    const entity = new MediumBlinkingRedStar1({
+      ...args,
+      meta: {
+        ...(args && args.meta ? args.meta : {}),
+        factory,
+        list
+      }
+    });
+    list[0].push(entity);
+    return entity;
   };
+
   this.mediumBlinkingWhiteStar1 = function(args) {
-    return new MediumBlinkingWhiteStar1({ ...args });
+    const entity = new MediumBlinkingWhiteStar1({
+      ...args,
+      meta: {
+        ...(args && args.meta ? args.meta : {}),
+        factory,
+        list
+      }
+    });
+    list[0].push(entity);
+    return entity;
   };
 }
 

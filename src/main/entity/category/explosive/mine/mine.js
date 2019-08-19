@@ -33,14 +33,14 @@ function Mine({
   });
 
   /** @override **/
-  this.type = [...this.type, 'mine'];
+  this.props.type = [...this.props.type, 'mine'];
 
   /** @override **/
   this.animationTimer.delay = fps * 0.5;
 
   // Decrement vector movement acceleration timer
   this.accelerationTimer = {
-    initialSpeed: this.dy,
+    initialSpeed: this.vector.dy,
     step: 0,
     stepSize: 0.02,
     update: true
@@ -54,8 +54,8 @@ function Mine({
       Math.abs(this.accelerationTimer.initialSpeed)
     ) {
       this.speed = 0;
-      this.dy = 0;
-      this.dy = 0;
+      this.vector.dy = 0;
+      this.vector.dy = 0;
       this.accelerationTimer.frame = 0;
       this.accelerationTimer.step = 0;
       this.accelerationTimer.update = false;
@@ -70,10 +70,10 @@ function Mine({
       this.accelerationTimer.step +
       this.accelerationTimer.initialSpeed * this.accelerationTimer.stepSize;
 
-    if (this.dy > 0) {
-      this.dy = this.dy - this.accelerationTimer.stepSize;
-    } else if (this.dy < 0) {
-      this.dy = this.dy + this.accelerationTimer.stepSize;
+    if (this.vector.dy > 0) {
+      this.vector.dy = this.vector.dy - this.accelerationTimer.stepSize;
+    } else if (this.vector.dy < 0) {
+      this.vector.dy = this.vector.dy + this.accelerationTimer.stepSize;
     }
   };
 

@@ -35,8 +35,8 @@ function ShipTrail({
 
   /** @override **/
   this.updatePosition = function() {
-    this.x = getX();
-    this.y = getY();
+    this.pos.x = getX();
+    this.pos.y = getY();
   };
 }
 

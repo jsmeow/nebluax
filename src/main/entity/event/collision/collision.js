@@ -1,27 +1,21 @@
-const validateEntityCollision = require('../validate/validate-entity-collision');
-const validateEntityCollisionEvent = require('../validate/validate-entity-collision-event');
+const validateEntityCollision = require('./assert-entity-collision');
+const validateEntityCollisionEvent = require('./assert-entity-collision-event');
 
-// Cycle through the entities list and perform an entity collision event action
-// If the event occurs.
+// Cycle through the entities list and perform a collision assertion and
+// collision action
 function collision(index) {
-  // Cycle through the entities list and perform collision event action, if
-  // Collision assertions hold.
   this.list.forEach((entity, _index) => {
-    // On collision, exchange attack damage and health points if applicable.
-    // On collision, if the entity is explosive type, always set alive status to
-    // False and skip the points exchange.
-    // On collision, projectile kills are attributed to the creator entity, if
-    // Applicable.
-    // On collision, alive or dead status is always set after the the points
-    // Exchange.
+    // Perform a collision assertion
     if (
       validateEntityCollisionEvent(this, entity, index, _index) &&
       validateEntityCollision(this, entity)
     ) {
+      // Perform a collision action
+
       if (!this.status.invincible) {
         this.points.health = this.points.health - entity.points.attack;
 
-        if (entity.type.includes('bullet')) {
+        if (entity.props.type.includes('bullet')) {
           entity.status.alive = false;
           entity.status.dispose = true;
         }
@@ -30,7 +24,7 @@ function collision(index) {
       if (!entity.status.invincible) {
         entity.points.health = entity.points.health - this.points.attack;
 
-        if (this.type.includes('bullet')) {
+        if (this.props.type.includes('bullet')) {
           this.status.alive = false;
           this.status.dispose = true;
         }

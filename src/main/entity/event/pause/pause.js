@@ -1,4 +1,4 @@
-const { fps } = require('../../options');
+const { fps } = require('../../../options');
 
 // Creates a pause/delay timer.
 // !warning! This is an async action unaffected by the application loop.

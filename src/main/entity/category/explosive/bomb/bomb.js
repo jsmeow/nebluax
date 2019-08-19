@@ -33,7 +33,7 @@ function Bomb({
   });
 
   /** @override **/
-  this.type = [...this.type, 'bomb'];
+  this.props.type = [...this.props.type, 'bomb'];
 
   /** @override **/
   this.animationTimer.delay = fps * 0.5;

@@ -12,7 +12,7 @@ function LargeWideStar({ x, y, width, height, imageSource }) {
     maxDy: 0.5
   });
 
-  this.type = [...this.type, 'large-wide'];
+  this.props.type = [...this.props.type, 'large-wide'];
 
   /** @override **/
   this.animationTimer.delay = fps;

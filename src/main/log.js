@@ -19,8 +19,8 @@ function divider() {
 
 function attack(entity, challenger) {
   console.log(
-    `🗡️️ %c${entity.faction} ${entity.type}%c attacked %c${challenger.faction} ` +
-      `${challenger.type}%c for : %c${entity.points.attack} health`,
+    `🗡️️ %c${entity.faction} ${entity.props.type}%c attacked %c${challenger.faction} ` +
+      `${challenger.props.type}%c for : %c${entity.points.attack} health`,
     `color:${getFactionColor(entity)};`,
     'color:#ffffff',
     `color:${getFactionColor(challenger)};`,
@@ -31,7 +31,7 @@ function attack(entity, challenger) {
 
 function health(entity) {
   console.log(
-    `💗 %c${entity.faction} ${entity.type}%c has %c${entity.points.health} ` +
+    `💗 %c${entity.faction} ${entity.props.type}%c has %c${entity.points.health} ` +
       `health%c left`,
     `color:${getFactionColor(entity)};`,
     'color:#ffffff',
@@ -41,7 +41,7 @@ function health(entity) {
 }
 
 function exchange(entity, challenger) {
-  if (challenger.type !== 'projectile') {
+  if (challenger.props.type !== 'projectile') {
     attack(entity, challenger);
     health(challenger);
     divider();
@@ -49,13 +49,13 @@ function exchange(entity, challenger) {
 }
 
 function death(entity) {
-  if (entity.type !== 'projectile') {
+  if (entity.props.type !== 'projectile') {
     console.log(
-      `💀 %c${entity.faction} ${entity.type} has been killed`,
+      `💀 %c${entity.faction} ${entity.props.type} has been killed`,
       'color:#859900;'
     );
     console.log(
-      `💯 %c${entity.faction} ${entity.type} yielded ${entity.points.score} score points`,
+      `💯 %c${entity.faction} ${entity.props.type} yielded ${entity.points.score} score points`,
       'color:#859900;'
     );
 

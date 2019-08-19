@@ -1,4 +1,5 @@
 const { factory, list } = require('../../entities');
+/*
 
 // The application/game life hud
 const lifeHud = factory.hud.lifeHud();
@@ -14,6 +15,7 @@ const bombHud = factory.hud.bombHud();
 
 // The application/game score hud
 const scoreHud = factory.hud.scoreHud();
+*/
 
 // The current level
 let level;
@@ -24,22 +26,40 @@ function update() {
     // Level = new Level1();
   }
 
-  // Iterate through the entities list
-  list.forEach((entity, index) => {
+  // Iterate through each type of entity list
+
+  list[0].forEach((entity, index) => {
+    entity.update(index);
+  });
+
+  list[1].forEach((entity, index) => {
+    entity.update(index);
+  });
+
+  list[2].forEach((entity, index) => {
     entity.update(index);
   });
 }
 
 function render() {
-  lifeHud.render();
+  /* lifeHud.render();
   shieldHud.render();
   healthHud.render();
   bombHud.render();
-  scoreHud.render();
+  scoreHud.render();*/
 
-  // Iterate through the entities list
-  list.forEach(entity => {
-    entity.render();
+  // Iterate through each type of entity list
+
+  list[0].forEach((entity, index) => {
+    entity.render(index);
+  });
+
+  list[1].forEach((entity, index) => {
+    entity.render(index);
+  });
+
+  list[2].forEach((entity, index) => {
+    entity.render(index);
   });
 }
 

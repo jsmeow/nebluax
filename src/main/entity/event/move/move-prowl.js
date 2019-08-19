@@ -12,8 +12,8 @@ function prowlStart() {
 
   // Save reference of the entity position, for utility.
   // Pass to the prowl action to help speed up method construction.
-  const x = this.x;
-  const y = this.y;
+  const x = this.pos.x;
+  const y = this.pos.y;
 
   // Begin prowling.
   return this.prowl(x, y).then(() => {

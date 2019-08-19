@@ -60,7 +60,7 @@ function StandardMine({
     list
   });
 
-  this.type = [...this.type, 'standard'];
+  this.props.type = [...this.props.type, 'standard'];
 }
 
 StandardMine.prototype = Object.create(Mine.prototype);

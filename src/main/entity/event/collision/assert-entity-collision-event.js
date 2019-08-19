@@ -1,5 +1,5 @@
 // Returns an entity collision event assertion
-function validateEntityCollisionEvent(entity, _entity, index, _index) {
+function assertEntityCollisionEvent(entity, _entity, index, _index) {
   return (
     // Entity cannot reference itself
     index !== _index &&
@@ -15,8 +15,8 @@ function validateEntityCollisionEvent(entity, _entity, index, _index) {
     // Both entities cannot share the same faction
     entity.faction !== _entity.faction &&
     // Both entities cannot share the bullet type
-    !(entity.type.includes('bullet') && _entity.type.includes('bullet'))
+    !(entity.props.type.includes('bullet') && _entity.props.type.includes('bullet'))
   );
 }
 
-module.exports = validateEntityCollisionEvent;
+module.exports = assertEntityCollisionEvent;

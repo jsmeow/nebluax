@@ -12,7 +12,7 @@ function SmallPurpleStar5({ x, y, width, height }) {
   });
 
   /** @override **/
-  this.type = [...this.type, 'purple'];
+  this.props.type = [...this.props.type, 'purple'];
 }
 
 SmallPurpleStar5.prototype = Object.create(SmallStar.prototype);

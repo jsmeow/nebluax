@@ -21,32 +21,32 @@ function BombHud(list) {
 
     canvas.drawText({
       text: 'Bombs',
-      x: this.x + canvas.pixel * 2,
-      y: this.y,
+      x: this.pos.x + canvas.pixel * 2,
+      y: this.pos.y,
       size: 25,
       fillStyle: '#ffffff'
     });
 
     canvas.drawText({
       text: `${player.points.bomb}`,
-      x: this.x + canvas.pixel,
-      y: this.y + canvas.pixel * 10,
+      x: this.pos.x + canvas.pixel,
+      y: this.pos.y + canvas.pixel * 10,
       size: 25,
       fillStyle: '#ffffff'
     });
 
     canvas.drawImage({
       image: this.image,
-      x: this.x + canvas.pixel * 14,
-      y: this.y + canvas.pixel * 3,
+      x: this.pos.x + canvas.pixel * 14,
+      y: this.pos.y + canvas.pixel * 3,
       width: 30,
       height: 30
     });
 
     canvas.drawText({
       text: `${player.points.maxBomb}`,
-      x: this.x + canvas.pixel * 28,
-      y: this.y + canvas.pixel * 10,
+      x: this.pos.x + canvas.pixel * 28,
+      y: this.pos.y + canvas.pixel * 10,
       size: 25,
       fillStyle: '#ffffff'
     });

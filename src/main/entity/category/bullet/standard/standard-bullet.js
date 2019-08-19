@@ -29,7 +29,7 @@ function StandardBullet({ x, y, speed, dx, dy, degrees, creator, list }) {
   });
 
   /** @override **/
-  this.type = [...this.type, 'standard'];
+  this.props.type = [...this.props.type, 'standard'];
 }
 
 StandardBullet.prototype = Object.create(Bullet.prototype);

@@ -1,22 +1,30 @@
 const canvas = require('../../../../../canvas');
+const assertBoundaryCollision = require('../../../../event/collision/assert-boundary-collision');
+const getRandomCanvasPosition = require('../../../../util/get-random-canvas-position');
 const Entity = require('../../../../entity');
 
-function Star({ x, y, width, height, imageSource, minDy, maxDy }) {
+function Star({ pos, dims, vector, props, status, points, image, meta }) {
   Entity.call(this, {
-    x: x || Math.random() * canvas.width,
-    y: y || Math.random() * canvas.height,
-    width,
-    height,
-    dy: Math.random() * (maxDy - minDy) + minDy,
-    type: ['background', 'space', 'star'],
-    imageSource
+    pos: pos || { ...getRandomCanvasPosition() },
+    dims,
+    vector,
+    props: {
+      ...props,
+      type: [...props.type, 'background', 'outer-space', 'star']
+    },
+    status,
+    points,
+    image,
+    meta
   });
 
   /** @override **/
   this.preUpdate = function() {
-    // Get new random coordinate position on bottom boundary collision.
-    if (this.validateBoundaryCollision().bottom) {
-      this.randomPosition({ height: { max: -0.5 } });
+    // Get new random position coordinate on bottom boundary collision
+    if (assertBoundaryCollision(this.pos, this.dims, this.vector).bottom) {
+      this.pos = {
+        ...getRandomCanvasPosition({ y: { min: -canvas.height, max: 0 } })
+      };
     }
   };
 }

@@ -137,8 +137,8 @@ function Ship({
   this.postUpdate = function() {
     if (this.status.collided) {
       factory.explosion.destroyExplosion({
-        x: this.x,
-        y: this.y,
+        x: this.pos.x,
+        y: this.pos.y,
         faction: this.faction
       });
     }

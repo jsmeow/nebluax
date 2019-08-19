@@ -40,7 +40,7 @@ function Player(factory, list) {
   });
 
   /** @override **/
-  this.type = [...this.type, 'player'];
+  this.props.type = [...this.props.type, 'player'];
 
   /** @override **/
   this.points = {
@@ -80,10 +80,10 @@ function Player(factory, list) {
   factory.shipTrail.blueShipTrail({
     creator: this,
     getX: () => {
-      return this.x + this.width * 0.5 - BlueShipTrail.width * 0.5;
+      return this.pos.x + this.dims.width * 0.5 - BlueShipTrail.width * 0.5;
     },
     getY: () => {
-      return this.y + this.height - canvas.pixel * 2;
+      return this.pos.y + this.dims.height - canvas.pixel * 2;
     }
   });
 
@@ -103,8 +103,8 @@ function Player(factory, list) {
   /** @override **/
   this.createBullets = function() {
     factory.bullet.standardBullet({
-      x: this.x + this.width * 0.5 - StandardBullet.width * 0.5,
-      y: this.y - canvas.pixel,
+      x: this.pos.x + this.dims.width * 0.5 - StandardBullet.width * 0.5,
+      y: this.pos.y - canvas.pixel,
       creator: this
     });
   };
@@ -112,8 +112,8 @@ function Player(factory, list) {
   /** @override **/
   this.createBombs = function() {
     factory.explosive.bomb.standardBomb({
-      x: this.x + this.width * 0.5 - StandardBomb.width * 0.5,
-      y: this.y - canvas.pixel,
+      x: this.pos.x + this.dims.width * 0.5 - StandardBomb.width * 0.5,
+      y: this.pos.y - canvas.pixel,
       faction: this.faction,
       creator: this
     });
@@ -122,8 +122,8 @@ function Player(factory, list) {
   /** @override **/
   this.createMines = function() {
     factory.explosive.mine.standardMine({
-      x: this.x + this.width * 0.5 - StandardMine.width * 0.5,
-      y: this.y - canvas.pixel,
+      x: this.pos.x + this.dims.width * 0.5 - StandardMine.width * 0.5,
+      y: this.pos.y - canvas.pixel,
       faction: this.faction,
       creator: this
     });

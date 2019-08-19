@@ -1,182 +1,185 @@
 const { fps } = require('../options');
 const canvas = require('../canvas');
 const move = require('./event/move/move');
-const moveToPoint = require('./event/move/move-in-path');
-const moveInPath = require('./event/move/move-to-point');
+const moveToPoint = require('./event/move/move-to-point');
+const moveInPath = require('./event/move/move-in-path');
 const collision = require('./event/collision/collision');
-const validateBoundaryCollision = require('./event/validate/validate-boundary-collision');
-const randomPosition = require('./event/position/random-position');
 
 function Entity({
-  x = 0,
-  y = 0,
-  width = 0,
-  height = 0,
-  speed = 1,
-  dx = 0,
-  dy = 0,
-  type = [],
-  faction = null,
+  pos = {},
+  dims = {},
+  vector = {},
+  props = {},
   status = {},
   points = {},
-  imageSource = null,
-  degrees = 0,
-  creator = null,
-  factory = null,
-  list = null
+  image = {},
+  meta = {}
 }) {
   // Position coordinates relative to the html5 canvas
-  this.x = x;
-  this.y = y;
+  // x - position on the x axis in terms of canvas pixel units
+  // y - position on the y axis in terms of canvas pixel units
+  this.pos = {
+    x: pos.x || 0,
+    y: pos.y || 0
+  };
 
   // Size dimensions relative to the html5 canvas
-  this.width = width;
-  this.height = height;
+  // width - width in terms of canvas pixel units
+  // height - height in terms of canvas pixel units
+  this.dims = {
+    width: dims.width || 0,
+    height: dims.height || 0
+  };
 
-  // The entity vector movement unit magnitude
-  // Extending entity classes may change the unit magnitude vector speed to
-  // Have a consistent dx, dy at a different vector movement step.
-  this.speed = speed;
+  // Vector movement properties
+  // speed - vector movement magnitude
+  // dx - unit direction on the x axis
+  // dy - unit direction on the y axis
+  this.vector = {
+    speed: vector.speed || 1,
+    dx: vector.dx || 0,
+    dy: vector.dy || 0
+  };
 
-  // The entity vector movement magnitude and direction in the x, y plane
-  this.dx = dx;
-  this.dy = dy;
+  // Description/identification properties
+  // type - entity type(s) (optional)
+  // faction - faction affiliation (optional)
+  this.props = {
+    type: props.type || [],
+    faction: props.faction || ''
+  };
 
-  // Types an entity may take
-  // An entity may have multiple types, therefore they are stored in a list.
-  // Extending entity classes are expected to implement the entity type(s).
-  this.type = [...type];
-
-  // Faction affiliation, if applicable for the extending entity class.
-  this.faction = faction;
-
-  // Statuses an entity may take
-  // Extending entity classes are expected to implement additional statuses if
-  // Needed.
+  // Status properties
+  // Common statuses are added as baseline, but need not apply across all
+  // entities.
+  // The extending entity class are expected to implement additional status
+  // properties if needed.
   this.status = {
-    dispose: false,
-    collided: false,
-    moving: false,
-    pathing: false,
-    ...status
+    dispose: status.dispose || false,
+    alive: status.alive || false,
+    collides: status.collides || false,
+    collided: status.collided || false,
+    invincible: status.invincible || false,
+    damaged: status.damaged || false,
+    moving: status.moving || false,
+    pathing: status.pathing || false
   };
 
-  // Types of points an entity may have, if applicable.
-  // Extending entity classes may implement more points types.
-  this.points = { ...points };
-
-  // The creator entity reference
-  // On occasion, some entities are created by another entity, this property
-  // Holds a reference to the creator entity.
-  this.creator = creator;
-
-  // The entities factory reference
-  this.factory = factory;
-
-  // The entities list reference
-  this.list = list;
-
-  // Image object used by the entity, if entity uses an external image.
-  // This entity property can be a single image object, or a list of multiple
-  // Image objects if the entity performs animation.
-  // Defaults to a single image object.
-  this.image = new Image();
-
-  // Image source(s) object used by the entity, if entity uses an external
-  // Image(s).
-  // This entity property can be a single image source object, or a list of
-  // Multiple image source objects if the entity performs animation.
-  // Extending entity classes are expected to implement the entity image
-  // Source.
-  // Defaults to a single image source object.
-  this.imageSource = imageSource;
-
-  // Image object unloaded/loaded flag
-  this.isImageLoaded = false;
-
-  // Image animation object that holds 3 animation properties:
-  // 1. Flag whether the entity performs animation.
-  // 2. The image objects to be used for the animation. Any one of the images
-  // In this list will be mapped to the entity image object before rendering.
-  // 3. The image object list index that will reference the image object in the
-  // List to be mapped to the entity image object.
-  // 4. The animation timer that will increment/change the imageIndex after a
-  // Delay.
-  this.animationTimer = {
-    frame: 0,
-    delay: fps,
-    imageIndex: 0
+  // Point properties
+  // Common points are added as baseline, but need not apply across all
+  // entities.
+  // The extending entity class are expected to implement additional point
+  // properties if needed.
+  this.points = {
+    health: points.health || 0,
+    maxHealth: points.maxHealth || 0,
+    attack: points.attack || 0,
+    maxAttack: points.maxAttack || 0,
+    score: points.score || 0,
+    value: points.value || 0
   };
 
-  // The entity render rotation in degrees
-  this.degrees = degrees;
+  console.log(image.src);
 
-  // Entity movement event/action
-  // While not all entities perform movement, the event/action is shared enough
-  // Across entities that it can be reasonably placed inside the entity
-  // Abstract class.
+  // Image properties
+  // obj - entity image object(s) reference
+  // src - entity image object source(s) reference
+  // deg - the degrees in which to render the image object
+  // delay - the delay for the image animation loop timer
+  // timer - image animation loop timer
+  this.image = {
+    src: image.src,
+    obj: Array.isArray(image.src)
+      ? [...Array(image.src.length)].map((_, index) => {
+          const _image = new Image();
+          _image.src = image.src[index];
+          return _image;
+        })
+      : [new Image()].map(_image => {
+          _image.src = image.src;
+          return _image;
+        }),
+    deg: image.deg || 0,
+    delay: image.delay || fps,
+    timer: {
+      frame: 0,
+      index: 0
+    }
+  };
+
+  // Meta properties
+  // Contains references to external game/application entities/objects
+  // creator - creator entity reference (optional)
+  // factory - entity factory reference
+  // list - entity list reference
+  this.meta = {
+    creator: meta.creator || null,
+    factory: meta.factory || null,
+    list: meta.list || null
+  };
+
+  // Define and bind external methods
+
+  // Perform movement
   this.move = move.bind(this);
 
-  // Entity collision assertion
-  // While not all entities perform entity collision assertion, the
-  // Event/action is shared enough across entities that it can be reasonably
-  // Placed inside the entity abstract class.
+  // Perform movement to a position coordinate point
+  this.moveToPoint = moveToPoint.bind(this);
+
+  // Perform movement in a path
+  this.moveInPath = moveInPath.bind(this);
+
+  // Perform collision assertion and collision action
   this.collision = collision.bind(this);
 
-  // Entity disposal update action
-  // Removes the entity from the entities list.
-  // Extending entity classes are expected to override this method if needed.
-  this.dispose = function(index) {
-    this.list.splice(index, 1);
-  };
+  // Define update methods
 
-  // Pre-update entity event/action
-  // Perform an event/action before the update method implementation actions.
+  // Pre-update entity
+  // Perform an update before the update method implementation.
   // Extending entity classes are expected to override this method if needed.
   this.preUpdate = function() {};
 
-  // Entity timers event/action
-  // Perform a timer event/action on a single application frame.
+  // Entity disposal update action
+  // Removes the entity from the entities list.
+  this.dispose = function(index) {
+    this.meta.list.splice(index, 1);
+  };
+
+  // Update the entity timers
   // Extending entity classes are expected to override this method if needed.
   this.updateTimers = function() {};
 
-  // Entity update position event/action
-  // Perform a position update via the move method.
-  // Extending entity classes are expected to override this method if needed.
+  // Update position coordinate
+  // Perform a position coordinate update via the move method.
   this.updatePosition = function() {
     this.move();
   };
 
-  // Entity assert collision event/action
-  // Perform an entity collision assertion via the collision method only if it
-  // Was passed the entities list via the entity factory.
-  // An entity having the list implementation defined means it interacts with
-  // Other entities and is therefore capable of entity collision.
-  // Extending entity classes are expected to override this method if needed.
-  this.assertCollision = function(index) {
-    if (this.list) {
+  // Update collision assertion and collision action
+  // Perform an entity collision assertion via the collision method, if the
+  // entities list was passed and collides status is set to true.
+  this.updateCollision = function(index) {
+    if (this.meta.list && this.status.collides) {
       this.collision(index);
     }
   };
 
-  // Reset entity properties after an update in preparation for the next
-  // Update, if applicable.
-  // Extending entity classes are expected to override this method if needed.
+  // Reset status/points/properties after an update in preparation for
+  // the next update.
   this.reset = function() {
     if (this.status.collided) {
       this.status.collided = false;
     }
   };
 
-  // Post-update entity event/action
-  // Perform an event/action after the update method implementation actions.
+  // Post-update entity
+  // Perform an update after the update method implementation.
   // Extending entity classes are expected to override this method if needed.
   this.postUpdate = function() {};
 
-  // Update entity event/action
-  // Event/actions taken on a single application frame.
+  // Update entity
+  // Perform update work on a single application frame.
   // If the disposing status is true, perform entity disposal.
-  // Extending entity classes are expected to override this method if needed.
   this.update = function(index) {
     this.preUpdate();
 
@@ -185,116 +188,71 @@ function Entity({
     } else {
       this.updateTimers();
       this.updatePosition();
-      this.assertCollision(index);
+      this.updateCollision(index);
     }
 
     this.postUpdate();
     this.reset();
   };
 
-  // Load the entity image source object onto entity image object
-  // The image source object is preloaded to buffer and optimize performance.
-  // Extending entity classes are expected to override this method if needed.
-  this.loadImage = function() {
-    this.image.src = this.imageSource;
-  };
+  // Define render methods
 
-  // Load the entity image source objects onto the image objects
-  // The image source objects are preloaded to buffer and optimize performance.
-  // Load entity image source objects onto entity image object list if the
-  // Entity performs animation.
+  // Pre-render entity
+  // Perform a render update before the render method implementation.
   // Extending entity classes are expected to override this method if needed.
-  this.loadImages = function() {
-    this.image = [...Array(this.imageSource.length)].map((_, index) => {
-      const image = new Image();
-      image.src = this.imageSource[index];
-      return image;
-    });
-  };
+  this.preRender = function() {};
 
-  // Update the animation timer event/action
-  // Perform an animation timer update on an event/action on a single
-  // Application frame.
-  // When timer expires, reset the timer.
-  // Extending entity classes are expected to override this method if needed.
+  // Update the animation loop timer and image index
   this.updateAnimationTimer = function() {
-    if (this.animationTimer.frame >= this.animationTimer.delay) {
-      this.animationTimer.frame = 0;
-    } else {
-      this.animationTimer.frame = this.animationTimer.frame + 1;
-    }
-  };
-
-  // Update the animation image index event/action
-  // Extending entity classes are expected to override this method if needed.
-  this.updateAnimationImageIndex = function() {
+    // Increment or reset animation image index
     const timerRangeBegin =
-      this.animationTimer.frame >=
-      (this.animationTimer.delay / this.image.length) *
-        this.animationTimer.imageIndex;
+      this.image.timer.index * (this.image.delay / this.image.obj.length);
 
     const timerRangeEnd =
-      this.animationTimer.frame <
-      (this.animationTimer.delay / this.image.length) *
-        (this.animationTimer.imageIndex + 1);
+      (this.image.timer.index + 1) * (this.image.delay / this.image.obj.length);
 
-    if (timerRangeBegin && timerRangeEnd) {
-      this.animationTimer.imageIndex = this.animationTimer.imageIndex + 1;
+    if (
+      this.image.timer.frame >= timerRangeBegin &&
+      this.image.timer.frame < timerRangeEnd
+    ) {
+      this.image.timer.index = this.image.timer.index + 1;
     }
 
-    if (this.animationTimer.imageIndex >= this.image.length) {
-      this.animationTimer.imageIndex = 0;
+    if (this.image.timer.index >= this.image.obj.length) {
+      this.image.timer.index = 0;
     }
-  };
 
-  // Render entity event/action on the html5 canvas
-  // Extending entity classes are expected to override this method if needed.
-  this.render = function() {
-    if (this.isImageLoaded) {
-      if (Array.isArray(this.image)) {
-        canvas.drawImage({
-          image: this.image[this.animationTimer.imageIndex],
-          x: this.x,
-          y: this.y,
-          width: this.width,
-          height: this.height,
-          degrees: this.degrees
-        });
+    // Increment or reset animation loop timer
 
-        this.updateAnimationTimer();
-        this.updateAnimationImageIndex();
-      } else {
-        canvas.drawImage({
-          image: this.image,
-          x: this.x,
-          y: this.y,
-          width: this.width,
-          height: this.height,
-          degrees: this.degrees
-        });
-      }
-    } else if (Array.isArray(this.imageSource)) {
-      this.loadImages();
-      this.isImageLoaded = true;
+    if (this.image.timer.frame >= this.image.delay) {
+      this.image.timer.frame = 0;
     } else {
-      this.loadImage();
-      this.isImageLoaded = true;
+      this.image.timer.frame = this.image.timer.frame + 1;
     }
   };
 
-  // Util methods
+  // Post-render entity
+  // Perform a render update after the render method implementation.
+  // Extending entity classes are expected to override this method if needed.
+  this.postRender = function() {};
 
-  // Perform movement in a vector line towards a point
-  this.moveToPoint = moveToPoint.bind(this);
+  // Render entity
+  // Perform rendering on a single application frame.
+  this.render = function() {
+    this.preRender();
 
-  // Perform movement in the x and y plane in a vector line path
-  this.moveInPath = moveInPath.bind(this);
+    canvas.drawImage({
+      image: this.image.obj[this.image.timer.index],
+      x: this.pos.x,
+      y: this.pos.y,
+      width: this.dims.width,
+      height: this.dims.height,
+      deg: this.image.deg
+    });
 
-  // Validate boundary collision assertion
-  this.validateBoundaryCollision = validateBoundaryCollision.bind(this);
-
-  // Get new a new random x, y coordinate position.
-  this.randomPosition = randomPosition.bind(this);
+    this.updateAnimationTimer();
+    this.postRender();
+  };
 }
 
 module.exports = Entity;

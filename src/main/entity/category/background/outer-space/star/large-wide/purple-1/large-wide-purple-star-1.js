@@ -16,7 +16,7 @@ function LargeWidePurpleStar1({ x, y, width, height }) {
   });
 
   /** @override **/
-  this.type = [...this.type, 'purple'];
+  this.props.type = [...this.props.type, 'purple'];
 }
 
 LargeWidePurpleStar1.prototype = Object.create(LargeStar.prototype);

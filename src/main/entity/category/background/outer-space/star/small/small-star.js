@@ -1,22 +1,27 @@
-const { fps } = require('../../../../../../options');
 const canvas = require('../../../../../../canvas');
+const getRandomRangedFloat = require('../../../../../util/get-random-ranged-float');
 const Star = require('../star');
 
-function SmallStar({ x, y, width, height, imageSource }) {
+function SmallStar({ pos, dims, vector, props, status, points, image, meta }) {
   Star.call(this, {
-    x,
-    y,
-    width: width || canvas.pixel,
-    height: height || canvas.pixel,
-    imageSource,
-    minDy: 1,
-    maxDy: 1.5
+    pos,
+    dims: dims || {
+      width: canvas.pixel,
+      height: canvas.pixel
+    },
+    vector: {
+      ...vector,
+      dy: getRandomRangedFloat(0.5, 1.5)
+    },
+    props: {
+      ...props,
+      type: [...props.type, 'small']
+    },
+    status,
+    points,
+    image,
+    meta
   });
-
-  this.type = [...this.type, 'small'];
-
-  /** @override **/
-  this.animationTimer.delay = fps;
 }
 
 SmallStar.prototype = Object.create(Star.prototype);

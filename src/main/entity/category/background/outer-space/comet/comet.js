@@ -18,12 +18,12 @@ function Comet() {
 
   // Comet will have a height of k rectangles units where k is the gradient
   // Length.
-  const totalHeight = this.height * gradient.length;
+  const totalHeight = this.dims.height * gradient.length;
 
   /** @override **/
   this.preUpdate = function() {
     // Get new random coordinate position on bottom boundary collision.
-    if (this.y + this.dy - totalHeight >= canvas.height) {
+    if (this.pos.y + this.vector.dy - totalHeight >= canvas.height) {
       this.randomPosition({ height: { max: -0.5 } });
     }
   };
@@ -32,10 +32,10 @@ function Comet() {
   this.render = function() {
     gradient.forEach((hex, index) => {
       canvas.drawRect({
-        x: this.x,
-        y: this.y - index * this.height,
-        width: this.width,
-        height: this.height,
+        x: this.pos.x,
+        y: this.pos.y - index * this.dims.height,
+        width: this.dims.width,
+        height: this.dims.height,
         fillStyle: `#ffffff${hex}`
       });
     });

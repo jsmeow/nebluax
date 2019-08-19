@@ -1,5 +1,5 @@
 // Returns an entity collision assertion.
-function validateEntityCollision(entity, _entity) {
+function assertEntityCollision(entity, _entity) {
   return (
     entity.x <= _entity.x + _entity.width &&
     entity.x + entity.width >= _entity.x &&
@@ -8,4 +8,4 @@ function validateEntityCollision(entity, _entity) {
   );
 }
 
-module.exports = validateEntityCollision;
+module.exports = assertEntityCollision;
