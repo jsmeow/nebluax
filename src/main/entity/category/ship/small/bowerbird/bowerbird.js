@@ -2,7 +2,7 @@ const canvas = require('../../../../../canvas');
 const Ship = require('../../ship');
 const StandardBullet = require('../../../bullet/standard/standard-bullet');
 const allied =
-  './main/entity/category/ship/small/bowerbird/assets/images/allied.png.bak';
+  './main/entity/category/ship/small/bowerbird/assets/images/allied.png';
 const enemy =
   './main/entity/category/ship/small/bowerbird/assets/images/enemy.png';
 const neutral =
@@ -18,7 +18,7 @@ function Bowerbird({ degrees, faction, factory, list }) {
     width: Bowerbird.width,
     height: Bowerbird.height,
     faction,
-    imageSources: {
+    imageSource: {
       allied,
       enemy,
       neutral,

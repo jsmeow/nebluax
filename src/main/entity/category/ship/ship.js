@@ -12,8 +12,9 @@ function Ship({
   faction,
   status,
   points,
-  imageSources,
+  imageSource,
   degrees,
+  creator,
   factory,
   list
 }) {
@@ -29,7 +30,9 @@ function Ship({
     faction,
     status,
     points,
+    imageSource,
     degrees,
+    creator,
     factory,
     list
   });
@@ -62,23 +65,14 @@ function Ship({
     delay: fps
   };
 
-  // Bullet creation method.
+  // Reference to the shield entity created by the ship entity
+  this.shield = null;
+
+  // Bullet creation
   // Creates bullet(s) entities at an interval.
   // Extending ship entity classes are expected to implement this method if
   // They are to fire bullets.
   this.createBullets = function() {};
-
-  // Bomb creation method.
-  // Creates bomb(s) entities.
-  // Extending ship entity classes are expected to implement this method if
-  // They are to fire bullets.
-  this.createBombs = function() {};
-
-  // Mine creation method.
-  // Creates mine(s) entities.
-  // Extending ship entity classes are expected to implement this method if
-  // They are to fire bullets.
-  this.createMines = function() {};
 
   // Update the bullet timer
   // Separate method implemented rather than including it in the updateTimers
@@ -93,6 +87,44 @@ function Ship({
       this.bulletTimer.frame = 0;
     } else {
       this.bulletTimer.frame = this.bulletTimer.frame + 1;
+    }
+  };
+
+  // Bomb creation
+  // Creates bomb(s) entities.
+  // Extending ship entity classes are expected to implement this method if
+  // They are to fire bullets.
+  this.createBombs = function() {};
+
+  // Mine creation
+  // Creates mine(s) entities.
+  // Extending ship entity classes are expected to implement this method if
+  // They are to fire bullets.
+  this.createMines = function() {};
+
+  // Shield creation
+  // Creates a shield entity around the ship entity
+  this.createShield = function() {
+    if (!this.shield) {
+      this.shield = factory.shield.standardShield({
+        creator: this
+      });
+
+      this.status.invincible = true;
+      this.status.shielded = true;
+    }
+  };
+
+  // Shield disposal
+  // Disposes the ship entity current shield entity
+  this.disposeShield = function() {
+    if (this.shield) {
+      this.shield.status.alive = false;
+      this.shield.status.dispose = true;
+      this.shield = null;
+
+      this.status.invincible = false;
+      this.status.shielded = false;
     }
   };
 
@@ -114,33 +146,60 @@ function Ship({
 
   /** @override **/
   this.loadImage = function() {
-    // This entity can use multiple images sources
-    // On render, the entity will be conditionally assigned one of the image
-    // Sources depending on the entity status/event.
+    let imageSource;
+
+    // Get the image source list based on the entity faction/status
 
     if (this.faction === 'allied') {
-      this.image.src = imageSources.allied;
+      imageSource = this.imageSource.allied;
     }
 
     if (this.faction === 'enemy') {
-      this.image.src = imageSources.enemy;
+      imageSource = this.imageSource.enemy;
     }
 
-    if (this.faction === 'neutral') {
-      this.image.src = imageSources.neutral;
+    if (this.faction === 'neutral' || !this.faction) {
+      imageSource = this.imageSource.neutral;
     }
 
     if (this.status.damaged) {
-      this.image.src = imageSources.damaged;
+      imageSource = this.imageSource.damaged;
     }
 
     if (this.status.shielded) {
-      this.image.src = imageSources.shielded;
+      imageSource = this.imageSource.shielded;
     }
 
     if (this.status.powered) {
-      this.image.src = imageSources.powered;
+      imageSource = this.imageSource.powered;
     }
+
+    this.image.src = imageSource;
+  };
+
+  /** @override **/
+  this.loadImages = function() {
+    let imageSource;
+
+    // Get the image source list based on the entity faction
+
+    if (this.faction === 'allied') {
+      imageSource = this.imageSource[0];
+    }
+
+    if (this.faction === 'enemy') {
+      imageSource = this.imageSource[1];
+    }
+
+    if (this.faction === 'neutral' || !this.faction) {
+      imageSource = this.imageSource[2];
+    }
+
+    this.image = [...Array(imageSource.length)].map((_, index) => {
+      const image = new Image();
+      image.src = imageSource[index];
+      return image;
+    });
   };
 }
 

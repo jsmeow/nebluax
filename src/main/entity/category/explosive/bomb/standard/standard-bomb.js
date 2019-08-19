@@ -43,7 +43,7 @@ function StandardBomb({
     dx: dx || 0,
     dy: dy || creator.faction === 'enemy' ? 1 : -1,
     faction,
-    imageSources: [
+    imageSource: [
       imageSource1,
       imageSource2,
       imageSource3,
@@ -55,6 +55,7 @@ function StandardBomb({
       imageSource9,
       imageSource10
     ],
+    degrees: 90,
     creator,
     factory,
     list

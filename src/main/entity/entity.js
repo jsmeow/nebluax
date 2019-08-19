@@ -91,23 +91,21 @@ function Entity({
   // Defaults to a single image source object.
   this.imageSource = imageSource;
 
+  // Image object unloaded/loaded flag
+  this.isImageLoaded = false;
+
   // Image animation object that holds 3 animation properties:
   // 1. Flag whether the entity performs animation.
-  // 2. The interval to update the animation as a fractional proportion of the
-  // Timer delay.
-  // 3. The image objects to be used for the animation. Any one of the images
+  // 2. The image objects to be used for the animation. Any one of the images
   // In this list will be mapped to the entity image object before rendering.
-  // 4. The image object list index that will reference the image object in the
+  // 3. The image object list index that will reference the image object in the
   // List to be mapped to the entity image object.
-  // 5. The animation timer that will increment/change the imageIndex after a
+  // 4. The animation timer that will increment/change the imageIndex after a
   // Delay.
   this.animationTimer = {
-    imageIndex: 0,
-    interval: 1,
-    timer: {
-      frame: 0,
-      delay: fps
-    }
+    frame: 0,
+    delay: fps,
+    imageIndex: 0
   };
 
   // The entity render rotation in degrees
@@ -194,12 +192,15 @@ function Entity({
     this.reset();
   };
 
-  // Load entity image source object onto entity image object
+  // Load the entity image source object onto entity image object
+  // The image source object is preloaded to buffer and optimize performance.
   // Extending entity classes are expected to override this method if needed.
   this.loadImage = function() {
     this.image.src = this.imageSource;
   };
 
+  // Load the entity image source objects onto the image objects
+  // The image source objects are preloaded to buffer and optimize performance.
   // Load entity image source objects onto entity image object list if the
   // Entity performs animation.
   // Extending entity classes are expected to override this method if needed.
@@ -210,13 +211,6 @@ function Entity({
       return image;
     });
   };
-
-  // Map the image object(s) source to the image object(s)
-  if (Array.isArray(this.imageSource)) {
-    this.loadImages();
-  } else {
-    this.loadImage();
-  }
 
   // Update the animation timer event/action
   // Perform an animation timer update on an event/action on a single
@@ -236,47 +230,55 @@ function Entity({
   this.updateAnimationImageIndex = function() {
     const timerRangeBegin =
       this.animationTimer.frame >=
-      this.animationTimer.delay *
-        this.animationTimer.interval *
-        this.animationTimer;
+      (this.animationTimer.delay / this.image.length) *
+        this.animationTimer.imageIndex;
 
     const timerRangeEnd =
       this.animationTimer.frame <
-      this.animationTimer.delay *
-        this.animationTimer.interval *
-        (this.animationTimer + 1);
+      (this.animationTimer.delay / this.image.length) *
+        (this.animationTimer.imageIndex + 1);
+
+    if (timerRangeBegin && timerRangeEnd) {
+      this.animationTimer.imageIndex = this.animationTimer.imageIndex + 1;
+    }
 
     if (this.animationTimer.imageIndex >= this.image.length) {
       this.animationTimer.imageIndex = 0;
-    } else if (timerRangeBegin && timerRangeEnd) {
-      this.animationTimer.imageIndex += 1;
     }
   };
 
   // Render entity event/action on the html5 canvas
   // Extending entity classes are expected to override this method if needed.
   this.render = function() {
-    if (Array.isArray(this.image)) {
-      canvas.drawImage({
-        image: this.image[this.animationTimer.imageIndex],
-        x: this.x,
-        y: this.y,
-        width: this.width,
-        height: this.height,
-        degrees: this.degrees
-      });
+    if (this.isImageLoaded) {
+      if (Array.isArray(this.image)) {
+        canvas.drawImage({
+          image: this.image[this.animationTimer.imageIndex],
+          x: this.x,
+          y: this.y,
+          width: this.width,
+          height: this.height,
+          degrees: this.degrees
+        });
 
-      this.updateAnimationTimer();
-      this.updateAnimationImageIndex();
+        this.updateAnimationTimer();
+        this.updateAnimationImageIndex();
+      } else {
+        canvas.drawImage({
+          image: this.image,
+          x: this.x,
+          y: this.y,
+          width: this.width,
+          height: this.height,
+          degrees: this.degrees
+        });
+      }
+    } else if (Array.isArray(this.imageSource)) {
+      this.loadImages();
+      this.isImageLoaded = true;
     } else {
-      canvas.drawImage({
-        image: this.image,
-        x: this.x,
-        y: this.y,
-        width: this.width,
-        height: this.height,
-        degrees: this.degrees
-      });
+      this.loadImage();
+      this.isImageLoaded = true;
     }
   };
 

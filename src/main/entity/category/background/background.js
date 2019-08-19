@@ -1,11 +1,16 @@
 const canvas = require('../../../canvas');
 const Entity = require('../../entity');
 
-function Background() {
+function Background({ imageSource, factory, list }) {
   Entity.call(this, {
+    x: 0,
+    y: 0,
     width: canvas.width,
-    height: canvas.height,
-    type: ['background']
+    height: canvas.height * 2,
+    type: ['background'],
+    imageSource,
+    factory,
+    list
   });
 
   // List of entities that populate the background.
@@ -18,6 +23,8 @@ function Background() {
     this.entities.forEach(entity => {
       entity.update();
     });
+
+    this.y = this.y + 0.5;
   };
 }
 

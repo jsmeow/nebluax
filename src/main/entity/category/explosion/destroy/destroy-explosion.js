@@ -1,11 +1,11 @@
 const canvas = require('../../../../canvas');
 const Explosion = require('../explosion');
 const imageSource1 =
-  './main/entity/category/explosion/destroy/assets/images/image-source-1.png';
+  './main/entity/category/explosion/destroy/assets/images/shield1.png';
 const imageSource2 =
-  './main/entity/category/explosion/destroy/assets/images/image-source-2.png';
+  './main/entity/category/explosion/destroy/assets/images/shield2.png';
 const imageSource3 =
-  './main/entity/category/explosion/destroy/assets/images/image-source-3.png';
+  './main/entity/category/explosion/destroy/assets/images/shield3.png';
 const imageSource4 =
   './main/entity/category/explosion/destroy/assets/images/image-source-4.png';
 const imageSource5 =

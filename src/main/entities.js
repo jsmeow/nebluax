@@ -11,18 +11,19 @@ const factory = new EntityFactory(list);
 // Will update and render regardless of application state.
 // Will not be part of the entities list, since it does not actively
 // Participate or interact with other entities in the game.
-const background = factory.background.space.space();
+const background = factory.background.outerSpace.space();
 
 // Implement the game/application player/user entity
-factory.ship.small.player();
+const player = factory.ship.player.player();
 
-factory.ship.small.bowerbird({ faction: 'enemy', degrees: Math.PI });
+// Factory.ship.small.bowerbird({ faction: 'enemy', degrees: Math.PI });
 
 // Swap the player and the player created entities in the entities list so
 // That the player entity is always first.
-// This is due to the fact the the player created entities are created before
-// The actual player entity.
-[list[0], list[1]] = [list[1], list[0]];
+// This is due to the fact the the player entity created entities are created
+// Before The actual player entity.
+list.splice(list.length - 1);
+list.unshift(player);
 
 module.exports = {
   list,

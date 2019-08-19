@@ -1,5 +1,4 @@
 const { fps } = require('../../../../options');
-const canvas = require('../../../../canvas');
 const Explosive = require('../explosive');
 
 function Mine({
@@ -11,7 +10,8 @@ function Mine({
   dx,
   dy,
   faction,
-  imageSources,
+  imageSource,
+  degrees,
   creator,
   factory,
   list
@@ -25,6 +25,8 @@ function Mine({
     dx,
     dy,
     faction,
+    imageSource,
+    degrees,
     creator,
     factory,
     list
@@ -33,54 +35,53 @@ function Mine({
   /** @override **/
   this.type = [...this.type, 'mine'];
 
-  // Preload the image source objects onto the image objects
-  // The image source objects are preloaded to buffer and optimize performance.
-  // Extending entity classes are expected to implement the image source
-  // Objects.
   /** @override **/
-  this.image = [...Array(imageSources.length)].map((_, index) => {
-    const image = new Image();
-    image.src = imageSources[index];
-    return image;
-  });
+  this.animationTimer.delay = fps * 0.5;
 
-  // The image to render in the image list
-  let imageIndex = 0;
+  // Decrement vector movement acceleration timer
+  this.accelerationTimer = {
+    initialSpeed: this.dy,
+    step: 0,
+    stepSize: 0.02,
+    update: true
+  };
 
-  // Animation timer
-  const animationTimer = {
-    frame: 0,
-    delay: fps * 0.5
+  // Update the decrement vector movement acceleration timer and entity vector
+  // Movement magnitude
+  this.updateAccelerationTimer = function() {
+    if (
+      Math.abs(this.accelerationTimer.step) >=
+      Math.abs(this.accelerationTimer.initialSpeed)
+    ) {
+      this.speed = 0;
+      this.dy = 0;
+      this.dy = 0;
+      this.accelerationTimer.frame = 0;
+      this.accelerationTimer.step = 0;
+      this.accelerationTimer.update = false;
+    } else {
+      this.accelerationTimer.frame = this.accelerationTimer.frame + 1;
+    }
+  };
+
+  // Update the decrement vector movement acceleration timer  step
+  this.updateAccelerationStep = function() {
+    this.accelerationTimer.step =
+      this.accelerationTimer.step +
+      this.accelerationTimer.initialSpeed * this.accelerationTimer.stepSize;
+
+    if (this.dy > 0) {
+      this.dy = this.dy - this.accelerationTimer.stepSize;
+    } else if (this.dy < 0) {
+      this.dy = this.dy + this.accelerationTimer.stepSize;
+    }
   };
 
   /** @override **/
   this.updateTimers = function() {
-    if (animationTimer.frame >= animationTimer.delay) {
-      animationTimer.frame = 0;
-    } else {
-      animationTimer.frame = animationTimer.frame + 1;
-    }
-  };
-
-  /** @override **/
-  this.render = function() {
-    if (imageIndex >= this.image.length) {
-      imageIndex = 0;
-    }
-
-    canvas.drawImage({
-      image: this.image[imageIndex],
-      x: this.x,
-      y: this.y,
-      width: this.width,
-      height: this.height
-    });
-
-    if (
-      animationTimer.frame >= animationTimer.delay * 0.09 * imageIndex &&
-      animationTimer.frame < animationTimer.delay * 0.09 * (imageIndex + 1)
-    ) {
-      imageIndex += 1;
+    if (this.accelerationTimer.update) {
+      this.updateAccelerationTimer();
+      this.updateAccelerationStep();
     }
   };
 }

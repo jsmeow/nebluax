@@ -22,13 +22,9 @@ function StandardBullet({ x, y, speed, dx, dy, degrees, creator, list }) {
     speed,
     dx,
     dy,
+    imageSource: [[allied1, allied2], [enemy1, enemy2], [neutral1, neutral2]],
     degrees,
     creator,
-    imageSources: {
-      allied: [allied1, allied2],
-      enemy: [enemy1, enemy2],
-      neutral: [neutral1, neutral2]
-    },
     list
   });
 

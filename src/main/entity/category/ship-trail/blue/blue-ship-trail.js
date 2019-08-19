@@ -1,20 +1,20 @@
 const canvas = require('../../../../canvas');
 const ShipTrail = require('../ship-trail');
-const trail1 =
-  './main/entity/category/ship-trail/blue/assets/images/trail1.png';
-const trail2 =
-  './main/entity/category/ship-trail/blue/assets/images/trail2.png';
+const imageSource1 =
+  './main/entity/category/ship-trail/blue/assets/images/image-source-1.png';
+const imageSource2 =
+  './main/entity/category/ship-trail/blue/assets/images/image-source-2.png';
 
-function BlueShipTrail({ getTrailX, getTrailY, creator, degrees, list }) {
+function BlueShipTrail({ degrees, creator, list, getX, getY }) {
   ShipTrail.call(this, {
     width: BlueShipTrail.width,
     height: BlueShipTrail.height,
-    getTrailX,
-    getTrailY,
-    creator,
-    imageSources: [trail1, trail2],
+    imageSource: [imageSource1, imageSource2],
     degrees,
-    list
+    creator,
+    list,
+    getX,
+    getY
   });
 
   /** @override **/

@@ -11,6 +11,7 @@ function Explosive({
   dy,
   faction,
   imageSource,
+  degrees,
   creator,
   factory,
   list
@@ -26,6 +27,7 @@ function Explosive({
     faction,
     type: ['explosive'],
     imageSource,
+    degrees,
     creator,
     factory,
     list

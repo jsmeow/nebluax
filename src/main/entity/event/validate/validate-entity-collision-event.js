@@ -1,9 +1,5 @@
 // Returns an entity collision event assertion
 function validateEntityCollisionEvent(entity, _entity, index, _index) {
-  if (entity.type.includes('explosive')) {
-    console.log(entity.status.alive && _entity.status.alive);
-  }
-
   return (
     // Entity cannot reference itself
     index !== _index &&

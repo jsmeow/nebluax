@@ -32,9 +32,9 @@ function onKeydown(event) {
     [keyCodes.SPACE]() {
       player.createBombs();
     },
-    /* [keyCodes.KEYQ]() {
-      player.shieldStart();
-    }*/
+    [keyCodes.KEYQ]() {
+      player.createShield();
+    },
     [keyCodes.KEYE]() {
       player.createMines();
     }

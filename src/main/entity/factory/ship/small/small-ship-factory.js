@@ -1,5 +1,5 @@
 const Bowerbird = require('../../../category/ship/small/bowerbird/bowerbird');
-const Player = require('../../../category/ship/small/player/player');
+const Player = require('../../../category/ship/player/player');
 
 function SmallShipFactory(factory, list) {
   this.bowerbird = function(args) {
