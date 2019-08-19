@@ -24,7 +24,7 @@ function Background({ imageSource, factory, list }) {
       entity.update();
     });
 
-    this.y = this.y + 0.5;
+    this.y = this.y + this.height / (canvas.height * 5);
   };
 }
 

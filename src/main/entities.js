@@ -11,7 +11,7 @@ const factory = new EntityFactory(list);
 // Will update and render regardless of application state.
 // Will not be part of the entities list, since it does not actively
 // Participate or interact with other entities in the game.
-const background = factory.background.outerSpace.space();
+const background = factory.background.outerSpace.space.space();
 
 // Implement the game/application player/user entity
 const player = factory.ship.player.player();

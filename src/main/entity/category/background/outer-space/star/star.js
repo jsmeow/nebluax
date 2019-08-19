@@ -1,18 +1,16 @@
 const canvas = require('../../../../../canvas');
 const Entity = require('../../../../entity');
 
-function Star({ width, height, imageSource, minDy = 0.5, maxDy = 0.5 }) {
+function Star({ x, y, width, height, imageSource, minDy, maxDy }) {
   Entity.call(this, {
-    x: Math.random() * canvas.width,
-    y: Math.random() * canvas.height,
+    x: x || Math.random() * canvas.width,
+    y: y || Math.random() * canvas.height,
     width,
     height,
     dy: Math.random() * (maxDy - minDy) + minDy,
     type: ['background', 'space', 'star'],
     imageSource
   });
-
-  console.log(this.dy);
 
   /** @override **/
   this.preUpdate = function() {
