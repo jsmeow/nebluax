@@ -21,7 +21,13 @@ function Star({ pos, dims, vector, props, status, points, image, meta }) {
   /** @override **/
   this.preUpdate = function() {
     // Get new random position coordinate on bottom boundary collision
-    if (assertBoundaryCollision(this.pos, this.dims, this.vector).bottom) {
+    if (
+      assertBoundaryCollision(
+        this.pos,
+        { height: this.dims.height * 2 },
+        this.vector
+      ).bottom
+    ) {
       this.pos = {
         ...getRandomCanvasPosition({ y: { min: -canvas.height, max: 0 } })
       };

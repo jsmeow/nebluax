@@ -71,6 +71,13 @@ function Space({ pos, dims, vector, props, status, points, image, meta }) {
     }),
     ...[...Array(5)].map(() => {
       return this.meta.factory.background.space.star.small.smallBlinkingWhiteStar1();
+    }),
+
+    ...[...Array(1)].map(() => {
+      return this.meta.factory.background.space.planet.planet1();
+    }),
+    ...[...Array(1)].map(() => {
+      return this.meta.factory.background.space.planet.planet2();
     })
   ];
 }
