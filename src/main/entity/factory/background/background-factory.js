@@ -1,7 +1,7 @@
-const OuterSpaceBackgroundFactory = require('./outer-space/outer-space-background-factory');
+const SpaceBackgroundFactory = require('./space/space-background-factory');
 
 function BackgroundFactory(factory, list) {
-  this.outerSpace = new OuterSpaceBackgroundFactory(factory, list);
+  this.space = new SpaceBackgroundFactory(factory, list);
 }
 
 module.exports = BackgroundFactory;

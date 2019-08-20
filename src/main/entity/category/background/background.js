@@ -6,7 +6,7 @@ function Background({ pos, dims, vector, props, status, points, image, meta }) {
     pos,
     dims: dims || {
       width: canvas.width,
-      height: canvas.height * 2
+      height: canvas.height
     },
     vector: {
       ...vector,
@@ -29,7 +29,7 @@ function Background({ pos, dims, vector, props, status, points, image, meta }) {
 
   /** @override **/
   this.preRender = function() {
-    if (this.pos.y === canvas.height * 2) {
+    if (this.pos.y === canvas.height) {
       this.pos.y = 0;
     }
   };
@@ -41,7 +41,7 @@ function Background({ pos, dims, vector, props, status, points, image, meta }) {
     canvas.drawImage({
       image: this.image.obj[this.image.timer.index],
       x: this.pos.x,
-      y: this.pos.y - canvas.height * 2,
+      y: this.pos.y - canvas.height,
       width: this.dims.width,
       height: this.dims.height,
       deg: this.image.deg

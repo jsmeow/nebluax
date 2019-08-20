@@ -10,7 +10,7 @@ const factory = new EntityFactory(list);
 
 // The game/application default background entity
 // Will update and render regardless of application state.
-const background = factory.background.outerSpace.space.space();
+const background = factory.background.space.space();
 
 // Swap the background and the background created entities in the entities list
 // so that the background entity is always first.

@@ -79,8 +79,6 @@ function Entity({
     value: points.value || 0
   };
 
-  console.log(image.src);
-
   // Image properties
   // obj - entity image object(s) reference
   // src - entity image object source(s) reference
@@ -223,7 +221,6 @@ function Entity({
     }
 
     // Increment or reset animation loop timer
-
     if (this.image.timer.frame >= this.image.delay) {
       this.image.timer.frame = 0;
     } else {
