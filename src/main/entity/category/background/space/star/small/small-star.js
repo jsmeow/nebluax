@@ -11,7 +11,8 @@ function SmallStar({ pos, dims, vector, props, status, points, image, meta }) {
     },
     vector: {
       ...vector,
-      dy: getRandomRangedFloat(0.5, 1.5)
+      speed: getRandomRangedFloat(0.5, 1.5),
+      dy: 1
     },
     props: {
       ...props,

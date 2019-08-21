@@ -6,7 +6,11 @@ function Space({ pos, dims, vector, props, status, points, image, meta }) {
   Background.call(this, {
     pos,
     dims,
-    vector,
+    vector: {
+      ...vector,
+      speed: 0.25,
+      dy: 1
+    },
     props: {
       ...props,
       type: ['space']

@@ -20,7 +20,8 @@ function LargeWideStar({
     },
     vector: {
       ...vector,
-      dy: getRandomRangedFloat(0.1, 0.3)
+      speed: (() => getRandomRangedFloat(0.1, 0.3))(),
+      dy: 1
     },
     props: {
       ...props,

@@ -6,15 +6,14 @@ const Entity = require('../../../../entity');
 
 function Planet({ pos, dims, vector, props, status, points, image, meta }) {
   Entity.call(this, {
-    // pos: pos || { ...getRandomCanvasPosition() },
-    pos: {
-      x: canvas.width / 2,
-      y: canvas.height / 2
+    pos: pos || {
+      ...getRandomCanvasPosition({ y: { min: 0, max: -canvas.height } })
     },
     dims,
     vector: {
       ...vector,
-      dy: getRandomRangedFloat(0.5, 1.5)
+      speed: (() => getRandomRangedFloat(0.5, 1.5))(),
+      dy: 2
     },
     props: {
       ...props,

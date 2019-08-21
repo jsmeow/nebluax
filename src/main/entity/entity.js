@@ -83,6 +83,16 @@ function Entity({
   // obj - entity image object(s) reference
   // src - entity image object source(s) reference
   // deg - the degrees in which to render the image object
+  // alpha - the opacity alpha value in which to render the image object, from
+  // range 0 to 1
+  // sat - the saturation value in which to render the image object, in
+  // percentage
+  // hue - the hue value in which to render the image object, in percentage
+  // luma - the brightness value in which to render the image object, in
+  // percentage
+  // con - the contrast value in which to render the image object, in
+  // percentage
+  // from 0 to 100. Saturation must be > 0, otherwise won't matter.
   // delay - the delay for the image animation loop timer
   // timer - image animation loop timer
   this.image = {
@@ -98,6 +108,11 @@ function Entity({
           return _image;
         }),
     deg: image.deg || 0,
+    alpha: image.alpha || 1,
+    sat: image.sat || null,
+    hue: image.hue || null,
+    luma: image.luma || null,
+    con: image.con || null,
     delay: image.delay || fps,
     timer: {
       frame: 0,
@@ -239,12 +254,17 @@ function Entity({
     this.preRender();
 
     canvas.drawImage({
-      image: this.image.obj[this.image.timer.index],
+      obj: this.image.obj[this.image.timer.index],
       x: this.pos.x,
       y: this.pos.y,
       width: this.dims.width,
       height: this.dims.height,
-      deg: this.image.deg
+      deg: this.image.deg,
+      alpha: this.image.alpha,
+      sat: this.image.sat,
+      hue: this.image.hue,
+      luma: this.image.luma,
+      con: this.image.con
     });
 
     this.updateAnimationTimer();

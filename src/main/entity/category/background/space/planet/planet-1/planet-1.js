@@ -16,7 +16,9 @@ function Planet1({ pos, dims, vector, props, status, points, image, meta }) {
     points,
     image: {
       ...image,
-      src: imageSource
+      src: imageSource,
+      // sat: 99,
+      sat: 0.5
     },
     meta
   });
