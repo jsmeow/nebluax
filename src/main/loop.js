@@ -3,11 +3,7 @@ const logic = require('./logic/logic');
 
 // The animation start frame timestamp
 function timestamp() {
-  if (window.performance && window.performance.now) {
-    return window.performance.now();
-  }
-
-  return new Date().getTime();
+  return window.performance.now();
 }
 
 // The previous frame datetime timestamp
@@ -34,8 +30,8 @@ function frame() {
   // We can workaround this by limiting the delta to one second
   delta = delta + Math.min(1, (now - last) / 1000);
 
-  while (delta > step) {
-    delta -= step;
+  while (delta >= step) {
+    delta = delta - step;
     logic.update();
   }
 

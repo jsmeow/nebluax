@@ -1,4 +1,4 @@
-const canvas = require('../../../../canvas/canvas');
+const canvas = require('../../../../canvas');
 const Bullet = require('../bullet');
 const allied1 =
   './main/entity/category/bullet/standard/assets/images/allied/allied1.png';

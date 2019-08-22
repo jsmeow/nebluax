@@ -1,4 +1,4 @@
-const canvas = require('../../../../../canvas/canvas');
+const canvas = require('../../../../../canvas');
 const Bomb = require('../bomb');
 const imgSrc1 =
   './main/entity/category/explosive/bomb/standard/assets/images/image-source-1.png';

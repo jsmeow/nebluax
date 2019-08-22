@@ -1,5 +1,5 @@
 const { fps } = require('../../../../options');
-const canvas = require('../../../../canvas/canvas');
+const canvas = require('../../../../canvas');
 const Ship = require('../ship');
 const BlueShipTrail = require('../../ship-trail/blue/blue-ship-trail');
 const StandardBullet = require('../../bullet/standard/standard-bullet');

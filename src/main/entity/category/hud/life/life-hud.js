@@ -1,4 +1,4 @@
-const canvas = require('../../../../canvas/canvas');
+const canvas = require('../../../../canvas');
 const Entity = require('../../../entity');
 const imgSrc =
   './main/entity/category/hud/life/assets/images/image-source.png';

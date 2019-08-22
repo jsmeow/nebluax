@@ -1,4 +1,4 @@
-const canvas = require('../../../../canvas/canvas');
+const canvas = require('../../../../canvas');
 const ShipTrail = require('../ship-trail');
 const imgSrc1 =
   './main/entity/category/ship-trail/blue/assets/images/image-source-1.png';

@@ -1,4 +1,4 @@
-const canvas = require('../../../canvas/canvas');
+const canvas = require('../../../canvas');
 
 function render() {
   // Draw the 'NEBULON' text.

@@ -1,4 +1,4 @@
-const canvas = require('../../../../../../canvas/canvas');
+const canvas = require('../../../../../../canvas');
 const getRandomRangedFloat = require('../../../../../util/get-random-ranged-float');
 const Star = require('../star');
 
@@ -11,7 +11,8 @@ function LargeStar({ pos, dims, vector, props, status, points, img, meta }) {
     },
     vector: {
       ...vector,
-      speed: (() => getRandomRangedFloat(0.5, 1.5))(),
+      // speed: (() => getRandomRangedFloat(0.5, 1.5))(),
+      speed: 1,
       dy: 1
     },
     props: {

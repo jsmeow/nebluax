@@ -1,4 +1,4 @@
-const canvas = require('../../../../../../canvas/canvas');
+const canvas = require('../../../../../../canvas');
 const Planet = require('../planet');
 const imgSrc =
   './main/entity/category/background/space/planet/planet-1/assets/images/image-source.png';

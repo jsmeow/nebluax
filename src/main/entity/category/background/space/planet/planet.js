@@ -1,4 +1,4 @@
-const canvas = require('../../../../../canvas/canvas');
+const canvas = require('../../../../../canvas');
 const assertBoundaryCollision = require('../../../../event/collision/assert-boundary-collision');
 const getRandomRangedFloat = require('../../../../util/get-random-ranged-float');
 const getRandomCanvasPosition = require('../../../../util/get-random-canvas-position');
@@ -12,8 +12,9 @@ function Planet({ pos, dims, vector, props, status, points, img, meta }) {
     dims,
     vector: {
       ...vector,
-      speed: (() => getRandomRangedFloat(0.5, 1.5))(),
-      dy: 2
+      // speed: (() => getRandomRangedFloat(0.5, 1.5))(),
+      speed: 1,
+      dy: 1
     },
     props: {
       ...props,

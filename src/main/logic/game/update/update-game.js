@@ -2,8 +2,8 @@ const { list } = require('../../../entities');
 
 function update() {
   list.forEach(entities => {
-    entities.forEach(entity => {
-      entity.update();
+    entities.forEach((entity, index) => {
+      entity.update(index);
     });
   });
 }

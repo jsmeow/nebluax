@@ -1,8 +1,7 @@
-const DrawImageWorker = require('../canvas/worker/draw-image/draw-image-worker');
-const move = require('./event/move/move');
-const moveToPoint = require('./event/move/move-to-point');
-const moveInPath = require('./event/move/move-in-path');
-const collision = require('./event/collision/collision');
+const { fps } = require('../options');
+const canvas = require('../canvas');
+const UpdateWorkerHandler = require('./worker-handler/update/update-worker-handler');
+const RenderWorkerHandler = require('./worker-handler/render/render-worker-handler');
 
 function Entity({
   pos = {},
@@ -12,6 +11,7 @@ function Entity({
   status = {},
   points = {},
   img = {},
+  anim = {},
   meta = {}
 }) {
   // Position coordinates relative to the html5 canvas
@@ -79,13 +79,31 @@ function Entity({
   };
 
   // Image properties
+  // ctx - offscreen canvas context reference
+  // src - the image source(s) used by the entity, converted to image objects
+  // deg - the rotation in degrees to render the image
   this.img = {
-    src: img.src,
-    animDelay: img.animDelay
+    ctx: canvas.offscreenCanvas.getContext('2d'),
+    src: [Array.isArray(img.src) ? [...img.src] : [img.src]].map(
+      (src, index) => {
+        const _img = new Image();
+        _img.src = src[index];
+        return _img;
+      }
+    ),
+    deg: img.deg || 0
   };
 
-  // Canvas draw image web worker handler
-  this.drawImageWorker = new DrawImageWorker(this.pos, this.dims, this.img);
+  // Animation properties if the entity performs animation ie. has more than
+  // image source
+  // delay - time between animation frames
+  // frame - current animation frame
+  // index - current animation image index of the current image to draw
+  this.anim = {
+    delay: anim.delay || fps,
+    frame: 0,
+    index: 0
+  };
 
   // Meta properties
   // Contains references to external application entities/objects
@@ -98,107 +116,58 @@ function Entity({
     entities: meta.entities || null
   };
 
-  // Define and bind external movement and collision methods
-
-  // Perform movement
-  this.move = move.bind(this);
-
-  // Perform movement to a position coordinate point
-  this.moveToPoint = moveToPoint.bind(this);
-
-  // Perform movement in a path
-  this.moveInPath = moveInPath.bind(this);
-
-  // Perform collision assertion and collision action
-  this.collision = collision.bind(this);
-
-  // Define update methods
-
-  // Pre-update entity
-  // Perform an update before the update method implementation.
-  // Extending entity classes are expected to override this method if needed.
-  this.preUpdate = function() {};
-
-  // Entity disposal update action
-  // Removes the entity from the entities list.
-  this.dispose = function(index) {
-    this.meta.entities.splice(index, 1);
-  };
-
-  // Update the entity timers
-  // Extending entity classes are expected to override this method if needed.
-  this.updateTimers = function() {};
-
-  // Update position coordinate
-  // Perform a position coordinate update via the move method.
-  this.updatePosition = function() {
-    this.move();
-  };
-
-  // Update collision assertion and collision action
-  // Perform an entity collision assertion via the collision method, if the
-  // entities list was passed and collides status is set to true.
-  this.updateCollision = function(index) {
-    if (this.meta.entities && this.status.collides) {
-      this.collision(index);
-    }
-  };
-
-  // Reset status/points/properties after an update in preparation for
-  // the next update.
-  this.reset = function() {
-    if (this.status.collided) {
-      this.status.collided = false;
-    }
-  };
-
-  // Post-update entity
-  // Perform an update after the update method implementation.
-  // Extending entity classes are expected to override this method if needed.
-  this.postUpdate = function() {};
+  // Create entity web worker handlers
+  const updateWorkerHandler = new UpdateWorkerHandler(this);
+  const renderWorkerHandler = new RenderWorkerHandler();
 
   // Update entity
   // Perform update work on a single application frame.
   // If the disposing status is true, perform entity disposal.
   this.update = function(index) {
-    this.preUpdate();
+    // Pre-update entity
+    // Perform an update before the update method implementation.
+    // Extending entity classes are expected to override this method if needed.
+    this.preUpdate ? this.preUpdate() : null;
 
     if (this.status.dispose) {
-      this.dispose(index);
+      this.meta.entities.splice(index, 1);
     } else {
-      this.updateTimers();
-      this.updatePosition();
-      this.updateCollision(index);
+      // Update the entity timers
+      // Extending entity classes are expected to override this method if
+      // needed.
+      this.updateTimers ? this.updateTimers() : null;
+
+      updateWorkerHandler.updatePosition();
+      updateWorkerHandler.updateCollision(index);
+      updateWorkerHandler.updateAnimation();
     }
 
-    this.postUpdate();
-    this.reset();
+    // Post-update entity
+    // Perform an update after the update method implementation.
+    // Extending entity classes are expected to override this method if needed.
+    this.postUpdate ? this.postUpdate() : null;
   };
-
-  // Define render methods
-
-  // Pre-render entity
-  // Perform a render update before the render method implementation.
-  // Extending entity classes are expected to override this method if needed.
-  this.preRender = function() {};
-
-  // Post-render entity
-  // Perform a render update after the render method implementation.
-  // Extending entity classes are expected to override this method if needed.
-  this.postRender = function() {};
 
   // Render entity
   // Perform rendering on a single application frame.
   this.render = function() {
-    this.preRender();
+    // Pre-render entity
+    // Perform a render update before the render method implementation.
+    // Extending entity classes are expected to override this method if needed.
+    this.preRender ? this.preRender() : null;
 
-    // Execute and update the draw image web worker handler
-    this.drawImageWorker.exec();
-    this.drawImageWorker.updateAnimationTimer();
-    this.drawImageWorker.pos = this.pos;
-    this.drawImageWorker.dims = this.dims;
+    this.img.ctx.drawImage(
+      this.img.src[this.anim.index],
+      this.pos.x,
+      this.pos.y,
+      this.dims.width,
+      this.dims.height
+    );
 
-    this.postRender();
+    // Post-render entity
+    // Perform a render update after the render method implementation.
+    // Extending entity classes are expected to override this method if needed.
+    this.postRender ? this.postRender() : null;
   };
 }
 

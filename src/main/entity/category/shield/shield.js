@@ -1,5 +1,5 @@
 const { fps } = require('../../../options');
-const canvas = require('../../../canvas/canvas');
+const canvas = require('../../../canvas');
 const Entity = require('../../entity');
 
 function Shield({ creator, entities }) {

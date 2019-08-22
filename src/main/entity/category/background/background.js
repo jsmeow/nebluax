@@ -1,5 +1,4 @@
-const canvas = require('../../../canvas/canvas');
-const DrawImageWorker = require('../../../canvas/worker/draw-image/draw-image-worker');
+const canvas = require('../../../canvas');
 const Entity = require('../../entity');
 
 function Background({ pos, dims, vector, props, status, points, img, meta }) {
@@ -24,14 +23,6 @@ function Background({ pos, dims, vector, props, status, points, img, meta }) {
   // Extending entity classes are are expected to override this property.
   this.entities = [];
 
-  // Create a second canvas draw image web worker handler to infinitely scroll
-  // background
-  this.drawImageWorker2 = new DrawImageWorker(
-    { x: this.pos.x, y: -this.dims.height },
-    this.dims,
-    this.img
-  );
-
   /** @override **/
   this.preRender = function() {
     if (this.pos.y >= this.dims.height) {
@@ -41,20 +32,31 @@ function Background({ pos, dims, vector, props, status, points, img, meta }) {
 
   /** @override **/
   this.render = function() {
-    this.preRender();
+    // Pre-render entity
+    // Perform a render update before the render method implementation.
+    // Extending entity classes are expected to override this method if needed.
+    this.preRender ? this.preRender() : null;
 
-    // Execute and update the draw image web worker handler
-    this.drawImageWorker.exec();
-    this.drawImageWorker2.exec();
-    this.drawImageWorker.updateAnimationTimer();
-    this.drawImageWorker2.updateAnimationTimer();
-    this.drawImageWorker.pos = this.pos;
-    this.drawImageWorker2.pos = {
-      x: this.pos.x,
-      y: this.pos.y - this.dims.height
-    };
+    this.img.ctx.drawImage(
+      this.img.src[this.anim.index],
+      this.pos.x,
+      this.pos.y - this.dims.height,
+      this.dims.width,
+      this.dims.height
+    );
 
-    this.postRender();
+    this.img.ctx.drawImage(
+      this.img.src[this.anim.index],
+      this.pos.x,
+      this.pos.y,
+      this.dims.width,
+      this.dims.height
+    );
+
+    // Post-render entity
+    // Perform a render update after the render method implementation.
+    // Extending entity classes are expected to override this method if needed.
+    this.postRender ? this.postRender() : null;
   };
 }
 

@@ -1,4 +1,4 @@
-const canvas = require('../../../../../canvas/canvas');
+const canvas = require('../../../../../canvas');
 const Ship = require('../../ship');
 const StandardBullet = require('../../../bullet/standard/standard-bullet');
 const allied =
