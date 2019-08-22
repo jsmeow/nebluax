@@ -28,7 +28,7 @@ function Player(factory, entities) {
     height: Player.height,
     speed: 2,
     faction: 'allied',
-    imageSource: [
+    imgSrc: [
       [allied1, allied2, allied3, allied4],
       [],
       [],

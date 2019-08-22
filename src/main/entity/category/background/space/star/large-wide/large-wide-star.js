@@ -9,7 +9,7 @@ function LargeWideStar({
   props,
   status,
   points,
-  image,
+  img,
   meta
 }) {
   Star.call(this, {
@@ -29,7 +29,7 @@ function LargeWideStar({
     },
     status,
     points,
-    image,
+    img,
     meta
   });
 }

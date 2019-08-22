@@ -9,7 +9,7 @@ function Shield({ creator, entities }) {
     width: creator.width + canvas.res * 6,
     height: creator.height + canvas.res * 6,
     type: ['shield'],
-    imageSource: creator.imageSource[4],
+    imgSrc: creator.imgSrc[4],
     degrees: creator.degrees,
     creator,
     entities

@@ -12,7 +12,7 @@ function Ship({
   faction,
   status,
   points,
-  imageSource,
+  imgSrc,
   degrees,
   creator,
   factory,
@@ -30,7 +30,7 @@ function Ship({
     faction,
     status,
     points,
-    imageSource,
+    imgSrc,
     degrees,
     creator,
     factory,
@@ -146,58 +146,58 @@ function Ship({
 
   /** @override **/
   this.loadImage = function() {
-    let imageSource;
+    let imgSrc;
 
     // Get the image source entities based on the entity faction/status
 
     if (this.faction === 'allied') {
-      imageSource = this.imageSource.allied;
+      imgSrc = this.imgSrc.allied;
     }
 
     if (this.faction === 'enemy') {
-      imageSource = this.imageSource.enemy;
+      imgSrc = this.imgSrc.enemy;
     }
 
     if (this.faction === 'neutral' || !this.faction) {
-      imageSource = this.imageSource.neutral;
+      imgSrc = this.imgSrc.neutral;
     }
 
     if (this.status.damaged) {
-      imageSource = this.imageSource.damaged;
+      imgSrc = this.imgSrc.damaged;
     }
 
     if (this.status.shielded) {
-      imageSource = this.imageSource.shielded;
+      imgSrc = this.imgSrc.shielded;
     }
 
     if (this.status.powered) {
-      imageSource = this.imageSource.powered;
+      imgSrc = this.imgSrc.powered;
     }
 
-    this.image.src = imageSource;
+    this.image.src = imgSrc;
   };
 
   /** @override **/
   this.loadImages = function() {
-    let imageSource;
+    let imgSrc;
 
     // Get the image source entities based on the entity faction
 
     if (this.faction === 'allied') {
-      imageSource = this.imageSource[0];
+      imgSrc = this.imgSrc[0];
     }
 
     if (this.faction === 'enemy') {
-      imageSource = this.imageSource[1];
+      imgSrc = this.imgSrc[1];
     }
 
     if (this.faction === 'neutral' || !this.faction) {
-      imageSource = this.imageSource[2];
+      imgSrc = this.imgSrc[2];
     }
 
-    this.image = [...Array(imageSource.length)].map((_, index) => {
+    this.image = [...Array(imgSrc.length)].map((_, index) => {
       const image = new Image();
-      image.src = imageSource[index];
+      image.src = imgSrc[index];
       return image;
     });
   };

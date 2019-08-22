@@ -1,6 +1,6 @@
 const canvas = require('../../../../canvas/canvas');
 const Entity = require('../../../entity');
-const imageSource =
+const imgSrc =
   './main/entity/category/hud/health/assets/images/image-source.png';
 
 function HealthHud(entities) {
@@ -8,7 +8,7 @@ function HealthHud(entities) {
     x: canvas.width * 0.5 - canvas.res * 17,
     y: canvas.res * 10,
     type: ['hud, health'],
-    imageSource,
+    imgSrc,
     entities
   });
 
@@ -36,7 +36,7 @@ function HealthHud(entities) {
     });
 
     canvas.drawImage({
-      image: this.image,
+      img: this.img,
       x: this.pos.x + canvas.res * 14,
       y: this.pos.y + canvas.res * 3,
       width: 30,

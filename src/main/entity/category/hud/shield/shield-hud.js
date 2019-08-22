@@ -1,6 +1,6 @@
 const canvas = require('../../../../canvas/canvas');
 const Entity = require('../../../entity');
-const imageSource =
+const imgSrc =
   './main/entity/category/hud/shield/assets/images/image-source.png';
 
 function ShieldHud(entities) {
@@ -8,7 +8,7 @@ function ShieldHud(entities) {
     x: canvas.res * 80,
     y: canvas.res * 10,
     type: ['hud, shield'],
-    imageSource,
+    imgSrc,
     entities
   });
 
@@ -36,7 +36,7 @@ function ShieldHud(entities) {
     });
 
     canvas.drawImage({
-      image: this.image,
+      img: this.img,
       x: this.pos.x + canvas.res * 14,
       y: this.pos.y + canvas.res * 3,
       width: 30,

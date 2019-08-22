@@ -1,7 +1,8 @@
 const canvas = require('../../../canvas/canvas');
+const DrawImageWorker = require('../../../canvas/worker/draw-image/draw-image-worker');
 const Entity = require('../../entity');
 
-function Background({ pos, dims, vector, props, status, points, image, meta }) {
+function Background({ pos, dims, vector, props, status, points, img, meta }) {
   Entity.call(this, {
     pos,
     dims: dims || {
@@ -15,13 +16,21 @@ function Background({ pos, dims, vector, props, status, points, image, meta }) {
     },
     status,
     points,
-    image,
+    img,
     meta
   });
 
   // entities of entities that populate the background
   // Extending entity classes are are expected to override this property.
   this.entities = [];
+
+  // Create a second canvas draw image web worker handler to infinitely scroll
+  // background
+  this.drawImageWorker2 = new DrawImageWorker(
+    { x: this.pos.x, y: -this.dims.height },
+    this.dims,
+    this.img
+  );
 
   /** @override **/
   this.preRender = function() {
@@ -34,23 +43,17 @@ function Background({ pos, dims, vector, props, status, points, image, meta }) {
   this.render = function() {
     this.preRender();
 
-    [this.pos.y, this.pos.y - this.dims.height].forEach(y => {
-      canvas.drawImage({
-        elem: this.image.elem[this.image.timer.index],
-        x: this.pos.x,
-        y,
-        width: this.dims.width,
-        height: this.dims.height
-        /*        deg: this.image.deg,
-        alpha: this.image.alpha,
-        sat: this.image.sat,
-        hue: this.image.hue,
-        luma: this.image.luma,
-        con: this.image.con*/
-      });
-    });
+    // Execute and update the draw image web worker handler
+    this.drawImageWorker.exec();
+    this.drawImageWorker2.exec();
+    this.drawImageWorker.updateAnimationTimer();
+    this.drawImageWorker2.updateAnimationTimer();
+    this.drawImageWorker.pos = this.pos;
+    this.drawImageWorker2.pos = {
+      x: this.pos.x,
+      y: this.pos.y - this.dims.height
+    };
 
-    this.updateAnimationTimer();
     this.postRender();
   };
 }

@@ -9,7 +9,7 @@ function Bullet({
   speed,
   dx,
   dy,
-  imageSource,
+  imgSrc,
   degrees,
   creator,
   entities
@@ -24,7 +24,7 @@ function Bullet({
     dy: dy || creator.faction === 'enemy' ? 1 : -1,
     type: ['bullet'],
     faction: creator.faction,
-    imageSource,
+    imgSrc,
     degrees,
     creator,
     entities
@@ -58,25 +58,25 @@ function Bullet({
 
   /** @override **/
   this.loadImages = function() {
-    let imageSource;
+    let imgSrc;
 
     // Get the image source entities based on the entity faction
 
     if (this.faction === 'allied') {
-      imageSource = this.imageSource[0];
+      imgSrc = this.imgSrc[0];
     }
 
     if (this.faction === 'enemy') {
-      imageSource = this.imageSource[1];
+      imgSrc = this.imgSrc[1];
     }
 
     if (this.faction === 'neutral' || !this.faction) {
-      imageSource = this.imageSource[2];
+      imgSrc = this.imgSrc[2];
     }
 
-    this.image = [...Array(imageSource.length)].map((_, index) => {
+    this.image = [...Array(imgSrc.length)].map((_, index) => {
       const image = new Image();
-      image.src = imageSource[index];
+      image.src = imgSrc[index];
       return image;
     });
   };

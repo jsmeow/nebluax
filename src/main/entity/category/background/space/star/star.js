@@ -3,7 +3,7 @@ const assertBoundaryCollision = require('../../../../event/collision/assert-boun
 const getRandomCanvasPosition = require('../../../../util/get-random-canvas-position');
 const Entity = require('../../../../entity');
 
-function Star({ pos, dims, vector, props, status, points, image, meta }) {
+function Star({ pos, dims, vector, props, status, points, img, meta }) {
   Entity.call(this, {
     pos: pos || { ...getRandomCanvasPosition() },
     dims,
@@ -14,7 +14,7 @@ function Star({ pos, dims, vector, props, status, points, image, meta }) {
     },
     status,
     points,
-    image,
+    img,
     meta
   });
 

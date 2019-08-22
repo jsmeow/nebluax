@@ -1,8 +1,8 @@
 const Background = require('../background');
-const imageSource =
+const imgSrc =
   './main/entity/category/background/space/assets/images/image-source.png';
 
-function Space({ pos, dims, vector, props, status, points, image, meta }) {
+function Space({ pos, dims, vector, props, status, points, img, meta }) {
   Background.call(this, {
     pos,
     dims,
@@ -17,9 +17,9 @@ function Space({ pos, dims, vector, props, status, points, image, meta }) {
     },
     status,
     points,
-    image: {
-      ...image,
-      src: imageSource
+    img: {
+      ...img,
+      src: imgSrc
     },
     meta
   });

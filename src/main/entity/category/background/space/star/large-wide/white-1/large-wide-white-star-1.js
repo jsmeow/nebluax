@@ -1,5 +1,5 @@
 const LargeWideStar = require('../large-wide-star');
-const imageSource =
+const imgSrc =
   './main/entity/category/background/space/star/large-wide/white-1/assets/images/image-source.png';
 
 function LargeWideWhiteStar1({
@@ -9,7 +9,7 @@ function LargeWideWhiteStar1({
   props,
   status,
   points,
-  image,
+  img,
   meta
 }) {
   LargeWideStar.call(this, {
@@ -22,9 +22,9 @@ function LargeWideWhiteStar1({
     },
     status,
     points,
-    image: {
-      ...image,
-      src: imageSource
+    img: {
+      ...img,
+      src: imgSrc
     },
     meta
   });

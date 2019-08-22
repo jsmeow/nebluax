@@ -1,5 +1,5 @@
 const SmallStar = require('../small-star');
-const imageSource =
+const imgSrc =
   './main/entity/category/background/space/star/small/red-3/assets/images/image-source.png';
 
 function SmallRedStar3({
@@ -9,7 +9,7 @@ function SmallRedStar3({
   props,
   status,
   points,
-  image,
+  img,
   meta
 }) {
   SmallStar.call(this, {
@@ -22,9 +22,9 @@ function SmallRedStar3({
     },
     status,
     points,
-    image: {
-      ...image,
-      src: imageSource
+    img: {
+      ...img,
+      src: imgSrc
     },
     meta
   });

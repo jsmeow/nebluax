@@ -1,15 +1,15 @@
 const canvas = require('../../../../canvas/canvas');
 const ShipTrail = require('../ship-trail');
-const imageSource1 =
+const imgSrc1 =
   './main/entity/category/ship-trail/blue/assets/images/image-source-1.png';
-const imageSource2 =
+const imgSrc2 =
   './main/entity/category/ship-trail/blue/assets/images/image-source-2.png';
 
 function BlueShipTrail({ degrees, creator, entities, getX, getY }) {
   ShipTrail.call(this, {
     width: BlueShipTrail.width,
     height: BlueShipTrail.height,
-    imageSource: [imageSource1, imageSource2],
+    imgSrc: [imgSrc1, imgSrc2],
     degrees,
     creator,
     entities,

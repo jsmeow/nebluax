@@ -8,7 +8,7 @@ function Explosion({
   height,
   faction,
   points,
-  imageSource,
+  imgSrc,
   entities
 }) {
   Entity.call(this, {
@@ -19,7 +19,7 @@ function Explosion({
     type: ['explosion'],
     faction: faction || 'neutral',
     points,
-    imageSource,
+    imgSrc,
     entities
   });
 

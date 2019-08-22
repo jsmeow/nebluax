@@ -1,13 +1,13 @@
 const SmallStar = require('../small-star');
-const imageSource1 =
+const imgSrc1 =
   './main/entity/category/background/space/star/small/white-blinking-1/assets/images/image-source-1.png';
-const imageSource2 =
+const imgSrc2 =
   './main/entity/category/background/space/star/small/white-blinking-1/assets/images/image-source-2.png';
-const imageSource3 =
+const imgSrc3 =
   './main/entity/category/background/space/star/small/white-blinking-1/assets/images/image-source-3.png';
-const imageSource4 =
+const imgSrc4 =
   './main/entity/category/background/space/star/small/white-blinking-1/assets/images/image-source-4.png';
-const imageSource5 =
+const imgSrc5 =
   './main/entity/category/background/space/star/small/white-blinking-1/assets/images/image-source-5.png';
 
 function SmallBlinkingWhiteStar1({
@@ -17,7 +17,7 @@ function SmallBlinkingWhiteStar1({
   props,
   status,
   points,
-  image,
+  img,
   meta
 }) {
   SmallStar.call(this, {
@@ -30,17 +30,17 @@ function SmallBlinkingWhiteStar1({
     },
     status,
     points,
-    image: {
-      ...image,
+    img: {
+      ...img,
       src: [
-        imageSource1,
-        imageSource2,
-        imageSource3,
-        imageSource4,
-        imageSource5,
-        imageSource4,
-        imageSource3,
-        imageSource2
+        imgSrc1,
+        imgSrc2,
+        imgSrc3,
+        imgSrc4,
+        imgSrc5,
+        imgSrc4,
+        imgSrc3,
+        imgSrc2
       ]
     },
     meta

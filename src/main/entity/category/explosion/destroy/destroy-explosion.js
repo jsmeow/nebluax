@@ -1,18 +1,18 @@
 const canvas = require('../../../../canvas/canvas');
 const Explosion = require('../explosion');
-const imageSource1 =
+const imgSrc1 =
   './main/entity/category/explosion/destroy/assets/images/shield1.png';
-const imageSource2 =
+const imgSrc2 =
   './main/entity/category/explosion/destroy/assets/images/shield2.png';
-const imageSource3 =
+const imgSrc3 =
   './main/entity/category/explosion/destroy/assets/images/shield3.png';
-const imageSource4 =
+const imgSrc4 =
   './main/entity/category/explosion/destroy/assets/images/image-source-4.png';
-const imageSource5 =
+const imgSrc5 =
   './main/entity/category/explosion/destroy/assets/images/image-source-5.png';
-const imageSource6 =
+const imgSrc6 =
   './main/entity/category/explosion/destroy/assets/images/image-source-6.png';
-const imageSource7 =
+const imgSrc7 =
   './main/entity/category/explosion/destroy/assets/images/image-source-7.png';
 
 function DestroyExplosion({ x, y, width, height, faction, points, entities }) {
@@ -23,14 +23,14 @@ function DestroyExplosion({ x, y, width, height, faction, points, entities }) {
     height: height || DestroyExplosion.height,
     faction,
     points,
-    imageSources: [
-      imageSource1,
-      imageSource2,
-      imageSource3,
-      imageSource4,
-      imageSource5,
-      imageSource6,
-      imageSource7
+    imgSrcs: [
+      imgSrc1,
+      imgSrc2,
+      imgSrc3,
+      imgSrc4,
+      imgSrc5,
+      imgSrc6,
+      imgSrc7
     ],
     entities
   });

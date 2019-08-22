@@ -1,5 +1,4 @@
-const { fps } = require('../options');
-const canvas = require('../canvas/canvas');
+const DrawImageWorker = require('../canvas/worker/draw-image/draw-image-worker');
 const move = require('./event/move/move');
 const moveToPoint = require('./event/move/move-to-point');
 const moveInPath = require('./event/move/move-in-path');
@@ -12,7 +11,7 @@ function Entity({
   props = {},
   status = {},
   points = {},
-  image = {},
+  img = {},
   meta = {}
 }) {
   // Position coordinates relative to the html5 canvas
@@ -80,45 +79,13 @@ function Entity({
   };
 
   // Image properties
-  // obj - entity image object(s) reference
-  // src - entity image object source(s) reference
-  // deg - the degrees in which to render the image object
-  // alpha - the opacity alpha value in which to render the image object, from
-  // range 0 to 1
-  // sat - the saturation value in which to render the image object, in
-  // percentage
-  // hue - the hue value in which to render the image object, in percentage
-  // luma - the brightness value in which to render the image object, in
-  // percentage
-  // con - the contrast value in which to render the image object, in
-  // percentage
-  // from 0 to 100. Saturation must be > 0, otherwise won't matter.
-  // delay - the delay for the image animation loop timer
-  // timer - image animation loop timer
-  this.image = {
-    src: image.src,
-    elem: Array.isArray(image.src)
-      ? [...Array(image.src.length)].map((_, index) => {
-          const _image = new Image();
-          _image.src = image.src[index];
-          return _image;
-        })
-      : [new Image()].map(_image => {
-          _image.src = image.src;
-          return _image;
-        }),
-    deg: image.deg || 0,
-    alpha: image.alpha || 1,
-    sat: image.sat || null,
-    hue: image.hue || null,
-    luma: image.luma || null,
-    con: image.con || null,
-    delay: image.delay || fps,
-    timer: {
-      frame: 0,
-      index: 0
-    }
+  this.img = {
+    src: img.src,
+    animDelay: img.animDelay
   };
+
+  // Canvas draw image web worker handler
+  this.drawImageWorker = new DrawImageWorker(this.pos, this.dims, this.img);
 
   // Meta properties
   // Contains references to external application entities/objects
@@ -131,7 +98,7 @@ function Entity({
     entities: meta.entities || null
   };
 
-  // Define and bind external methods
+  // Define and bind external movement and collision methods
 
   // Perform movement
   this.move = move.bind(this);
@@ -215,35 +182,6 @@ function Entity({
   // Extending entity classes are expected to override this method if needed.
   this.preRender = function() {};
 
-  // Update the animation loop timer and image index
-  this.updateAnimationTimer = function() {
-    // Increment or reset animation image index
-    const timerRangeBegin =
-      this.image.timer.index * (this.image.delay / this.image.elem.length);
-
-    const timerRangeEnd =
-      (this.image.timer.index + 1) *
-      (this.image.delay / this.image.elem.length);
-
-    if (
-      this.image.timer.frame >= timerRangeBegin &&
-      this.image.timer.frame < timerRangeEnd
-    ) {
-      this.image.timer.index = this.image.timer.index + 1;
-    }
-
-    if (this.image.timer.index >= this.image.elem.length) {
-      this.image.timer.index = 0;
-    }
-
-    // Increment or reset animation loop timer
-    if (this.image.timer.frame >= this.image.delay) {
-      this.image.timer.frame = 0;
-    } else {
-      this.image.timer.frame = this.image.timer.frame + 1;
-    }
-  };
-
   // Post-render entity
   // Perform a render update after the render method implementation.
   // Extending entity classes are expected to override this method if needed.
@@ -254,21 +192,12 @@ function Entity({
   this.render = function() {
     this.preRender();
 
-    canvas.drawImage({
-      elem: this.image.elem[this.image.timer.index],
-      x: this.pos.x,
-      y: this.pos.y,
-      width: this.dims.width,
-      height: this.dims.height,
-      deg: this.image.deg,
-      alpha: this.image.alpha,
-      sat: this.image.sat,
-      hue: this.image.hue,
-      luma: this.image.luma,
-      con: this.image.con
-    });
+    // Execute and update the draw image web worker handler
+    this.drawImageWorker.exec();
+    this.drawImageWorker.updateAnimationTimer();
+    this.drawImageWorker.pos = this.pos;
+    this.drawImageWorker.dims = this.dims;
 
-    this.updateAnimationTimer();
     this.postRender();
   };
 }

@@ -4,7 +4,7 @@ const Entity = require('../../entity');
 function ShipTrail({
   width,
   height,
-  imageSource,
+  imgSrc,
   degrees,
   creator,
   entities,
@@ -17,7 +17,7 @@ function ShipTrail({
     width,
     height,
     type: ['ship-trail'],
-    imageSource,
+    imgSrc,
     degrees,
     creator,
     entities

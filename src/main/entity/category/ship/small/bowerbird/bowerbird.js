@@ -18,7 +18,7 @@ function Bowerbird({ degrees, faction, factory, entities }) {
     width: Bowerbird.width,
     height: Bowerbird.height,
     faction,
-    imageSource: {
+    imgSrc: {
       allied,
       enemy,
       neutral,

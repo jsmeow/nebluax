@@ -1,10 +1,10 @@
 const { fps } = require('../../../../../../../options');
 const SmallStar = require('../small-star');
-const imageSource1 =
+const imgSrc1 =
   './main/entity/category/background/space/star/small/multicolor-blinking-1/assets/images/image-source-1.png';
-const imageSource2 =
+const imgSrc2 =
   './main/entity/category/background/space/star/small/multicolor-blinking-1/assets/images/image-source-2.png';
-const imageSource3 =
+const imgSrc3 =
   './main/entity/category/background/space/star/small/multicolor-blinking-1/assets/images/image-source-3.png';
 
 function SmallBlinkingMulticolorStar1({
@@ -14,7 +14,7 @@ function SmallBlinkingMulticolorStar1({
   props,
   status,
   points,
-  image,
+  img,
   meta
 }) {
   SmallStar.call(this, {
@@ -27,9 +27,9 @@ function SmallBlinkingMulticolorStar1({
     },
     status,
     points,
-    image: {
-      ...image,
-      src: [imageSource1, imageSource2, imageSource3, imageSource2],
+    img: {
+      ...img,
+      src: [imgSrc1, imgSrc2, imgSrc3, imgSrc2],
       delay: fps * 0.2
     },
     meta
