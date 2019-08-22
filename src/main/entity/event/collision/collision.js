@@ -4,7 +4,7 @@ const validateEntityCollisionEvent = require('./assert-entity-collision-event');
 // Cycle through the entities list and perform a collision assertion and
 // collision action
 function collision(index) {
-  this.list.forEach((entity, _index) => {
+  this.entities.forEach((entity, _index) => {
     // Perform a collision assertion
     if (
       validateEntityCollisionEvent(this, entity, index, _index) &&

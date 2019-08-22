@@ -4,25 +4,25 @@ const LifeHud = require('../../category/hud/life/life-hud');
 const ScoreHud = require('../../category/hud/score/score-hud');
 const ShieldHud = require('../../category/hud/shield/shield-hud');
 
-function HudFactory(list) {
+function HudFactory(entities) {
   this.bombHud = function() {
-    return new BombHud(list);
+    return new BombHud(entities);
   };
 
   this.healthHud = function() {
-    return new HealthHud(list);
+    return new HealthHud(entities);
   };
 
   this.lifeHud = function() {
-    return new LifeHud(list);
+    return new LifeHud(entities);
   };
 
   this.scoreHud = function() {
-    return new ScoreHud(list);
+    return new ScoreHud(entities);
   };
 
   this.shieldHud = function() {
-    return new ShieldHud(list);
+    return new ShieldHud(entities);
   };
 }
 

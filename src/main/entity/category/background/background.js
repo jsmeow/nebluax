@@ -1,12 +1,12 @@
-const canvas = require('../../../canvas');
+const canvas = require('../../../canvas/canvas');
 const Entity = require('../../entity');
 
 function Background({ pos, dims, vector, props, status, points, image, meta }) {
   Entity.call(this, {
     pos,
     dims: dims || {
-      width: canvas.pixel * 320,
-      height: canvas.pixel * 320
+      width: canvas.width,
+      height: canvas.height
     },
     vector,
     props: {
@@ -19,13 +19,13 @@ function Background({ pos, dims, vector, props, status, points, image, meta }) {
     meta
   });
 
-  // List of entities that populate the background
+  // entities of entities that populate the background
   // Extending entity classes are are expected to override this property.
   this.entities = [];
 
   /** @override **/
   this.preRender = function() {
-    if (this.pos.y >= canvas.pixel * 320) {
+    if (this.pos.y >= this.dims.height) {
       this.pos.y = 0;
     }
   };
@@ -34,19 +34,19 @@ function Background({ pos, dims, vector, props, status, points, image, meta }) {
   this.render = function() {
     this.preRender();
 
-    [this.pos.y, this.pos.y - canvas.pixel * 320].forEach(y => {
+    [this.pos.y, this.pos.y - this.dims.height].forEach(y => {
       canvas.drawImage({
-        obj: this.image.obj[this.image.timer.index],
+        elem: this.image.elem[this.image.timer.index],
         x: this.pos.x,
         y,
         width: this.dims.width,
-        height: this.dims.height,
-        deg: this.image.deg,
+        height: this.dims.height
+        /*        deg: this.image.deg,
         alpha: this.image.alpha,
         sat: this.image.sat,
         hue: this.image.hue,
         luma: this.image.luma,
-        con: this.image.con
+        con: this.image.con*/
       });
     });
 

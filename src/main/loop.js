@@ -3,9 +3,11 @@ const logic = require('./logic/logic');
 
 // The animation start frame timestamp
 function timestamp() {
-  return window.performance && window.performance.now
-    ? window.performance.now()
-    : new Date().getTime();
+  if (window.performance && window.performance.now) {
+    return window.performance.now();
+  }
+
+  return new Date().getTime();
 }
 
 // The previous frame datetime timestamp
@@ -32,30 +34,25 @@ function frame() {
   // We can workaround this by limiting the delta to one second
   delta = delta + Math.min(1, (now - last) / 1000);
 
-  // Update the application
   while (delta > step) {
     delta -= step;
     logic.update();
   }
 
-  // Render the application
   logic.render();
 
-  // The current frame datetime timestamp becomes the previous frame datetime
-  // Timestamp.
   last = now;
 
-  // Perform the application loop
   window.requestAnimationFrame(() => {
     frame();
   });
 }
 
 // Start the application loop
-function init() {
+function loop() {
   window.requestAnimationFrame(() => {
     frame();
   });
 }
 
-module.exports = init;
+module.exports = loop;

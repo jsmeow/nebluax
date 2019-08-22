@@ -1,9 +1,9 @@
 const BlueShipTrail = require('../../category/ship-trail/blue/blue-ship-trail');
 
-function ShipTrailFactory(list) {
+function ShipTrailFactory(entities) {
   this.blueShipTrail = function(args) {
-    const entity = new BlueShipTrail({ ...args, list });
-    list.push(entity);
+    const entity = new BlueShipTrail({ ...args, entities });
+    entities.push(entity);
     return entity;
   };
 }

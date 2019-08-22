@@ -1,4 +1,4 @@
-const factory = require('../../entity/factory/factory-entity');
+const factory = require('../../factory/factory/factory-entity');
 const properties = require('../../entity/properties/properties-entity');
 const Wave = require('../wave');
 

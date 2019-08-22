@@ -14,17 +14,17 @@ const SmallWhiteStar4 = require('../../../../../category/background/space/star/s
 const SmallWhiteStar5 = require('../../../../../category/background/space/star/small/white-5/small-white-star-5');
 const SmallBlinkingWhiteStar1 = require('../../../../../category/background/space/star/small/white-blinking-1/small-blinking-white-star-1');
 
-function SpaceBackgroundSmallStarFactory(factory, list) {
+function SpaceBackgroundSmallStarFactory(factory, entities) {
   this.smallBlinkingMulticolorStar1 = function(args) {
     const entity = new SmallBlinkingMulticolorStar1({
       ...args,
       meta: {
         ...(args && args.meta ? args.meta : {}),
         factory,
-        list
+        entities
       }
     });
-    list[0].push(entity);
+    entities[0].push(entity);
     return entity;
   };
 
@@ -34,10 +34,10 @@ function SpaceBackgroundSmallStarFactory(factory, list) {
       meta: {
         ...(args && args.meta ? args.meta : {}),
         factory,
-        list
+        entities
       }
     });
-    list[0].push(entity);
+    entities[0].push(entity);
     return entity;
   };
 
@@ -47,10 +47,10 @@ function SpaceBackgroundSmallStarFactory(factory, list) {
       meta: {
         ...(args && args.meta ? args.meta : {}),
         factory,
-        list
+        entities
       }
     });
-    list[0].push(entity);
+    entities[0].push(entity);
     return entity;
   };
 
@@ -60,10 +60,10 @@ function SpaceBackgroundSmallStarFactory(factory, list) {
       meta: {
         ...(args && args.meta ? args.meta : {}),
         factory,
-        list
+        entities
       }
     });
-    list[0].push(entity);
+    entities[0].push(entity);
     return entity;
   };
 
@@ -73,10 +73,10 @@ function SpaceBackgroundSmallStarFactory(factory, list) {
       meta: {
         ...(args && args.meta ? args.meta : {}),
         factory,
-        list
+        entities
       }
     });
-    list[0].push(entity);
+    entities[0].push(entity);
     return entity;
   };
 
@@ -86,10 +86,10 @@ function SpaceBackgroundSmallStarFactory(factory, list) {
       meta: {
         ...(args && args.meta ? args.meta : {}),
         factory,
-        list
+        entities
       }
     });
-    list[0].push(entity);
+    entities[0].push(entity);
     return entity;
   };
 
@@ -99,10 +99,10 @@ function SpaceBackgroundSmallStarFactory(factory, list) {
       meta: {
         ...(args && args.meta ? args.meta : {}),
         factory,
-        list
+        entities
       }
     });
-    list[0].push(entity);
+    entities[0].push(entity);
     return entity;
   };
 
@@ -112,10 +112,10 @@ function SpaceBackgroundSmallStarFactory(factory, list) {
       meta: {
         ...(args && args.meta ? args.meta : {}),
         factory,
-        list
+        entities
       }
     });
-    list[0].push(entity);
+    entities[0].push(entity);
     return entity;
   };
 
@@ -125,10 +125,10 @@ function SpaceBackgroundSmallStarFactory(factory, list) {
       meta: {
         ...(args && args.meta ? args.meta : {}),
         factory,
-        list
+        entities
       }
     });
-    list[0].push(entity);
+    entities[0].push(entity);
     return entity;
   };
 
@@ -138,10 +138,10 @@ function SpaceBackgroundSmallStarFactory(factory, list) {
       meta: {
         ...(args && args.meta ? args.meta : {}),
         factory,
-        list
+        entities
       }
     });
-    list[0].push(entity);
+    entities[0].push(entity);
     return entity;
   };
 
@@ -151,10 +151,10 @@ function SpaceBackgroundSmallStarFactory(factory, list) {
       meta: {
         ...(args && args.meta ? args.meta : {}),
         factory,
-        list
+        entities
       }
     });
-    list[0].push(entity);
+    entities[0].push(entity);
     return entity;
   };
 
@@ -164,10 +164,10 @@ function SpaceBackgroundSmallStarFactory(factory, list) {
       meta: {
         ...(args && args.meta ? args.meta : {}),
         factory,
-        list
+        entities
       }
     });
-    list[0].push(entity);
+    entities[0].push(entity);
     return entity;
   };
 
@@ -177,10 +177,10 @@ function SpaceBackgroundSmallStarFactory(factory, list) {
       meta: {
         ...(args && args.meta ? args.meta : {}),
         factory,
-        list
+        entities
       }
     });
-    list[0].push(entity);
+    entities[0].push(entity);
     return entity;
   };
 
@@ -190,10 +190,10 @@ function SpaceBackgroundSmallStarFactory(factory, list) {
       meta: {
         ...(args && args.meta ? args.meta : {}),
         factory,
-        list
+        entities
       }
     });
-    list[0].push(entity);
+    entities[0].push(entity);
     return entity;
   };
 
@@ -203,10 +203,10 @@ function SpaceBackgroundSmallStarFactory(factory, list) {
       meta: {
         ...(args && args.meta ? args.meta : {}),
         factory,
-        list
+        entities
       }
     });
-    list[0].push(entity);
+    entities[0].push(entity);
     return entity;
   };
 }

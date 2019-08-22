@@ -14,7 +14,7 @@ function Mine({
   degrees,
   creator,
   factory,
-  list
+  entities
 }) {
   Explosive.call(this, {
     x,
@@ -29,7 +29,7 @@ function Mine({
     degrees,
     creator,
     factory,
-    list
+    entities
   });
 
   /** @override **/

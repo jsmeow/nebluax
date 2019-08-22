@@ -1,19 +1,19 @@
-const canvas = require('../../../../canvas');
+const canvas = require('../../../../canvas/canvas');
 const Entity = require('../../../entity');
 const imageSource =
   './main/entity/category/hud/life/assets/images/image-source.png';
 
-function LifeHud(list) {
+function LifeHud(entities) {
   Entity.call(this, {
-    x: canvas.pixel * 17,
-    y: canvas.pixel * 10,
+    x: canvas.res * 17,
+    y: canvas.res * 10,
     type: ['hud, life'],
     imageSource,
-    list
+    entities
   });
 
-  // The game/application player/user entity
-  const player = list[0];
+  // The application player/user entity
+  const player = entities[0];
 
   /** @override **/
   this.render = function() {
@@ -21,7 +21,7 @@ function LifeHud(list) {
 
     canvas.drawText({
       text: 'Lives',
-      x: this.pos.x + canvas.pixel * 2,
+      x: this.pos.x + canvas.res * 2,
       y: this.pos.y,
       size: 25,
       fillStyle: '#ffffff'
@@ -29,24 +29,24 @@ function LifeHud(list) {
 
     canvas.drawText({
       text: `${player.points.life}`,
-      x: this.pos.x + canvas.pixel,
-      y: this.pos.y + canvas.pixel * 10,
+      x: this.pos.x + canvas.res,
+      y: this.pos.y + canvas.res * 10,
       size: 25,
       fillStyle: '#ffffff'
     });
 
     canvas.drawImage({
       image: this.image,
-      x: this.pos.x + canvas.pixel * 14,
-      y: this.pos.y + canvas.pixel * 3,
+      x: this.pos.x + canvas.res * 14,
+      y: this.pos.y + canvas.res * 3,
       width: 30,
       height: 30
     });
 
     canvas.drawText({
       text: `${player.points.maxLife}`,
-      x: this.pos.x + canvas.pixel * 28,
-      y: this.pos.y + canvas.pixel * 10,
+      x: this.pos.x + canvas.res * 28,
+      y: this.pos.y + canvas.res * 10,
       size: 25,
       fillStyle: '#ffffff'
     });

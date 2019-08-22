@@ -2,17 +2,17 @@ const LargeWidePurpleStar1 = require('../../../../../category/background/space/s
 const LargeWideRedStar1 = require('../../../../../category/background/space/star/large-wide/red-1/large-wide-red-star-1');
 const LargeWideWhiteStar1 = require('../../../../../category/background/space/star/large-wide/white-1/large-wide-white-star-1');
 
-function SpaceBackgroundLargeWideStarFactory(factory, list) {
+function SpaceBackgroundLargeWideStarFactory(factory, entities) {
   this.largeWidePurpleStar1 = function(args) {
     const entity = new LargeWidePurpleStar1({
       ...args,
       meta: {
         ...(args && args.meta ? args.meta : {}),
         factory,
-        list
+        entities
       }
     });
-    list[0].push(entity);
+    entities[0].push(entity);
     return entity;
   };
 
@@ -22,10 +22,10 @@ function SpaceBackgroundLargeWideStarFactory(factory, list) {
       meta: {
         ...(args && args.meta ? args.meta : {}),
         factory,
-        list
+        entities
       }
     });
-    list[0].push(entity);
+    entities[0].push(entity);
     return entity;
   };
   this.largeWideWhiteStar1 = function(args) {
@@ -34,10 +34,10 @@ function SpaceBackgroundLargeWideStarFactory(factory, list) {
       meta: {
         ...(args && args.meta ? args.meta : {}),
         factory,
-        list
+        entities
       }
     });
-    list[0].push(entity);
+    entities[0].push(entity);
     return entity;
   };
 }

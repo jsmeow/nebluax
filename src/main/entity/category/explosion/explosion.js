@@ -9,7 +9,7 @@ function Explosion({
   faction,
   points,
   imageSource,
-  list
+  entities
 }) {
   Entity.call(this, {
     x,
@@ -20,7 +20,7 @@ function Explosion({
     faction: faction || 'neutral',
     points,
     imageSource,
-    list
+    entities
   });
 
   /** @override **/

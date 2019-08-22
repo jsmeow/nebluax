@@ -1,9 +1,9 @@
 const Player = require('../../../category/ship/player/player');
 
-function PlayerShipFactory(factory, list) {
+function PlayerShipFactory(factory, entities) {
   this.player = function() {
-    const entity = new Player(factory, list);
-    list.push(entity);
+    const entity = new Player(factory, entities);
+    entities.push(entity);
     return entity;
   };
 }

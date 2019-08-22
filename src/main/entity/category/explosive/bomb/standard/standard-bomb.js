@@ -1,4 +1,4 @@
-const canvas = require('../../../../../canvas');
+const canvas = require('../../../../../canvas/canvas');
 const Bomb = require('../bomb');
 const imageSource1 =
   './main/entity/category/explosive/bomb/standard/assets/images/image-source-1.png';
@@ -32,7 +32,7 @@ function StandardBomb({
   faction,
   creator,
   factory,
-  list
+  entities
 }) {
   Bomb.call(this, {
     x,
@@ -58,7 +58,7 @@ function StandardBomb({
     degrees: 90,
     creator,
     factory,
-    list
+    entities
   });
 
   this.props.type = [...this.props.type, 'standard'];
@@ -66,7 +66,7 @@ function StandardBomb({
 
 StandardBomb.prototype = Object.create(Bomb.prototype);
 
-StandardBomb.width = canvas.pixel * 7;
-StandardBomb.height = canvas.pixel * 7;
+StandardBomb.width = canvas.res * 7;
+StandardBomb.height = canvas.res * 7;
 
 module.exports = StandardBomb;

@@ -1,9 +1,9 @@
 const BombFactory = require('./bomb/bomb-factory');
 const MineFactory = require('./mine/mine-factory');
 
-function ExplosiveFactory(factory, list) {
-  this.bomb = new BombFactory(factory, list);
-  this.mine = new MineFactory(factory, list);
+function ExplosiveFactory(factory, entities) {
+  this.bomb = new BombFactory(factory, entities);
+  this.mine = new MineFactory(factory, entities);
 }
 
 module.exports = ExplosiveFactory;

@@ -4,7 +4,7 @@ function Wave() {
   // The wave entities list.
   this.entities = [];
 
-  // The wave entities path list.
+  // The wave entities path entities.
   this.paths = [];
 
   // Flags whether the current wave has been cleared.

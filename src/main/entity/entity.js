@@ -1,5 +1,5 @@
 const { fps } = require('../options');
-const canvas = require('../canvas');
+const canvas = require('../canvas/canvas');
 const move = require('./event/move/move');
 const moveToPoint = require('./event/move/move-to-point');
 const moveInPath = require('./event/move/move-in-path');
@@ -97,7 +97,7 @@ function Entity({
   // timer - image animation loop timer
   this.image = {
     src: image.src,
-    obj: Array.isArray(image.src)
+    elem: Array.isArray(image.src)
       ? [...Array(image.src.length)].map((_, index) => {
           const _image = new Image();
           _image.src = image.src[index];
@@ -121,14 +121,14 @@ function Entity({
   };
 
   // Meta properties
-  // Contains references to external game/application entities/objects
+  // Contains references to external application entities/objects
   // creator - creator entity reference (optional)
   // factory - entity factory reference
-  // list - entity list reference
+  // entities - entity entities reference
   this.meta = {
     creator: meta.creator || null,
     factory: meta.factory || null,
-    list: meta.list || null
+    entities: meta.entities || null
   };
 
   // Define and bind external methods
@@ -155,7 +155,7 @@ function Entity({
   // Entity disposal update action
   // Removes the entity from the entities list.
   this.dispose = function(index) {
-    this.meta.list.splice(index, 1);
+    this.meta.entities.splice(index, 1);
   };
 
   // Update the entity timers
@@ -172,7 +172,7 @@ function Entity({
   // Perform an entity collision assertion via the collision method, if the
   // entities list was passed and collides status is set to true.
   this.updateCollision = function(index) {
-    if (this.meta.list && this.status.collides) {
+    if (this.meta.entities && this.status.collides) {
       this.collision(index);
     }
   };
@@ -219,10 +219,11 @@ function Entity({
   this.updateAnimationTimer = function() {
     // Increment or reset animation image index
     const timerRangeBegin =
-      this.image.timer.index * (this.image.delay / this.image.obj.length);
+      this.image.timer.index * (this.image.delay / this.image.elem.length);
 
     const timerRangeEnd =
-      (this.image.timer.index + 1) * (this.image.delay / this.image.obj.length);
+      (this.image.timer.index + 1) *
+      (this.image.delay / this.image.elem.length);
 
     if (
       this.image.timer.frame >= timerRangeBegin &&
@@ -231,7 +232,7 @@ function Entity({
       this.image.timer.index = this.image.timer.index + 1;
     }
 
-    if (this.image.timer.index >= this.image.obj.length) {
+    if (this.image.timer.index >= this.image.elem.length) {
       this.image.timer.index = 0;
     }
 
@@ -254,7 +255,7 @@ function Entity({
     this.preRender();
 
     canvas.drawImage({
-      obj: this.image.obj[this.image.timer.index],
+      elem: this.image.elem[this.image.timer.index],
       x: this.pos.x,
       y: this.pos.y,
       width: this.dims.width,

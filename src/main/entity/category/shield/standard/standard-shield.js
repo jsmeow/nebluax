@@ -1,9 +1,9 @@
 const Shield = require('../shield');
 
-function StandardShield({ creator, list }) {
+function StandardShield({ creator, entities }) {
   Shield.call(this, {
     creator,
-    list
+    entities
   });
 
   /** @override **/

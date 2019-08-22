@@ -1,12 +1,12 @@
-const canvas = require('../../../../../canvas');
+const canvas = require('../../../../../canvas/canvas');
 const Entity = require('../../../../entity');
 
 function Comet() {
   Entity.call(this, {
     x: Math.random() * canvas.width,
     y: Math.random() * canvas.height,
-    width: canvas.pixel,
-    height: canvas.pixel,
+    width: canvas.res,
+    height: canvas.res,
     dy: 2.5,
     type: ['background', 'space', 'comet']
   });

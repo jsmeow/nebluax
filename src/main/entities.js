@@ -1,40 +1,28 @@
 const EntityFactory = require('./entity/factory/entity-factory');
 
-// The game/application entities list
-// The three-dimensional array holds the background, display, and the game
-// entities list.
-const list = [[], [], []];
+// The background entities list are always rendered first
+const background = [];
 
-// Send the entities list to the new entity factory object.
+// The display entities list consists of entities such as the title text. hud
+// elements, etc.
+const display = [];
+
+// The game entities list consists of the entities that participate in the
+// game such as the player, ships, etc. and are always rendered last
+const game = [];
+
+// Instantiate the application entities list
+// The three-dimensional array holds the background, display, and the game
+// entities list which make up all rendered elements of the application.
+const list = [background, display, game];
+
+// Instantiate the entity factory object with the entities list reference
 const factory = new EntityFactory(list);
 
-// The game/application default background entity
-// Will update and render regardless of application state.
-const background = factory.background.space.space();
-
-// Swap the background and the background created entities in the entities list
-// so that the background entity is always first.
-// This is due to the fact the the background entity created entities are
-// instantiated before the actual background entity.
-// This also guarantees the correct update/render execution order.
-list[0].splice(list[0].length - 1);
-list[0].unshift(background);
-
-// Implement the game/application player/user entity
-// const player = factory.ship.player.player();
-
-// Factory.ship.small.bowerbird({ faction: 'enemy', degrees: Math.PI });
-
-// Swap the player and the background created entities in the entities list
-// so that the player entity is always first.
-// This is due to the fact the the background entity created entities are
-// instantiated before the actual player entity.
-// This also guarantees the correct update/render execution order.
-// list.splice(list.length - 1);
-// list.unshift(player);
+// Instantiate the application background entity
+factory.background.space.space();
 
 module.exports = {
   list,
-  factory,
-  background
+  factory
 };

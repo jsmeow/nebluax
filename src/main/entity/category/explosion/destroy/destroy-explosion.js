@@ -1,4 +1,4 @@
-const canvas = require('../../../../canvas');
+const canvas = require('../../../../canvas/canvas');
 const Explosion = require('../explosion');
 const imageSource1 =
   './main/entity/category/explosion/destroy/assets/images/shield1.png';
@@ -15,7 +15,7 @@ const imageSource6 =
 const imageSource7 =
   './main/entity/category/explosion/destroy/assets/images/image-source-7.png';
 
-function DestroyExplosion({ x, y, width, height, faction, points, list }) {
+function DestroyExplosion({ x, y, width, height, faction, points, entities }) {
   Explosion.call(this, {
     x,
     y,
@@ -32,7 +32,7 @@ function DestroyExplosion({ x, y, width, height, faction, points, list }) {
       imageSource6,
       imageSource7
     ],
-    list
+    entities
   });
 
   /** @override **/
@@ -41,7 +41,7 @@ function DestroyExplosion({ x, y, width, height, faction, points, list }) {
 
 DestroyExplosion.prototype = Object.create(Explosion.prototype);
 
-DestroyExplosion.width = canvas.pixel * 15;
-DestroyExplosion.height = canvas.pixel * 15;
+DestroyExplosion.width = canvas.res * 15;
+DestroyExplosion.height = canvas.res * 15;
 
 module.exports = DestroyExplosion;

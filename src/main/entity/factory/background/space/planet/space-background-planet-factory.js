@@ -2,17 +2,17 @@ const Planet1 = require('../../../../category/background/space/planet/planet-1/p
 const Planet2 = require('../../../../category/background/space/planet/planet-2/planet-2');
 const Planet3 = require('../../../../category/background/space/planet/planet-3/planet-3');
 
-function SpaceBackgroundPlanetFactory(factory, list) {
+function SpaceBackgroundPlanetFactory(factory, entities) {
   this.planet1 = function(args) {
     const entity = new Planet1({
       ...args,
       meta: {
         ...(args && args.meta ? args.meta : {}),
         factory,
-        list
+        entities
       }
     });
-    list[0].push(entity);
+    entities[0].push(entity);
     return entity;
   };
 
@@ -22,10 +22,10 @@ function SpaceBackgroundPlanetFactory(factory, list) {
       meta: {
         ...(args && args.meta ? args.meta : {}),
         factory,
-        list
+        entities
       }
     });
-    list[0].push(entity);
+    entities[0].push(entity);
     return entity;
   };
 
@@ -35,10 +35,10 @@ function SpaceBackgroundPlanetFactory(factory, list) {
       meta: {
         ...(args && args.meta ? args.meta : {}),
         factory,
-        list
+        entities
       }
     });
-    list[0].push(entity);
+    entities[0].push(entity);
     return entity;
   };
 }

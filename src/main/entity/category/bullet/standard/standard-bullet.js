@@ -1,4 +1,4 @@
-const canvas = require('../../../../canvas');
+const canvas = require('../../../../canvas/canvas');
 const Bullet = require('../bullet');
 const allied1 =
   './main/entity/category/bullet/standard/assets/images/allied/allied1.png';
@@ -13,7 +13,7 @@ const neutral1 =
 const neutral2 =
   './main/entity/category/bullet/standard/assets/images/allied/allied2.png';
 
-function StandardBullet({ x, y, speed, dx, dy, degrees, creator, list }) {
+function StandardBullet({ x, y, speed, dx, dy, degrees, creator, entities }) {
   Bullet.call(this, {
     x,
     y,
@@ -25,7 +25,7 @@ function StandardBullet({ x, y, speed, dx, dy, degrees, creator, list }) {
     imageSource: [[allied1, allied2], [enemy1, enemy2], [neutral1, neutral2]],
     degrees,
     creator,
-    list
+    entities
   });
 
   /** @override **/
@@ -34,7 +34,7 @@ function StandardBullet({ x, y, speed, dx, dy, degrees, creator, list }) {
 
 StandardBullet.prototype = Object.create(Bullet.prototype);
 
-StandardBullet.width = canvas.pixel * 2.5;
-StandardBullet.height = canvas.pixel * 3.5;
+StandardBullet.width = canvas.res * 2.5;
+StandardBullet.height = canvas.res * 3.5;
 
 module.exports = StandardBullet;

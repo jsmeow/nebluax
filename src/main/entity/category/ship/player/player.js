@@ -1,5 +1,5 @@
 const { fps } = require('../../../../options');
-const canvas = require('../../../../canvas');
+const canvas = require('../../../../canvas/canvas');
 const Ship = require('../ship');
 const BlueShipTrail = require('../../ship-trail/blue/blue-ship-trail');
 const StandardBullet = require('../../bullet/standard/standard-bullet');
@@ -20,10 +20,10 @@ const shield2 =
 const shield3 =
   './main/entity/category/ship/player/assets/images/shield/shield3.png';
 
-function Player(factory, list) {
+function Player(factory, entities) {
   Ship.call(this, {
-    x: canvas.width * 0.5 - canvas.pixel * 15 * 0.5,
-    y: canvas.height - canvas.pixel * 15 * 2,
+    x: canvas.width * 0.5 - canvas.res * 15 * 0.5,
+    y: canvas.height - canvas.res * 15 * 2,
     width: Player.width,
     height: Player.height,
     speed: 2,
@@ -36,7 +36,7 @@ function Player(factory, list) {
       [shield1, shield2, shield3]
     ],
     factory,
-    list
+    entities
   });
 
   /** @override **/
@@ -83,7 +83,7 @@ function Player(factory, list) {
       return this.pos.x + this.dims.width * 0.5 - BlueShipTrail.width * 0.5;
     },
     getY: () => {
-      return this.pos.y + this.dims.height - canvas.pixel * 2;
+      return this.pos.y + this.dims.height - canvas.res * 2;
     }
   });
 
@@ -104,7 +104,7 @@ function Player(factory, list) {
   this.createBullets = function() {
     factory.bullet.standardBullet({
       x: this.pos.x + this.dims.width * 0.5 - StandardBullet.width * 0.5,
-      y: this.pos.y - canvas.pixel,
+      y: this.pos.y - canvas.res,
       creator: this
     });
   };
@@ -113,7 +113,7 @@ function Player(factory, list) {
   this.createBombs = function() {
     factory.explosive.bomb.standardBomb({
       x: this.pos.x + this.dims.width * 0.5 - StandardBomb.width * 0.5,
-      y: this.pos.y - canvas.pixel,
+      y: this.pos.y - canvas.res,
       faction: this.faction,
       creator: this
     });
@@ -123,7 +123,7 @@ function Player(factory, list) {
   this.createMines = function() {
     factory.explosive.mine.standardMine({
       x: this.pos.x + this.dims.width * 0.5 - StandardMine.width * 0.5,
-      y: this.pos.y - canvas.pixel,
+      y: this.pos.y - canvas.res,
       faction: this.faction,
       creator: this
     });
@@ -151,7 +151,7 @@ function Player(factory, list) {
 
 Player.prototype = Object.create(Ship.prototype);
 
-Player.width = canvas.pixel * 17;
-Player.height = canvas.pixel * 17;
+Player.width = canvas.res * 17;
+Player.height = canvas.res * 17;
 
 module.exports = Player;

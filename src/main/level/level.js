@@ -1,5 +1,5 @@
 function Level() {
-  // The level waves list.
+  // The level waves entities.
   this.waves = [];
 
   // The current wave being executed.
@@ -21,7 +21,7 @@ Level.prototype.createWaves = function() {};
 // Begin the current wave.
 Level.prototype.nextWave = function() {
   if (this.waves.length > 0) {
-    // Remove first element of the waves list, store as current.
+    // Remove first element of the waves entities, store as current.
     this.wave = this.waves.shift();
 
     // Begin the wave wave.

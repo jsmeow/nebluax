@@ -12,7 +12,7 @@ function Bullet({
   imageSource,
   degrees,
   creator,
-  list
+  entities
 }) {
   Entity.call(this, {
     x,
@@ -27,7 +27,7 @@ function Bullet({
     imageSource,
     degrees,
     creator,
-    list
+    entities
   });
 
   /** @override **/
@@ -60,7 +60,7 @@ function Bullet({
   this.loadImages = function() {
     let imageSource;
 
-    // Get the image source list based on the entity faction
+    // Get the image source entities based on the entity faction
 
     if (this.faction === 'allied') {
       imageSource = this.imageSource[0];

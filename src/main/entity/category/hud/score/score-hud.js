@@ -1,16 +1,16 @@
-const canvas = require('../../../../canvas');
+const canvas = require('../../../../canvas/canvas');
 const Entity = require('../../../entity');
 
-function ScoreHud(list) {
+function ScoreHud(entities) {
   Entity.call(this, {
-    x: canvas.width - canvas.pixel * 50,
-    y: canvas.pixel * 10,
+    x: canvas.width - canvas.res * 50,
+    y: canvas.res * 10,
     type: ['hud, score'],
-    list
+    entities
   });
 
-  // The game/application player/user entity
-  const player = list[0];
+  // The application player/user entity
+  const player = entities[0];
 
   /** @override **/
   this.render = function() {
@@ -24,8 +24,8 @@ function ScoreHud(list) {
 
     canvas.drawText({
       text: `${player.points.score}`,
-      x: this.pos.x + canvas.pixel * 13,
-      y: this.pos.y + canvas.pixel * 10,
+      x: this.pos.x + canvas.res * 13,
+      y: this.pos.y + canvas.res * 10,
       size: 25,
       fillStyle: '#ffffff'
     });

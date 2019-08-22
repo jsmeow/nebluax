@@ -1,4 +1,4 @@
-const canvas = require('../../../canvas');
+const canvas = require('../../../canvas/canvas');
 
 // Returns a boundary collision assertion for each cardinal direction
 function assertBoundaryCollision({ x, y }, { width, height }, { dx, dy }) {

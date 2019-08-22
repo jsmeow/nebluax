@@ -1,14 +1,14 @@
-// The possible application states object
-const states = {
-  TITLE: 0,
-  GAME: 1,
-  PAUSED: 2
+// Define the possible application states value keys
+const keys = {
+  title: 'TITLE',
+  game: 'GAME',
+  paused: 'PAUSED'
 };
 
-// The initial application state
-const current = states.GAME;
+// Define and set the current application state
+const current = keys.game;
 
 module.exports = {
   current,
-  states
+  keys
 };

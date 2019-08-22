@@ -1,4 +1,4 @@
-const canvas = require('../../../../../canvas');
+const canvas = require('../../../../../canvas/canvas');
 const Ship = require('../../ship');
 const StandardBullet = require('../../../bullet/standard/standard-bullet');
 const allied =
@@ -11,7 +11,7 @@ const damaged =
   './main/entity/category/ship/small/bowerbird/assets/images/damaged.png';
 
 // The Bowerbird entity.
-function Bowerbird({ degrees, faction, factory, list }) {
+function Bowerbird({ degrees, faction, factory, entities }) {
   Ship.call(this, {
     x: canvas.width * 0.5,
     y: canvas.height * 0.5,
@@ -26,7 +26,7 @@ function Bowerbird({ degrees, faction, factory, list }) {
     },
     degrees,
     factory,
-    list
+    entities
   });
 
   /** @override **/
@@ -53,7 +53,7 @@ function Bowerbird({ degrees, faction, factory, list }) {
 
 Bowerbird.prototype = Object.create(Ship.prototype);
 
-Bowerbird.width = canvas.pixel * 15;
-Bowerbird.height = canvas.pixel * 15;
+Bowerbird.width = canvas.res * 15;
+Bowerbird.height = canvas.res * 15;
 
 module.exports = Bowerbird;

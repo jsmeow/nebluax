@@ -1,9 +1,9 @@
-const { list } = require('./entities');
+const { entities } = require('./entities');
 const state = require('./state');
-const keyCodes = require('../static/key-codes/key-event-codes');
+const keyCodes = require('../../static/key-codes/key-event-codes');
 
-// The game/application player/user entity
-const player = list[0];
+// The application player/user entity
+const player = entities[0];
 
 // On keydown event actions
 function onKeydown(event) {
@@ -89,22 +89,22 @@ function onKeyup(event) {
   }
 }
 
-// Add keydown event listener
+// Add keydown event Listener
 function addKeydownEventListener() {
   document.body.addEventListener('keydown', onKeydown.bind(this));
 }
 
-// Add keyup event listener
+// Add keyup event Listener
 function addKeyupEventListener() {
   document.body.addEventListener('keyup', onKeyup.bind(this));
 }
 
-// Remove keydown event listener
+// Remove keydown event Listener
 function removeKeydownEventListener() {
   document.body.removeEventListener('keydown', onKeydown.bind(this));
 }
 
-// Remove keyup event listener
+// Remove keyup event Listener
 function removeKeyupEventListener() {
   document.body.removeEventListener('keyup', onKeyup.bind(this));
 }

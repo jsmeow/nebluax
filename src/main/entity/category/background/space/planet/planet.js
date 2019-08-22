@@ -1,4 +1,4 @@
-const canvas = require('../../../../../canvas');
+const canvas = require('../../../../../canvas/canvas');
 const assertBoundaryCollision = require('../../../../event/collision/assert-boundary-collision');
 const getRandomRangedFloat = require('../../../../util/get-random-ranged-float');
 const getRandomCanvasPosition = require('../../../../util/get-random-canvas-position');

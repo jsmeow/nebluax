@@ -1,18 +1,18 @@
 const { fps } = require('../../../options');
-const canvas = require('../../../canvas');
+const canvas = require('../../../canvas/canvas');
 const Entity = require('../../entity');
 
-function Shield({ creator, list }) {
+function Shield({ creator, entities }) {
   Entity.call(this, {
-    x: creator.x - canvas.pixel * 3,
-    y: creator.y + canvas.pixel * 3,
-    width: creator.width + canvas.pixel * 6,
-    height: creator.height + canvas.pixel * 6,
+    x: creator.x - canvas.res * 3,
+    y: creator.y + canvas.res * 3,
+    width: creator.width + canvas.res * 6,
+    height: creator.height + canvas.res * 6,
     type: ['shield'],
     imageSource: creator.imageSource[4],
     degrees: creator.degrees,
     creator,
-    list
+    entities
   });
 
   /** @override **/
@@ -27,8 +27,8 @@ function Shield({ creator, list }) {
 
   /** @override **/
   this.updatePosition = function() {
-    this.pos.x = creator.x - canvas.pixel * 3;
-    this.pos.y = creator.y - canvas.pixel * 3;
+    this.pos.x = creator.x - canvas.res * 3;
+    this.pos.y = creator.y - canvas.res * 3;
   };
 }
 

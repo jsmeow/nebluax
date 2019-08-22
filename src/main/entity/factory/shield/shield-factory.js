@@ -1,9 +1,9 @@
 const StandardShield = require('../../category/shield/standard/standard-shield');
 
-function ShieldFactory(list) {
+function ShieldFactory(entities) {
   this.standardShield = function(args) {
-    const entity = new StandardShield({ ...args, list });
-    list.push(entity);
+    const entity = new StandardShield({ ...args, entities });
+    entities.push(entity);
     return entity;
   };
 }

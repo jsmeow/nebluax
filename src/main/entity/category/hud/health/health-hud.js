@@ -1,19 +1,19 @@
-const canvas = require('../../../../canvas');
+const canvas = require('../../../../canvas/canvas');
 const Entity = require('../../../entity');
 const imageSource =
   './main/entity/category/hud/health/assets/images/image-source.png';
 
-function HealthHud(list) {
+function HealthHud(entities) {
   Entity.call(this, {
-    x: canvas.width * 0.5 - canvas.pixel * 17,
-    y: canvas.pixel * 10,
+    x: canvas.width * 0.5 - canvas.res * 17,
+    y: canvas.res * 10,
     type: ['hud, health'],
     imageSource,
-    list
+    entities
   });
 
-  // The game/application player/user entity
-  const player = list[0];
+  // The application player/user entity
+  const player = entities[0];
 
   /** @override **/
   this.render = function() {
@@ -29,24 +29,24 @@ function HealthHud(list) {
 
     canvas.drawText({
       text: `${player.points.health}`,
-      x: this.pos.x + canvas.pixel,
-      y: this.pos.y + canvas.pixel * 10,
+      x: this.pos.x + canvas.res,
+      y: this.pos.y + canvas.res * 10,
       size: 25,
       fillStyle: '#ffffff'
     });
 
     canvas.drawImage({
       image: this.image,
-      x: this.pos.x + canvas.pixel * 14,
-      y: this.pos.y + canvas.pixel * 3,
+      x: this.pos.x + canvas.res * 14,
+      y: this.pos.y + canvas.res * 3,
       width: 30,
       height: 30
     });
 
     canvas.drawText({
       text: `${player.points.maxHealth}`,
-      x: this.pos.x + canvas.pixel * 28,
-      y: this.pos.y + canvas.pixel * 10,
+      x: this.pos.x + canvas.res * 28,
+      y: this.pos.y + canvas.res * 10,
       size: 25,
       fillStyle: '#ffffff'
     });

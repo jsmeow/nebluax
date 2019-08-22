@@ -1,7 +1,4 @@
-const canvas = require('../../canvas');
-const { grey, red } = require('../../../static/mui/muiColors');
-
-function update() {}
+const canvas = require('../../../canvas/canvas');
 
 function render() {
   // Draw the 'NEBULON' text.
@@ -11,18 +8,15 @@ function render() {
     x: canvas.width / 6,
     y: canvas.height / 2.5,
     size: 150,
-    fillStyle: red[500].main
+    fillStyle: '#f44336'
   });
   canvas.drawText({
     text: 'Press Enter To Play',
     x: canvas.width / 5.2,
     y: canvas.height / 1.5,
     size: 50,
-    fillStyle: grey[50].main
+    fillStyle: '#ffffff'
   });
 }
 
-module.exports = {
-  update,
-  render
-};
+module.exports = render;

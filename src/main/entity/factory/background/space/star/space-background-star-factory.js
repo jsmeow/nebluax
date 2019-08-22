@@ -3,11 +3,11 @@ const SpaceBackgroundLargeWideStarFactory = require('./large-wide/space-backgrou
 const SpaceBackgroundMediumStarFactory = require('./medium/space-background-medium-star-factory');
 const SpaceBackgroundSmallStarFactory = require('./small/space-background-small-star-factory');
 
-function SpaceBackgroundStarFactory(factory, list) {
-  this.large = new SpaceBackgroundLargeStarFactory(factory, list);
-  this.largeWide = new SpaceBackgroundLargeWideStarFactory(factory, list);
-  this.medium = new SpaceBackgroundMediumStarFactory(factory, list);
-  this.small = new SpaceBackgroundSmallStarFactory(factory, list);
+function SpaceBackgroundStarFactory(factory, entities) {
+  this.large = new SpaceBackgroundLargeStarFactory(factory, entities);
+  this.largeWide = new SpaceBackgroundLargeWideStarFactory(factory, entities);
+  this.medium = new SpaceBackgroundMediumStarFactory(factory, entities);
+  this.small = new SpaceBackgroundSmallStarFactory(factory, entities);
 }
 
 module.exports = SpaceBackgroundStarFactory;

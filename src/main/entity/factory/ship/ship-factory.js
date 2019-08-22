@@ -1,9 +1,9 @@
 const PlayerShipFactory = require('./player/player-ship-factory');
 const SmallShipFactory = require('./small/small-ship-factory');
 
-function ShipFactory(factory, list) {
-  this.player = new PlayerShipFactory(factory, list);
-  this.small = new SmallShipFactory(factory, list);
+function ShipFactory(factory, entities) {
+  this.player = new PlayerShipFactory(factory, entities);
+  this.small = new SmallShipFactory(factory, entities);
 }
 
 module.exports = ShipFactory;

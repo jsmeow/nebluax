@@ -7,15 +7,16 @@ const ShieldFactory = require('./shield/shield-factory');
 const ShipFactory = require('./ship/ship-factory');
 const ShipTrailFactory = require('./ship-trail/ship-trail-factory');
 
-function EntityFactory(list) {
-  this.background = new BackgroundFactory(this, list);
-  this.bullet = new BulletFactory(list);
-  this.explosion = new ExplosionFactory(list);
-  this.explosive = new ExplosiveFactory(this, list);
-  this.hud = new HudFactory(list);
-  this.shield = new ShieldFactory(list);
-  this.ship = new ShipFactory(this, list);
-  this.shipTrail = new ShipTrailFactory(list);
+function EntityFactory(entities) {
+  // Instantiate child factory objects
+  this.background = new BackgroundFactory(this, entities);
+  /*  this.bullet = new BulletFactory(entities);
+  this.explosion = new ExplosionFactory(entities);
+  this.explosive = new ExplosiveFactory(this, entities);
+  this.hud = new HudFactory(entities);
+  this.shield = new ShieldFactory(entities);
+  this.ship = new ShipFactory(this, entities);
+  this.shipTrail = new ShipTrailFactory(entities);*/
 }
 
 module.exports = EntityFactory;

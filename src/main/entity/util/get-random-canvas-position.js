@@ -1,4 +1,4 @@
-const canvas = require('../../canvas');
+const canvas = require('../../canvas/canvas');
 const getRandomRangedInt = require('./get-random-ranged-int');
 
 // Get a random position within the canvas bounds

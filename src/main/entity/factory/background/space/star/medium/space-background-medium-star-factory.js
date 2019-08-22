@@ -2,17 +2,17 @@ const MediumBlinkingPurpleStar1 = require('../../../../../category/background/sp
 const MediumBlinkingRedStar1 = require('../../../../../category/background/space/star/medium/red-blinking-1/medium-blinking-red-star-1');
 const MediumBlinkingWhiteStar1 = require('../../../../../category/background/space/star/medium/white-blinking-1/medium-blinking-white-star-1');
 
-function SpaceBackgroundMediumStarFactory(factory, list) {
+function SpaceBackgroundMediumStarFactory(factory, entities) {
   this.mediumBlinkingPurpleStar1 = function(args) {
     const entity = new MediumBlinkingPurpleStar1({
       ...args,
       meta: {
         ...(args && args.meta ? args.meta : {}),
         factory,
-        list
+        entities
       }
     });
-    list[0].push(entity);
+    entities[0].push(entity);
     return entity;
   };
 
@@ -22,10 +22,10 @@ function SpaceBackgroundMediumStarFactory(factory, list) {
       meta: {
         ...(args && args.meta ? args.meta : {}),
         factory,
-        list
+        entities
       }
     });
-    list[0].push(entity);
+    entities[0].push(entity);
     return entity;
   };
 
@@ -35,10 +35,10 @@ function SpaceBackgroundMediumStarFactory(factory, list) {
       meta: {
         ...(args && args.meta ? args.meta : {}),
         factory,
-        list
+        entities
       }
     });
-    list[0].push(entity);
+    entities[0].push(entity);
     return entity;
   };
 }

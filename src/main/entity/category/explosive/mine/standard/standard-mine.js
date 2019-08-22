@@ -1,4 +1,4 @@
-const canvas = require('../../../../../canvas');
+const canvas = require('../../../../../canvas/canvas');
 const Mine = require('../mine');
 const imageSource1 =
   './main/entity/category/explosive/mine/standard/assets/images/image-source-1.png';
@@ -32,7 +32,7 @@ function StandardMine({
   faction,
   creator,
   factory,
-  list
+  entities
 }) {
   Mine.call(this, {
     x,
@@ -57,7 +57,7 @@ function StandardMine({
     ],
     creator,
     factory,
-    list
+    entities
   });
 
   this.props.type = [...this.props.type, 'standard'];
@@ -65,7 +65,7 @@ function StandardMine({
 
 StandardMine.prototype = Object.create(Mine.prototype);
 
-StandardMine.width = canvas.pixel * 7;
-StandardMine.height = canvas.pixel * 7;
+StandardMine.width = canvas.res * 7;
+StandardMine.height = canvas.res * 7;
 
 module.exports = StandardMine;

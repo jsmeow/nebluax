@@ -14,7 +14,7 @@ function Explosive({
   degrees,
   creator,
   factory,
-  list
+  entities
 }) {
   Entity.call(this, {
     x,
@@ -30,7 +30,7 @@ function Explosive({
     degrees,
     creator,
     factory,
-    list
+    entities
   });
 
   /** @override **/

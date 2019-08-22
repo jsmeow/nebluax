@@ -7,7 +7,7 @@ function ShipTrail({
   imageSource,
   degrees,
   creator,
-  list,
+  entities,
   getX,
   getY
 }) {
@@ -20,7 +20,7 @@ function ShipTrail({
     imageSource,
     degrees,
     creator,
-    list
+    entities
   });
 
   /** @override **/
