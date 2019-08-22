@@ -84,13 +84,11 @@ function Entity({
   // deg - the rotation in degrees to render the image
   this.img = {
     ctx: canvas.offscreenCanvas.getContext('2d'),
-    src: [Array.isArray(img.src) ? [...img.src] : [img.src]].map(
-      (src, index) => {
-        const _img = new Image();
-        _img.src = src[index];
-        return _img;
-      }
-    ),
+    src: (Array.isArray(img.src) ? img.src : [img.src]).map(src => {
+      const _img = new Image();
+      _img.src = src;
+      return _img;
+    }),
     deg: img.deg || 0
   };
 

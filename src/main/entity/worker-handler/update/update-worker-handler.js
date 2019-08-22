@@ -12,6 +12,7 @@ function UpdateWorkerHandler(entity) {
 
   // Create the web workers response events
   updatePositionWorker.onmessage = function(message) {
+    console.log(`${entity.props.type} end: ${window.performance.now()}`);
     const { pos } = message.data;
     entity.pos = { ...pos };
   };
@@ -40,8 +41,9 @@ function UpdateWorkerHandler(entity) {
     entity.anim = { ...anim };
   };
 
-  // Update the entity position coordinate
+  // Update the entity position coordinates
   this.updatePosition = function() {
+    console.log(`${entity.props.type} begin: ${window.performance.now()}`);
     updatePositionWorker.postMessage({
       pos: entity.pos,
       vector: entity.vector
@@ -85,7 +87,7 @@ function UpdateWorkerHandler(entity) {
 
   // Update the animation loop timer and image index
   this.updateAnimation = function() {
-    const imgLength = entity.img.length;
+    const imgLength = entity.img.src.length;
 
     if (imgLength > 1) {
       updateAnimationWorker.postMessage({

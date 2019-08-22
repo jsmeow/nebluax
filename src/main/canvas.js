@@ -22,13 +22,13 @@ canvas.height = Number(
 const res = canvas.width / 320;
 
 // Define the offscreen canvas to optimize image rendering
-const offscreenCanvas = canvas.transferControlToOffscreen();
+/* const offscreenCanvas = canvas.transferControlToOffscreen();
 offscreenCanvas.width = canvas.width;
-offscreenCanvas.height = canvas.height;
+offscreenCanvas.height = canvas.height;*/
 
 module.exports = {
   width: canvas.width,
   height: canvas.height,
   res,
-  offscreenCanvas
+  offscreenCanvas: canvas
 };
