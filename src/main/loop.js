@@ -1,16 +1,23 @@
 const logic = require('./logic/logic');
 
-// An update loop frame
-// Actions taken on an update loop frame depend on the application state.
+// An application loop frame
 function frame() {
   window.requestAnimationFrame(frame);
   logic.update();
   logic.render();
 }
 
-// Start the application loop
-function loop() {
+// Starts the application loop
+function start() {
   window.requestAnimationFrame(frame);
 }
 
-module.exports = loop;
+// Stops the application loop
+function stop() {
+  window.cancelAnimationFrame(frame);
+}
+
+module.exports = {
+  start,
+  stop
+};

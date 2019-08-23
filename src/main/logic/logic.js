@@ -3,21 +3,21 @@ const title = require('./title/title-logic');
 const game = require('./game/game-logic');
 
 function update() {
-  if (state.current === state.keys.title) {
+  if (state.curr === state.keys.title) {
     title.update();
   }
 
-  if (state.current === state.keys.game) {
+  if (state.curr === state.keys.game) {
     game.update();
   }
 }
 
 function render() {
-  if (state.current === state.keys.title) {
+  if (state.curr === state.keys.title) {
     title.render();
   }
 
-  if (state.current === state.keys.game) {
+  if (state.curr === state.keys.game) {
     game.render();
   }
 }

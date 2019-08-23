@@ -6,9 +6,9 @@ const keys = {
 };
 
 // Define and set the current application state
-const current = keys.game;
+const curr = keys.game;
 
 module.exports = {
-  current,
+  curr,
   keys
 };

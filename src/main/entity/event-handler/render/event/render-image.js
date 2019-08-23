@@ -1,14 +1,14 @@
-const { pixel, ctx } = require('../../../../canvas');
+const { ctx } = require('../../../../canvas');
+const { scale } = require('../../../../options');
 
-// Perform movement in vector directions dx, dy multiplied by  a vector
-// magnitude
+// Renders an image onto the offscreen canvas
 function renderImage(entity) {
   ctx.drawImage(
     entity.img.src[entity.img.idx],
     entity.pos.x,
     entity.pos.y,
-    entity.dims.width * pixel,
-    entity.dims.height * pixel
+    entity.dims.width * scale,
+    entity.dims.height * scale
   );
 
   if (entity.props.type.includes('bg-image')) {
@@ -16,8 +16,8 @@ function renderImage(entity) {
       entity.img.src[entity.img.idx],
       entity.pos.x,
       entity.pos.y - entity.dims.height,
-      entity.dims.width * pixel,
-      entity.dims.height * pixel
+      entity.dims.width * scale,
+      entity.dims.height * scale
     );
   }
 }

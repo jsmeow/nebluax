@@ -1,38 +1,29 @@
-const options = require('./options');
+const { res, scale } = require('./options');
 
 // Define the canvas reference and canvas context
 const canvas = document.getElementById('canvas');
 
-// Get the width, height of the document body element and set the canvas
-//  dimensions to the body element dimensions
-canvas.width = Number(
-  window
-    .getComputedStyle(document.body)
-    .getPropertyValue('width')
-    .split('px')[0]
-);
-canvas.height = Number(
-  window
-    .getComputedStyle(document.body)
-    .getPropertyValue('height')
-    .split('px')[0]
-);
+// Get the width, height of the window size
+const width = res.width * scale;
+const height = res.height * scale;
 
-// Set the canvas element application resolution/pixel size
-// Application resolution set to 320 by default, in order to get the low
-// resolution pixel art aesthetic look.
-const pixel = canvas.width / options.res;
+// Set the canvas dimensions to the window size
+canvas.width = width;
+canvas.height = height;
 
-// Define the offscreen canvas to optimize image rendering and the offscreen
-// canvas context
+// Define the offscreen canvas reference that mirrors the main canvas
+// This is done to optimize image rendering and performance
 const offscreenCanvas = canvas.transferControlToOffscreen();
+
+// Set the offscreen canvas dimensions to the window size
+offscreenCanvas.width = width;
+offscreenCanvas.height = height;
+
+// Define the offscreen canvas canvas context
 const ctx = offscreenCanvas.getContext('2d');
-offscreenCanvas.width = canvas.width;
-offscreenCanvas.height = canvas.height;
 
 module.exports = {
-  width: canvas.width,
-  height: canvas.height,
-  pixel,
+  width,
+  height,
   ctx
 };
