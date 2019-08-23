@@ -3,7 +3,7 @@ const getRandomRangedFloat = require('../../../util/get-random-ranged-float');
 const getRandomCanvasPosition = require('../../../util/get-random-canvas-position');
 const hasCollidedBoundary = require('../../../util/has-collided-boundary');
 
-function Asteroid({ pos, dims, vector, props, status, points, img, meta }) {
+function Asteroid({ pos, dims, vector, props, status, img, timers, meta }) {
   Entity.call(this, {
     pos: pos || { ...getRandomCanvasPosition() },
     dims,
@@ -15,8 +15,8 @@ function Asteroid({ pos, dims, vector, props, status, points, img, meta }) {
       type: ['asteroid', ...props.type]
     },
     status,
-    points,
     img,
+    timers,
     meta
   });
 

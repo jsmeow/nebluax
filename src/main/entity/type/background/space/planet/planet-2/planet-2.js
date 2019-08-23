@@ -1,22 +1,20 @@
 const Planet = require('../planet');
-const imgSrc =
-  './main/entity/type/background/space/planet/planet-2/assets/images/image-source.png';
 
-function Planet2({ pos, dims, vector, status, points, timers, meta }) {
+function Planet2({ pos, dims, vector, status, timers, meta }) {
   Planet.call(this, {
     pos,
     dims: dims || {
-      width: 29,
-      height: 29
+      width: Planet2.dims.width,
+      height: Planet2.dims.height
     },
     vector,
     props: {
       type: ['planet-2']
     },
     status,
-    points,
     img: {
-      src: imgSrc
+      src:
+        './main/entity/type/background/space/planet/planet-2/assets/images/image-source.png'
     },
     timers,
     meta
@@ -24,5 +22,10 @@ function Planet2({ pos, dims, vector, status, points, timers, meta }) {
 }
 
 Planet2.prototype = Object.create(Planet.prototype);
+
+Planet2.dims = {
+  width: 29,
+  height: 29
+};
 
 module.exports = Planet2;

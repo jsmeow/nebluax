@@ -1,11 +1,10 @@
-const LargeBlinkingPurpleStar1 = require('../../../../../type/background/space/star/large/purple-blinking-1/large-blinking-purple-star-1');
-const LargeBlinkingRedStar1 = require('../../../../../type/background/space/star/large/red-blinking-1/large-blinking-red-star-1');
-const LargeBlinkingWhiteStar1 = require('../../../../../type/background/space/star/large/white-blinking-1/large-blinking-white-star-1');
+const LargeStar = require('../../../../../type/background/space/star/large/large-star');
 
 function LargeStarFactory(factory, entities) {
-  this.largeBlinkingPurpleStar1 = function(args) {
-    const entity = new LargeBlinkingPurpleStar1({
+  this.purpleBlinking1 = function(args) {
+    const entity = new LargeStar({
       ...args,
+      imgSrc: LargeStar.imgSrc.purpleBlinking1,
       meta: {
         creator: args && args.meta ? args.meta.creator : null,
         factory,
@@ -16,9 +15,10 @@ function LargeStarFactory(factory, entities) {
     return entity;
   };
 
-  this.largeBlinkingRedStar1 = function(args) {
-    const entity = new LargeBlinkingRedStar1({
+  this.redBlinking1 = function(args) {
+    const entity = new LargeStar({
       ...args,
+      imgSrc: LargeStar.imgSrc.redBlinking1,
       meta: {
         creator: args && args.meta ? args.meta.creator : null,
         factory,
@@ -28,9 +28,11 @@ function LargeStarFactory(factory, entities) {
     entities[0].push(entity);
     return entity;
   };
-  this.largeBlinkingWhiteStar1 = function(args) {
-    const entity = new LargeBlinkingWhiteStar1({
+
+  this.whiteBlinking1 = function(args) {
+    const entity = new LargeStar({
       ...args,
+      imgSrc: LargeStar.imgSrc.whiteBlinking1,
       meta: {
         creator: args && args.meta ? args.meta.creator : null,
         factory,

@@ -1,23 +1,10 @@
-const SmallBlinkingMulticolorStar1 = require('../../../../../type/background/space/star/small/multicolor-blinking-1/small-blinking-multicolor-star-1');
-const SmallPurpleStar1 = require('../../../../../type/background/space/star/small/purple-1/small-purple-star-1');
-const SmallPurpleStar2 = require('../../../../../type/background/space/star/small/purple-2/small-purple-star-2');
-const SmallPurpleStar3 = require('../../../../../type/background/space/star/small/purple-3/small-purple-star-3');
-const SmallBlinkingPurpleStar1 = require('../../../../../type/background/space/star/small/purple-blinking-1/small-blinking-purple-star-1');
-const SmallRedStar1 = require('../../../../../type/background/space/star/small/red-1/small-red-star-1');
-const SmallRedStar2 = require('../../../../../type/background/space/star/small/red-2/small-red-star-2');
-const SmallRedStar3 = require('../../../../../type/background/space/star/small/red-3/small-red-star-3');
-const SmallBlinkingRedStar1 = require('../../../../../type/background/space/star/small/red-blinking-1/small-blinking-red-star-1');
-const SmallWhiteStar1 = require('../../../../../type/background/space/star/small/white-1/small-white-star-1');
-const SmallWhiteStar2 = require('../../../../../type/background/space/star/small/white-2/small-white-star-2');
-const SmallWhiteStar3 = require('../../../../../type/background/space/star/small/white-3/small-white-star-3');
-const SmallWhiteStar4 = require('../../../../../type/background/space/star/small/white-4/small-white-star-4');
-const SmallWhiteStar5 = require('../../../../../type/background/space/star/small/white-5/small-white-star-5');
-const SmallBlinkingWhiteStar1 = require('../../../../../type/background/space/star/small/white-blinking-1/small-blinking-white-star-1');
+const SmallStar = require('../../../../../type/background/space/star/small/small-star');
 
 function SmallStarFactory(factory, entities) {
-  this.smallBlinkingMulticolorStar1 = function(args) {
-    const entity = new SmallBlinkingMulticolorStar1({
+  this.multicolorBlinking1 = function(args) {
+    const entity = new SmallStar({
       ...args,
+      imgSrc: SmallStar.imgSrc.multicolorBlinking1,
       meta: {
         creator: args && args.meta ? args.meta.creator : null,
         factory,
@@ -28,9 +15,10 @@ function SmallStarFactory(factory, entities) {
     return entity;
   };
 
-  this.smallPurpleStar1 = function(args) {
-    const entity = new SmallPurpleStar1({
+  this.purple1 = function(args) {
+    const entity = new SmallStar({
       ...args,
+      imgSrc: SmallStar.imgSrc.purple1,
       meta: {
         creator: args && args.meta ? args.meta.creator : null,
         factory,
@@ -41,9 +29,10 @@ function SmallStarFactory(factory, entities) {
     return entity;
   };
 
-  this.smallPurpleStar2 = function(args) {
-    const entity = new SmallPurpleStar2({
+  this.purple2 = function(args) {
+    const entity = new SmallStar({
       ...args,
+      imgSrc: SmallStar.imgSrc.purple2,
       meta: {
         creator: args && args.meta ? args.meta.creator : null,
         factory,
@@ -54,9 +43,10 @@ function SmallStarFactory(factory, entities) {
     return entity;
   };
 
-  this.smallPurpleStar3 = function(args) {
-    const entity = new SmallPurpleStar3({
+  this.purple3 = function(args) {
+    const entity = new SmallStar({
       ...args,
+      imgSrc: SmallStar.imgSrc.purple3,
       meta: {
         creator: args && args.meta ? args.meta.creator : null,
         factory,
@@ -67,9 +57,10 @@ function SmallStarFactory(factory, entities) {
     return entity;
   };
 
-  this.smallBlinkingPurpleStar1 = function(args) {
-    const entity = new SmallBlinkingPurpleStar1({
+  this.purpleBlinking1 = function(args) {
+    const entity = new SmallStar({
       ...args,
+      imgSrc: SmallStar.imgSrc.purpleBlinking1,
       meta: {
         creator: args && args.meta ? args.meta.creator : null,
         factory,
@@ -80,9 +71,10 @@ function SmallStarFactory(factory, entities) {
     return entity;
   };
 
-  this.smallRedStar1 = function(args) {
-    const entity = new SmallRedStar1({
+  this.red1 = function(args) {
+    const entity = new SmallStar({
       ...args,
+      imgSrc: SmallStar.imgSrc.red1,
       meta: {
         creator: args && args.meta ? args.meta.creator : null,
         factory,
@@ -93,9 +85,10 @@ function SmallStarFactory(factory, entities) {
     return entity;
   };
 
-  this.smallRedStar2 = function(args) {
-    const entity = new SmallRedStar2({
+  this.red2 = function(args) {
+    const entity = new SmallStar({
       ...args,
+      imgSrc: SmallStar.imgSrc.red2,
       meta: {
         creator: args && args.meta ? args.meta.creator : null,
         factory,
@@ -106,9 +99,10 @@ function SmallStarFactory(factory, entities) {
     return entity;
   };
 
-  this.smallRedStar3 = function(args) {
-    const entity = new SmallRedStar3({
+  this.red3 = function(args) {
+    const entity = new SmallStar({
       ...args,
+      imgSrc: SmallStar.imgSrc.red3,
       meta: {
         creator: args && args.meta ? args.meta.creator : null,
         factory,
@@ -119,9 +113,10 @@ function SmallStarFactory(factory, entities) {
     return entity;
   };
 
-  this.smallBlinkingRedStar1 = function(args) {
-    const entity = new SmallBlinkingRedStar1({
+  this.redBlinking1 = function(args) {
+    const entity = new SmallStar({
       ...args,
+      imgSrc: SmallStar.imgSrc.redBlinking1,
       meta: {
         creator: args && args.meta ? args.meta.creator : null,
         factory,
@@ -132,9 +127,10 @@ function SmallStarFactory(factory, entities) {
     return entity;
   };
 
-  this.smallWhiteStar1 = function(args) {
-    const entity = new SmallWhiteStar1({
+  this.white1 = function(args) {
+    const entity = new SmallStar({
       ...args,
+      imgSrc: SmallStar.imgSrc.white1,
       meta: {
         creator: args && args.meta ? args.meta.creator : null,
         factory,
@@ -145,9 +141,10 @@ function SmallStarFactory(factory, entities) {
     return entity;
   };
 
-  this.smallWhiteStar2 = function(args) {
-    const entity = new SmallWhiteStar2({
+  this.white2 = function(args) {
+    const entity = new SmallStar({
       ...args,
+      imgSrc: SmallStar.imgSrc.white2,
       meta: {
         creator: args && args.meta ? args.meta.creator : null,
         factory,
@@ -158,9 +155,10 @@ function SmallStarFactory(factory, entities) {
     return entity;
   };
 
-  this.smallWhiteStar3 = function(args) {
-    const entity = new SmallWhiteStar3({
+  this.white3 = function(args) {
+    const entity = new SmallStar({
       ...args,
+      imgSrc: SmallStar.imgSrc.white3,
       meta: {
         creator: args && args.meta ? args.meta.creator : null,
         factory,
@@ -171,9 +169,10 @@ function SmallStarFactory(factory, entities) {
     return entity;
   };
 
-  this.smallWhiteStar4 = function(args) {
-    const entity = new SmallWhiteStar4({
+  this.white4 = function(args) {
+    const entity = new SmallStar({
       ...args,
+      imgSrc: SmallStar.imgSrc.white4,
       meta: {
         creator: args && args.meta ? args.meta.creator : null,
         factory,
@@ -184,9 +183,10 @@ function SmallStarFactory(factory, entities) {
     return entity;
   };
 
-  this.smallWhiteStar5 = function(args) {
-    const entity = new SmallWhiteStar5({
+  this.white5 = function(args) {
+    const entity = new SmallStar({
       ...args,
+      imgSrc: SmallStar.imgSrc.white5,
       meta: {
         creator: args && args.meta ? args.meta.creator : null,
         factory,
@@ -197,9 +197,10 @@ function SmallStarFactory(factory, entities) {
     return entity;
   };
 
-  this.smallBlinkingWhiteStar1 = function(args) {
-    const entity = new SmallBlinkingWhiteStar1({
+  this.whiteBlinking1 = function(args) {
+    const entity = new SmallStar({
       ...args,
+      imgSrc: SmallStar.imgSrc.whiteBlinking1,
       meta: {
         creator: args && args.meta ? args.meta.creator : null,
         factory,

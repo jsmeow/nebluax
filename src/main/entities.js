@@ -21,7 +21,7 @@ const factory = new EntityFactory(list);
 
 // Instantiate the application background entity
 factory.bg.space.bg();
-factory.game.asteroid.asteroid1();
+factory.game.ship.player();
 
 module.exports = {
   list,

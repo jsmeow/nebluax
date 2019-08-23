@@ -4,17 +4,7 @@ const getRandomRangedFloat = require('../../../../util/get-random-ranged-float')
 const getRandomCanvasPosition = require('../../../../util/get-random-canvas-position');
 const hasCollidedBoundary = require('../../../../util/has-collided-boundary');
 
-function Planet({
-  pos,
-  dims,
-  vector,
-  props,
-  status,
-  points,
-  img,
-  timers,
-  meta
-}) {
+function Planet({ pos, dims, vector, props, status, img, timers, meta }) {
   Entity.call(this, {
     pos: pos || { ...getRandomCanvasPosition() },
     dims,
@@ -26,7 +16,6 @@ function Planet({
       type: ['bg', 'space', 'planet', ...props.type]
     },
     status,
-    points,
     img,
     timers,
     meta

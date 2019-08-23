@@ -1,27 +1,31 @@
 const Asteroid = require('../asteroid');
-const imgSrc =
-  './main/entity/type/game/asteroid/asteroid-1/assets/images/image-source.png';
 
-function Asteroid1({ pos, dims, vector, status, points, meta }) {
+function Asteroid1({ pos, dims, vector, status, timers, meta }) {
   Asteroid.call(this, {
     pos,
     dims: dims || {
-      width: 23,
-      height: 23
+      width: Asteroid1.dims.width,
+      height: Asteroid1.dims.height
     },
     vector,
     props: {
       type: ['asteroid-1']
     },
     status,
-    points,
     img: {
-      src: imgSrc
+      src:
+        './main/entity/type/game/asteroid/asteroid-1/assets/images/image-source.png'
     },
+    timers,
     meta
   });
 }
 
 Asteroid1.prototype = Object.create(Asteroid.prototype);
+
+Asteroid1.dims = {
+  width: 23,
+  height: 23
+};
 
 module.exports = Asteroid1;

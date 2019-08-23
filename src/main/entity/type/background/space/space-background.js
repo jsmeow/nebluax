@@ -1,8 +1,6 @@
 const Background = require('../background');
-const imgSrc =
-  './main/entity/type/background/space/assets/images/image-source.png';
 
-function SpaceBackground({ pos, dims, vector, status, points, timers, meta }) {
+function SpaceBackground({ pos, dims, vector, status, timers, meta }) {
   Background.call(this, {
     pos,
     dims,
@@ -14,9 +12,8 @@ function SpaceBackground({ pos, dims, vector, status, points, timers, meta }) {
       type: ['space']
     },
     status,
-    points,
     img: {
-      src: imgSrc
+      src: './main/entity/type/background/space/assets/images/image-source.png'
     },
     timers,
     meta
@@ -26,22 +23,22 @@ function SpaceBackground({ pos, dims, vector, status, points, timers, meta }) {
 
   /** @override **/
   this.entities = [
-    [this.meta.factory.bg.space.star.largeWide.largeWidePurpleStar1, 1],
-    [this.meta.factory.bg.space.star.largeWide.largeWideRedStar1, 1],
-    [this.meta.factory.bg.space.star.largeWide.largeWideWhiteStar1, 1],
-    [this.meta.factory.bg.space.star.large.largeBlinkingPurpleStar1, 2],
-    [this.meta.factory.bg.space.star.large.largeBlinkingRedStar1, 2],
-    [this.meta.factory.bg.space.star.large.largeBlinkingWhiteStar1, 2],
-    [this.meta.factory.bg.space.star.medium.mediumBlinkingPurpleStar1, 1],
-    [this.meta.factory.bg.space.star.medium.mediumBlinkingRedStar1, 1],
-    [this.meta.factory.bg.space.star.medium.mediumBlinkingWhiteStar1, 1],
-    [this.meta.factory.bg.space.star.small.smallBlinkingMulticolorStar1, 20],
-    [this.meta.factory.bg.space.star.small.smallWhiteStar1, 5],
-    [this.meta.factory.bg.space.star.small.smallWhiteStar2, 5],
-    [this.meta.factory.bg.space.star.small.smallWhiteStar3, 5],
-    [this.meta.factory.bg.space.star.small.smallWhiteStar4, 5],
-    [this.meta.factory.bg.space.star.small.smallWhiteStar5, 5],
-    [this.meta.factory.bg.space.star.small.smallBlinkingWhiteStar1, 10],
+    [this.meta.factory.bg.space.star.largeWide.purple1, 1],
+    [this.meta.factory.bg.space.star.largeWide.red1, 1],
+    [this.meta.factory.bg.space.star.largeWide.white1, 1],
+    [this.meta.factory.bg.space.star.large.purpleBlinking1, 2],
+    [this.meta.factory.bg.space.star.large.redBlinking1, 2],
+    [this.meta.factory.bg.space.star.large.whiteBlinking1, 2],
+    [this.meta.factory.bg.space.star.medium.purpleBlinking1, 1],
+    [this.meta.factory.bg.space.star.medium.redBlinking1, 1],
+    [this.meta.factory.bg.space.star.medium.whiteBlinking1, 1],
+    [this.meta.factory.bg.space.star.small.multicolorBlinking1, 20],
+    [this.meta.factory.bg.space.star.small.white1, 5],
+    [this.meta.factory.bg.space.star.small.white2, 5],
+    [this.meta.factory.bg.space.star.small.white3, 5],
+    [this.meta.factory.bg.space.star.small.white4, 5],
+    [this.meta.factory.bg.space.star.small.white5, 5],
+    [this.meta.factory.bg.space.star.small.whiteBlinking1, 10],
     [this.meta.factory.bg.space.planet.planet1, 1],
     [this.meta.factory.bg.space.planet.planet2, 1]
   ]

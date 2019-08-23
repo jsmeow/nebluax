@@ -1,15 +1,6 @@
 const Entity = require('../../entity');
 
-function Game({
-  pos,
-  dims,
-  vector,
-  props,
-  status = {},
-  points = {},
-  img,
-  meta
-}) {
+function Game({ pos, dims, vector, props, status, points, img, timers, meta }) {
   Entity.call(this, {
     pos,
     dims,
@@ -19,25 +10,26 @@ function Game({
       faction: props.faction || 'none'
     },
     status: {
-      alive: status.alive || true,
-      invincible: status.invincible || false,
-      collides: status.collides || false,
-      collided: status.collided || false,
+      alive: true,
+      invincible: false,
+      collides: false,
+      collided: false,
       ...status
     },
     img,
+    timers,
     meta
   });
 
   // Point properties
-  // Common points are added as baseline, but need not apply across all
+  // Common points are added as baseline, but need not apply across all game
   // entities.
   // The extending entity class are expected to implement additional point
   // properties if needed.
   this.points = {
-    health: points.health || 0,
-    attack: points.health || 0,
-    value: points.health || 0,
+    health: 0,
+    attack: 0,
+    value: 0,
     ...points
   };
 }

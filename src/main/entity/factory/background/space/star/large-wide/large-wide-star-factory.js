@@ -1,11 +1,10 @@
-const LargeWidePurpleStar1 = require('../../../../../type/background/space/star/large-wide/purple-1/large-wide-purple-star-1');
-const LargeWideRedStar1 = require('../../../../../type/background/space/star/large-wide/red-1/large-wide-red-star-1');
-const LargeWideWhiteStar1 = require('../../../../../type/background/space/star/large-wide/white-1/large-wide-white-star-1');
+const LargeWideStar = require('../../../../../type/background/space/star/large-wide/large-wide-star');
 
 function LargeWideStarFactory(factory, entities) {
-  this.largeWidePurpleStar1 = function(args) {
-    const entity = new LargeWidePurpleStar1({
+  this.purple1 = function(args) {
+    const entity = new LargeWideStar({
       ...args,
+      imgSrc: LargeWideStar.imgSrc.purple1,
       meta: {
         creator: args && args.meta ? args.meta.creator : null,
         factory,
@@ -16,9 +15,10 @@ function LargeWideStarFactory(factory, entities) {
     return entity;
   };
 
-  this.largeWideRedStar1 = function(args) {
-    const entity = new LargeWideRedStar1({
+  this.red1 = function(args) {
+    const entity = new LargeWideStar({
       ...args,
+      imgSrc: LargeWideStar.imgSrc.red1,
       meta: {
         creator: args && args.meta ? args.meta.creator : null,
         factory,
@@ -28,9 +28,11 @@ function LargeWideStarFactory(factory, entities) {
     entities[0].push(entity);
     return entity;
   };
-  this.largeWideWhiteStar1 = function(args) {
-    const entity = new LargeWideWhiteStar1({
+
+  this.white1 = function(args) {
+    const entity = new LargeWideStar({
       ...args,
+      imgSrc: LargeWideStar.imgSrc.white1,
       meta: {
         creator: args && args.meta ? args.meta.creator : null,
         factory,

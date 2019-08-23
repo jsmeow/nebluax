@@ -8,7 +8,6 @@ function Entity({
   vector = {},
   props = {},
   status = {},
-  points = {},
   img = {},
   timers = {},
   meta = {}
@@ -48,7 +47,7 @@ function Entity({
   // description properties if needed.
   // type - entity type(s) (optional)
   this.props = {
-    type: props.type || [],
+    type: [],
     ...props
   };
 
@@ -58,7 +57,7 @@ function Entity({
   // dispose - flag if the entity should be removed from the entities list on
   // the next update frame
   this.status = {
-    dispose: status.dispose || false,
+    dispose: false,
     ...status
   };
 
@@ -72,17 +71,18 @@ function Entity({
       _img.src = src;
       return _img;
     }),
-    idx: 0,
+    idx: img.idx || 0,
     deg: img.deg || 0
   };
 
   // Entity timers
-  // The animation timer is defined by default, but extending entities can add
-  // more timers to this object, if needed.
+  // The animation loop timer is defined by default, but extending entities can
+  // add more timers to this object, if needed.
   this.timers = {
+    ...timers,
     anim: {
-      delay: timers && timers.anim ? timers.anim.delay : fps,
-      frame: 0
+      delay: timers.anim && timers.anim.delay ? timers.anim.delay : fps,
+      frame: timers.anim && timers.anim.frame ? timers.anim.frame : 0
     }
   };
 
