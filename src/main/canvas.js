@@ -1,3 +1,5 @@
+const options = require('./options');
+
 // Define the canvas reference and canvas context
 const canvas = document.getElementById('canvas');
 
@@ -17,9 +19,9 @@ canvas.height = Number(
 );
 
 // Set the canvas element application resolution/pixel size
-// Application resolution set to 320, in order to get the low resolution pixel
-// art aesthetic look.
-const res = canvas.width / 320;
+// Application resolution set to 320 by default, in order to get the low
+// resolution pixel art aesthetic look.
+const pixel = canvas.width / options.res;
 
 // Define the offscreen canvas to optimize image rendering and the offscreen
 // canvas context
@@ -31,6 +33,6 @@ offscreenCanvas.height = canvas.height;
 module.exports = {
   width: canvas.width,
   height: canvas.height,
-  res,
+  pixel,
   ctx
 };

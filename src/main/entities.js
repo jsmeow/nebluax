@@ -23,8 +23,6 @@ const factory = new EntityFactory(list);
 factory.bg.space.bg();
 factory.game.asteroid.asteroid1();
 
-console.log(list);
-
 module.exports = {
   list,
   factory

@@ -1,12 +1,11 @@
-const canvas = require('../../../canvas');
 const Entity = require('../../entity');
 
 function Background({ pos, dims, vector, props, status, points, img, meta }) {
   Entity.call(this, {
     pos,
     dims: dims || {
-      width: canvas.width,
-      height: canvas.height
+      width: 320,
+      height: 320
     },
     vector,
     props: {
