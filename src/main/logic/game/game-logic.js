@@ -1,12 +1,19 @@
-const updateGame = require('./update/update-game');
-const renderGame = require('./render/render-game');
+const { list } = require('../../entities');
 
 function update() {
-  updateGame();
+  list.forEach(entities => {
+    entities.forEach((entity, index) => {
+      entity.update(index);
+    });
+  });
 }
 
 function render() {
-  renderGame();
+  list.forEach(entities => {
+    entities.forEach(entity => {
+      entity.render();
+    });
+  });
 }
 
 module.exports = {

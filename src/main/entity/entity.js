@@ -1,7 +1,6 @@
 const { fps } = require('../options');
-const canvas = require('../canvas');
-const UpdateWorkerHandler = require('./worker-handler/update/update-worker-handler');
-const RenderWorkerHandler = require('./worker-handler/render/render-worker-handler');
+const UpdateEventHandler = require('./event-handler/update/update-event-hander');
+const RenderEventHandler = require('./event-handler/render/render-event-hander');
 
 function Entity({
   pos = {},
@@ -11,9 +10,13 @@ function Entity({
   status = {},
   points = {},
   img = {},
-  anim = {},
+  timers = {},
   meta = {}
 }) {
+  // Create entity event handlers
+  const updateEventHandler = new UpdateEventHandler(this);
+  const renderEventHandler = new RenderEventHandler(this);
+
   // Position coordinates relative to the html5 canvas
   // x - position on the x axis in terms of canvas pixel units
   // y - position on the y axis in terms of canvas pixel units
@@ -79,28 +82,27 @@ function Entity({
   };
 
   // Image properties
-  // ctx - offscreen canvas context reference
   // src - the image source(s) used by the entity, converted to image objects
+  // idx - the current image to render in the image object list
   // deg - the rotation in degrees to render the image
   this.img = {
-    ctx: canvas.offscreenCanvas.getContext('2d'),
     src: (Array.isArray(img.src) ? img.src : [img.src]).map(src => {
       const _img = new Image();
       _img.src = src;
       return _img;
     }),
+    idx: 0,
     deg: img.deg || 0
   };
 
-  // Animation properties if the entity performs animation ie. has more than
-  // image source
-  // delay - time between animation frames
-  // frame - current animation frame
-  // index - current animation image index of the current image to draw
-  this.anim = {
-    delay: anim.delay || fps,
-    frame: 0,
-    index: 0
+  // Entity timers
+  // The animation timer is defined by default, but extending entities can add
+  // more timers to this object, if needed.
+  this.timers = {
+    anim: {
+      delay: timers && timers.anim ? timers.anim.delay : fps,
+      frame: 0
+    }
   };
 
   // Meta properties
@@ -114,10 +116,6 @@ function Entity({
     entities: meta.entities || null
   };
 
-  // Create entity web worker handlers
-  const updateWorkerHandler = new UpdateWorkerHandler(this);
-  const renderWorkerHandler = new RenderWorkerHandler();
-
   // Update entity
   // Perform update work on a single application frame.
   // If the disposing status is true, perform entity disposal.
@@ -127,18 +125,11 @@ function Entity({
     // Extending entity classes are expected to override this method if needed.
     this.preUpdate ? this.preUpdate() : null;
 
-    if (this.status.dispose) {
-      this.meta.entities.splice(index, 1);
-    } else {
-      // Update the entity timers
-      // Extending entity classes are expected to override this method if
-      // needed.
-      this.updateTimers ? this.updateTimers() : null;
-
-      updateWorkerHandler.updatePosition();
-      updateWorkerHandler.updateCollision(index);
-      updateWorkerHandler.updateAnimation();
-    }
+    updateEventHandler.updatePosition();
+    updateEventHandler.updateCollision(index);
+    updateEventHandler.updateTimers();
+    updateEventHandler.updateAnimationIndex();
+    updateEventHandler.updateDispose();
 
     // Post-update entity
     // Perform an update after the update method implementation.
@@ -154,13 +145,7 @@ function Entity({
     // Extending entity classes are expected to override this method if needed.
     this.preRender ? this.preRender() : null;
 
-    this.img.ctx.drawImage(
-      this.img.src[this.anim.index],
-      this.pos.x,
-      this.pos.y,
-      this.dims.width,
-      this.dims.height
-    );
+    renderEventHandler.renderImage();
 
     // Post-render entity
     // Perform a render update after the render method implementation.

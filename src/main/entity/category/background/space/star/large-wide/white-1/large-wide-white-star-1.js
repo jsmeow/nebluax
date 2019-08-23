@@ -6,10 +6,9 @@ function LargeWideWhiteStar1({
   pos,
   dims,
   vector,
-  props,
   status,
   points,
-  img,
+  timers,
   meta
 }) {
   LargeWideStar.call(this, {
@@ -17,15 +16,14 @@ function LargeWideWhiteStar1({
     dims,
     vector,
     props: {
-      ...props,
       type: ['white']
     },
     status,
     points,
     img: {
-      ...img,
       src: imgSrc
     },
+    timers,
     meta
   });
 }

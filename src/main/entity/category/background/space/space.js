@@ -1,8 +1,20 @@
+const { fps } = require('../../../../options');
 const Background = require('../background');
+const getRandomRangedInt = require('../../../util/get-random-ranged-int');
 const imgSrc =
   './main/entity/category/background/space/assets/images/image-source.png';
 
-function Space({ pos, dims, vector, props, status, points, img, meta }) {
+function Space({
+  pos,
+  dims,
+  vector,
+  props,
+  status,
+  points,
+  img,
+  timers,
+  meta
+}) {
   Background.call(this, {
     pos,
     dims,
@@ -21,6 +33,7 @@ function Space({ pos, dims, vector, props, status, points, img, meta }) {
       ...img,
       src: imgSrc
     },
+    timers,
     meta
   });
 
@@ -56,6 +69,22 @@ function Space({ pos, dims, vector, props, status, points, img, meta }) {
     }),
     ...[...Array(1)].map(() => {
       return this.meta.factory.background.space.star.medium.mediumBlinkingWhiteStar1();
+    }),
+
+    ...[...Array(20)].map(() => {
+      return this.meta.factory.background.space.star.small.smallBlinkingMulticolorStar1(
+        {
+          vector: {
+            speed: 0.25,
+            dy: 1
+          },
+          timers: {
+            anim: {
+              delay: getRandomRangedInt(fps * 0.5, fps * 1.5)
+            }
+          }
+        }
+      );
     }),
 
     ...[...Array(5)].map(() => {

@@ -10,10 +10,9 @@ function MediumBlinkingPurpleStar1({
   pos,
   dims,
   vector,
-  props,
   status,
   points,
-  img,
+  timers,
   meta
 }) {
   MediumStar.call(this, {
@@ -21,15 +20,14 @@ function MediumBlinkingPurpleStar1({
     dims,
     vector,
     props: {
-      ...props,
       type: ['purple']
     },
     status,
     points,
     img: {
-      ...img,
       src: [imgSrc1, imgSrc2, imgSrc3, imgSrc2]
     },
+    timers,
     meta
   });
 }

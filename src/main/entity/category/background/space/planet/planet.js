@@ -4,27 +4,35 @@ const getRandomRangedFloat = require('../../../../util/get-random-ranged-float')
 const getRandomCanvasPosition = require('../../../../util/get-random-canvas-position');
 const Entity = require('../../../../entity');
 
-function Planet({ pos, dims, vector, props, status, points, img, meta }) {
+function Planet({
+  pos,
+  dims,
+  vector,
+  props,
+  status,
+  points,
+  img,
+  timers,
+  meta
+}) {
   Entity.call(this, {
-    pos: pos || {
-      ...getRandomCanvasPosition({ y: { min: 0, max: -canvas.height } })
-    },
+    pos: pos || { ...getRandomCanvasPosition() },
     dims,
-    vector: {
-      ...vector,
-      // speed: (() => getRandomRangedFloat(0.5, 1.5))(),
-      speed: 1,
+    vector: vector || {
+      speed: (() => getRandomRangedFloat(0.25, 0.3))(),
       dy: 1
     },
     props: {
-      ...props,
-      type: ['background', 'space', 'planet']
+      type: [...props.type, 'space', 'planet']
     },
     status,
     points,
     img,
+    timers,
     meta
   });
+
+  console.log(getRandomRangedFloat(0.25, 0.3));
 
   /** @override **/
   this.preUpdate = function() {

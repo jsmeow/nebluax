@@ -14,10 +14,9 @@ function SmallBlinkingWhiteStar1({
   pos,
   dims,
   vector,
-  props,
   status,
   points,
-  img,
+  timers,
   meta
 }) {
   SmallStar.call(this, {
@@ -25,13 +24,11 @@ function SmallBlinkingWhiteStar1({
     dims,
     vector,
     props: {
-      ...props,
       type: ['white']
     },
     status,
     points,
     img: {
-      ...img,
       src: [
         imgSrc1,
         imgSrc2,
@@ -43,6 +40,7 @@ function SmallBlinkingWhiteStar1({
         imgSrc2
       ]
     },
+    timers,
     meta
   });
 }

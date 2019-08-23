@@ -3,7 +3,7 @@ const Planet = require('../planet');
 const imgSrc =
   './main/entity/category/background/space/planet/planet-3/assets/images/image-source.png';
 
-function Planet3({ pos, dims, vector, props, status, points, img, meta }) {
+function Planet3({ pos, dims, vector, status, points, timers, meta }) {
   Planet.call(this, {
     pos,
     dims: dims || {
@@ -11,13 +11,15 @@ function Planet3({ pos, dims, vector, props, status, points, img, meta }) {
       height: canvas.res * 37
     },
     vector,
-    props,
+    props: {
+      type: ['planet1']
+    },
     status,
     points,
     img: {
-      ...img,
       src: imgSrc
     },
+    timers,
     meta
   });
 }

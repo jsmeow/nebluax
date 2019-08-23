@@ -10,10 +10,9 @@ function SmallBlinkingRedStar1({
   pos,
   dims,
   vector,
-  props,
   status,
   points,
-  img,
+  timers,
   meta
 }) {
   SmallStar.call(this, {
@@ -21,15 +20,14 @@ function SmallBlinkingRedStar1({
     dims,
     vector,
     props: {
-      ...props,
       type: ['red']
     },
     status,
     points,
     img: {
-      ...img,
       src: [imgSrc1, imgSrc2, imgSrc3, imgSrc2]
     },
+    timers,
     meta
   });
 }

@@ -10,6 +10,7 @@ function LargeWideStar({
   status,
   points,
   img,
+  timers,
   meta
 }) {
   Star.call(this, {
@@ -18,19 +19,17 @@ function LargeWideStar({
       width: canvas.res * 13,
       height: canvas.res * 9
     },
-    vector: {
-      ...vector,
-      // speed: (() => getRandomRangedFloat(0.1, 0.3))(),
-      speed: 1,
+    vector: vector || {
+      speed: (() => getRandomRangedFloat(0.25, 0.3))(),
       dy: 1
     },
     props: {
-      ...props,
       type: [...props.type, 'large-wide']
     },
     status,
     points,
     img,
+    timers,
     meta
   });
 }
