@@ -1,18 +1,30 @@
-const { list } = require('../../entities');
+const entities = require('../../entities');
 
 function update() {
-  list.forEach(entities => {
-    entities.forEach((entity, index) => {
-      entity.update(index);
-    });
+  entities.list[0].forEach((entity, index) => {
+    entity.update(index);
+  });
+
+  entities.list[1].forEach((entity, index) => {
+    entity.update(index);
+  });
+
+  entities.list[2].forEach((entity, index) => {
+    entity.update(index);
   });
 }
 
 function render() {
-  list.forEach(entities => {
-    entities.forEach(entity => {
-      entity.render();
-    });
+  entities.list[0].forEach((entity, index) => {
+    entity.render(index);
+  });
+
+  entities.list[1].forEach((entity, index) => {
+    entity.render(index);
+  });
+
+  entities.list[2].forEach((entity, index) => {
+    entity.render(index);
   });
 }
 

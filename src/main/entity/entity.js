@@ -44,41 +44,22 @@ function Entity({
   };
 
   // Description/identification properties
+  // The extending entity class are expected to implement additional
+  // description properties if needed.
   // type - entity type(s) (optional)
-  // faction - faction affiliation (optional)
   this.props = {
     type: props.type || [],
-    faction: props.faction || ''
+    ...props
   };
 
   // Status properties
-  // Common statuses are added as baseline, but need not apply across all
-  // entities.
   // The extending entity class are expected to implement additional status
   // properties if needed.
+  // dispose - flag if the entity should be removed from the entities list on
+  // the next update frame
   this.status = {
     dispose: status.dispose || false,
-    alive: status.alive || false,
-    collides: status.collides || false,
-    collided: status.collided || false,
-    invincible: status.invincible || false,
-    damaged: status.damaged || false,
-    moving: status.moving || false,
-    pathing: status.pathing || false
-  };
-
-  // Point properties
-  // Common points are added as baseline, but need not apply across all
-  // entities.
-  // The extending entity class are expected to implement additional point
-  // properties if needed.
-  this.points = {
-    health: points.health || 0,
-    maxHealth: points.maxHealth || 0,
-    attack: points.attack || 0,
-    maxAttack: points.maxAttack || 0,
-    score: points.score || 0,
-    value: points.value || 0
+    ...status
   };
 
   // Image properties

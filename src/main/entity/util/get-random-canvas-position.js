@@ -3,14 +3,14 @@ const getRandomRangedInt = require('./get-random-ranged-int');
 
 // Get a random position within the canvas bounds
 function getRandomCanvasPosition(
-  { x = { min: 0, max: canvas.width }, y = { min: 0, max: canvas.height } } = {
-    x: { min: 0, max: canvas.width },
-    y: { min: 0, max: canvas.height }
+  { x = [0, canvas.width], y = [0, canvas.height] } = {
+    x: [0, canvas.width],
+    y: [0, canvas.height]
   }
 ) {
   return {
-    x: getRandomRangedInt(x.min, x.max),
-    y: getRandomRangedInt(y.min, y.max)
+    x: getRandomRangedInt(x[0], x[1]),
+    y: getRandomRangedInt(y[0], y[1])
   };
 }
 

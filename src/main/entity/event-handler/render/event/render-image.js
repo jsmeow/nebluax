@@ -11,7 +11,7 @@ function renderImage(entity) {
     entity.dims.height
   );
 
-  if (entity.props.type.includes('background')) {
+  if (entity.props.type.includes('bg-image')) {
     ctx.drawImage(
       entity.img.src[entity.img.idx],
       entity.pos.x,
