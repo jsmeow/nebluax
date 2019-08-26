@@ -1,4 +1,4 @@
-const entities = require('../entities');
+const entities = require('../controller/handler/entities');
 
 function Wave() {
   // The wave entities list.

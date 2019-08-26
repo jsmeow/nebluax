@@ -1,8 +1,8 @@
-const loop = require('./loop');
+const controller = require('./controller/controller');
 
 // Application entry point
 function main() {
-  loop.start();
+  controller.run();
 }
 
 module.exports = main;

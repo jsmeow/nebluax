@@ -1,7 +1,7 @@
 // Modules to control application life and create native browser window
 const { app, BrowserWindow } = require('electron');
+const { window } = require('./main/options');
 const path = require('path');
-const { res, scale } = require('./main/options');
 
 // Enable live reload for all the files inside your project directory
 require('electron-reload')(__dirname);
@@ -16,8 +16,8 @@ function createWindow() {
   // Create the browser window.
   mainWindow = new BrowserWindow({
     center: true,
-    width: res.width * scale,
-    height: res.height * scale,
+    width: window.width * window.scale,
+    height: window.height * window.scale,
     useContentSize: true,
     resizable: false,
     webPreferences: {

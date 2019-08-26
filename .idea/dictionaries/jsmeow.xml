@@ -14,12 +14,16 @@
       <w>capslock</w>
       <w>cattacked</w>
       <w>cfor</w>
+      <w>chck</w>
       <w>closebracket</w>
       <w>controlleft</w>
       <w>controlright</w>
+      <w>crss</w>
       <w>ctrlr</w>
       <w>ctrlright</w>
       <w>electronjs</w>
+      <w>emojis</w>
+      <w>fctry</w>
       <w>fpsmeter</w>
       <w>hokein</w>
       <w>imgd</w>
@@ -29,22 +33,33 @@
       <w>keypressed</w>
       <w>lifecycles</w>
       <w>loadnewwindow</w>
+      <w>multicolorblinking</w>
       <w>narrowbill</w>
+      <w>nebulax</w>
       <w>nebulon</w>
       <w>ocanvas</w>
       <w>ocontext</w>
       <w>outerspace</w>
       <w>pathing</w>
       <w>pausebreak</w>
+      <w>polyfilled</w>
+      <w>postrender</w>
+      <w>postupdate</w>
+      <w>prerender</w>
+      <w>preupdate</w>
+      <w>purpleblinking</w>
       <w>respawning</w>
       <w>secondparam</w>
       <w>shiftleft</w>
       <w>spacebar</w>
+      <w>spawner</w>
       <w>strg</w>
+      <w>succ</w>
       <w>timestep</w>
       <w>unpower</w>
       <w>unpowered</w>
       <w>unshield</w>
+      <w>whte</w>
       <w>woff</w>
     </words>
   </dictionary>
