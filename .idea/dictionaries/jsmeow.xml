@@ -15,12 +15,16 @@
       <w>cattacked</w>
       <w>cfor</w>
       <w>chck</w>
+      <w>cllsn</w>
       <w>closebracket</w>
+      <w>cmptr</w>
       <w>controlleft</w>
       <w>controlright</w>
       <w>crss</w>
       <w>ctrlr</w>
       <w>ctrlright</w>
+      <w>dggr</w>
+      <w>dsktp</w>
       <w>electronjs</w>
       <w>emojis</w>
       <w>fctry</w>
@@ -33,6 +37,7 @@
       <w>keypressed</w>
       <w>lifecycles</w>
       <w>loadnewwindow</w>
+      <w>lptp</w>
       <w>multicolorblinking</w>
       <w>narrowbill</w>
       <w>nebulax</w>
@@ -42,17 +47,21 @@
       <w>outerspace</w>
       <w>pathing</w>
       <w>pausebreak</w>
+      <w>pntng</w>
       <w>polyfilled</w>
       <w>postrender</w>
       <w>postupdate</w>
       <w>prerender</w>
       <w>preupdate</w>
+      <w>pstl</w>
       <w>purpleblinking</w>
       <w>respawning</w>
+      <w>rght</w>
       <w>secondparam</w>
       <w>shiftleft</w>
       <w>spacebar</w>
       <w>spawner</w>
+      <w>sprkls</w>
       <w>strg</w>
       <w>succ</w>
       <w>timestep</w>

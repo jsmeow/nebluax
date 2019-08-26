@@ -14,11 +14,12 @@ function EntitiesController() {
 // The entity types list
 EntitiesController.types = ['BG', 'DISP', 'GAME'];
 
-EntitiesController.prototype.create = function(NewFactory, idx) {
-  NewFactory.prototype.setList = this.setList;
-  NewFactory.prototype.types = EntitiesController.types;
-  NewFactory.prototype.canvas = this.controllers.canvas;
-  return new NewFactory(idx);
+// Create the factories by entity type
+EntitiesController.prototype.create = function(EntityFactory, idx) {
+  EntityFactory.prototype.setList = this.setList;
+  EntityFactory.prototype.types = EntitiesController.types;
+  EntityFactory.prototype.canvas = this.controllers.canvas;
+  return new EntityFactory(idx);
 };
 
 module.exports = EntitiesController;

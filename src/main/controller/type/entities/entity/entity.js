@@ -134,8 +134,7 @@ Entity.remove = function(index) {
   this.setList[this.setListIdx].splice(index, 1);
 };
 
-// Update entity
-// Perform update work on a single application frame.
+// Perform an update on a single application frame.
 // If the disposing status is true, perform entity disposal.
 // Preupdate and postupdate methods are expected to overridden if needed.
 Entity.prototype.update = function(index) {
@@ -145,7 +144,6 @@ Entity.prototype.update = function(index) {
   this.dispose && this.remove();
 };
 
-// Render entity
 // Perform rendering on a single application frame.
 // Prerender and postrender methods are expected to overridden if needed.
 Entity.prototype.render = function() {

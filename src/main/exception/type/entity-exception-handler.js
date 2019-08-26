@@ -93,25 +93,6 @@ function InvalidImageSourcePathException(args) {
   });
 }
 
-function InvalidEntitySetListTypeException(args) {
-  throw new EntityExceptionHandler({
-    desc:
-      'the entities set list type type cannot be undefined or should match the valid entity types enum values',
-    entity: args.name,
-    name: 'InvalidEntitySetListTypeException',
-    val: args.setListType
-  });
-}
-
-function InvalidEntitySetListTypesException(args) {
-  throw new EntityExceptionHandler({
-    desc: 'the entity set list types reference cannot be undefined',
-    entity: args.name,
-    name: 'InvalidEntitySetListTypesException',
-    val: args.setListTypes
-  });
-}
-
 function InvalidEntitiesSetListException(args) {
   throw new EntityExceptionHandler({
     desc: 'the entities set list cannot be undefined',
@@ -130,27 +111,37 @@ function InvalidEntitiesSetListIndexException(args) {
   });
 }
 
-function InvalidEntitiesListIndexException(index) {
+function InvalidEntitySetListTypeException(args) {
   throw new EntityExceptionHandler({
-    desc: 'the entities list index cannot be undefined',
-    name: 'InvalidEntitiesListIndexException',
-    val: index
+    desc:
+      'the entities set list type type cannot be undefined or should match the valid entity types values',
+    entity: args.name,
+    name: 'InvalidEntitySetListTypeException',
+    val: args.setListType
+  });
+}
+
+function InvalidEntitySetListTypesException(args) {
+  throw new EntityExceptionHandler({
+    desc: 'the entity set list types reference cannot be undefined',
+    entity: args.name,
+    name: 'InvalidEntitySetListTypesException',
+    val: args.setListTypes
   });
 }
 
 module.exports = {
   InvalidXException,
   InvalidYException,
+  InvalidWidthException,
+  InvalidHeightException,
   InvalidSpeedException,
   InvalidDxException,
   InvalidDyException,
-  InvalidWidthException,
-  InvalidHeightException,
-  InvalidEntitySetListTypeException,
-  InvalidEntitySetListTypesException,
   InvalidCanvasException,
   InvalidImageSourcePathException,
   InvalidEntitiesSetListException,
   InvalidEntitiesSetListIndexException,
-  InvalidEntitiesListIndexException
+  InvalidEntitySetListTypeException,
+  InvalidEntitySetListTypesException
 };

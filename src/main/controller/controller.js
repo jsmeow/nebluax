@@ -4,11 +4,13 @@ const LoopController = require('./type/loop/loop-controller');
 const StateController = require('./type/state/state-controller');
 const CanvasController = require('./type/canvas/canvas-controller');
 const log = require('../util/log');
-const { whteHvyChckMrk } = require('../util/emoji');
+const { dsktpCmptr, sprkls, whteHvyChckMrk } = require('../util/emoji');
 
 function Controller() {
-  log.info('initializing nebulax...');
-  log.info(`window resolution set to ${width * scale}x${height * scale}`);
+  log.info(`${sprkls} initializing nebulax`);
+  log.info(
+    `${dsktpCmptr} window resolution set to ${width * scale}x${height * scale}`
+  );
 
   // The application controllers
   const controllers = [
@@ -30,22 +32,25 @@ function Controller() {
   log.succ(`${whteHvyChckMrk} successfully created the loop controller`);
   this.state = this.create(StateController);
   log.succ(`${whteHvyChckMrk} successfully created the state controller`);
+
+  log.info(`${sprkls} nebulax initialized`);
 }
 
+// Mixin the application controllers into the child controllers
 Controller.prototype.mixin = function(NewController) {
   NewController.prototype.controllers = this;
 };
 
-Controller.prototype.create = function(NewController) {
-  return new NewController();
+// Create the application child controllers
+Controller.prototype.create = function(ChildController) {
+  return new ChildController();
 };
 
-// Run the application
+// Run the application controller
 Controller.prototype.run = function() {
   this.state.onchange(StateController.states.GAME);
   this.loop.start();
-  const spaceBg = this.entities.factory.bg.space.bg();
-  console.log(spaceBg);
+  console.log(this.entities.factory.bg.space.bg());
 };
 
 module.exports = new Controller();

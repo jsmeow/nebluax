@@ -1,4 +1,4 @@
-const { window } = require('../../../../../../../options');
+const { width, height, scale } = require('../../../../../../../options').window;
 const Background = require('../background');
 
 function SpaceBackground(args) {
@@ -52,8 +52,8 @@ function SpaceBackground(args) {
 SpaceBackground.prototype = Object.create(Background.prototype);
 
 SpaceBackground.PATH = `${Background.PATH}/space`;
-SpaceBackground.WIDTH = window.width * window.scale;
-SpaceBackground.HEIGHT = window.height * window.scale;
+SpaceBackground.WIDTH = width * scale;
+SpaceBackground.HEIGHT = height * scale;
 SpaceBackground.IMG_SRC = `${SpaceBackground.PATH}/assets/images/image-source.png`;
 
 module.exports = SpaceBackground;

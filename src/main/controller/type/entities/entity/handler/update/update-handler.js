@@ -13,7 +13,6 @@ function updateHandler(entity, index) {
   if (entity.collides) {
     // Reset collided status before doing collision assertion
     entity.collided && Object.assign(entity, { collided: false });
-
     updateCollision(entity, index);
   }
 

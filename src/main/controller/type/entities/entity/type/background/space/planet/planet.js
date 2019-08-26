@@ -1,4 +1,3 @@
-const canvas = require('../../../../../../canvas/canvas-controller');
 const Entity = require('../../../../entity');
 const getRandomCanvasPos = require('../../../../util/get-random-canvas-position');
 const getRndRangedFloat = require('../../../../util/get-random-ranged-float');
@@ -17,7 +16,7 @@ function Planet(args) {
   this.preUpdate = function() {
     hasCollBoundary.bot(this.y, 0) &&
       Object.assign(this, {
-        y: getRandomCanvasPos({ y: [-canvas.height, 0] })
+        y: getRandomCanvasPos({ y: [-this.canvas.height, 0] })
       });
   };
 }
