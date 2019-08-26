@@ -1,5 +1,7 @@
+const entities = require('../../entities/entities-controller');
+
 // An application game frame
-function gameFrame(entities) {
+function gameFrame() {
   function update() {
     entities.setList.forEach(list => {
       list.forEach((entity, index) => {
@@ -16,7 +18,7 @@ function gameFrame(entities) {
     });
   }
 
-  return [update, render];
+  return { update, render };
 }
 
 module.exports = gameFrame;

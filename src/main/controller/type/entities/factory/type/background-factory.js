@@ -7,142 +7,118 @@ const MediumStar = require('../../entity/type/background/space/star/medium/mediu
 const LargeStar = require('../../entity/type/background/space/star/large/large-star');
 const LargeWideStar = require('../../entity/type/background/space/star/large-wide/large-wide-star');
 
-function BackgroundFactory(idx) {
-  EntityFactory.call(this, idx);
+function BackgroundFactory(args) {
+  EntityFactory.call(this, args);
 
   this.space = {
-    bg: args => this.spawn(SpaceBackground, args, true),
+    bg: (args = {}) => this.spawn(SpaceBackground, args, true),
     planet: {
-      1: args => this.spawn(Planet1, args),
-      2: args => this.spawn(Planet2, args)
+      1: (args = {}) => this.spawn(Planet1, args),
+      2: (args = {}) => this.spawn(Planet2, args)
     },
     star: {
       small: {
         multicolorBlinking: (args = {}) => {
-          const imgSrc = { src: SmallStar.IMG_SRC.MULTICOLOR_BLINKING };
-          Object.assign(args, { imgSrc });
+          args.imgSrc = SmallStar.IMG_SRC.MULTICOLOR_BLINKING;
           return this.spawn(SmallStar, args);
         },
         purple1: (args = {}) => {
-          const imgSrc = { src: SmallStar.IMG_SRC.PURPLE1 };
-          Object.assign(args, { imgSrc });
+          args.imgSrc = SmallStar.IMG_SRC.PURPLE1;
           return this.spawn(SmallStar, args);
         },
         purple2: (args = {}) => {
-          const imgSrc = { src: SmallStar.IMG_SRC.PURPLE2 };
-          Object.assign(args, { imgSrc });
+          args.imgSrc = SmallStar.IMG_SRC.PURPLE2;
           return this.spawn(SmallStar, args);
         },
         purple3: (args = {}) => {
-          const imgSrc = { src: SmallStar.IMG_SRC.PURPLE3 };
-          Object.assign(args, { imgSrc });
+          args.imgSrc = SmallStar.IMG_SRC.PURPLE3;
           return this.spawn(SmallStar, args);
         },
         purpleBlinking: (args = {}) => {
-          const imgSrc = { src: SmallStar.IMG_SRC.PURPLE_BLINKING };
-          Object.assign(args, { imgSrc });
+          args.imgSrc = SmallStar.IMG_SRC.PURPLE_BLINKING;
           return this.spawn(SmallStar, args);
         },
         red1: (args = {}) => {
-          const imgSrc = { src: SmallStar.IMG_SRC.RED1 };
-          Object.assign(args, { imgSrc });
+          args.imgSrc = SmallStar.IMG_SRC.RED1;
           return this.spawn(SmallStar, args);
         },
         red2: (args = {}) => {
-          const imgSrc = { src: SmallStar.IMG_SRC.RED2 };
-          Object.assign(args, { imgSrc });
+          args.imgSrc = SmallStar.IMG_SRC.RED2;
           return this.spawn(SmallStar, args);
         },
         red3: (args = {}) => {
-          const imgSrc = { src: SmallStar.IMG_SRC.RED3 };
-          Object.assign(args, { imgSrc });
+          args.imgSrc = SmallStar.IMG_SRC.RED3;
           return this.spawn(SmallStar, args);
         },
         redBlinking: (args = {}) => {
-          const imgSrc = { src: SmallStar.IMG_SRC.RED_BLINKING };
-          Object.assign(args, { imgSrc });
+          args.imgSrc = SmallStar.IMG_SRC.RED_BLINKING;
           return this.spawn(SmallStar, args);
         },
         white1: (args = {}) => {
-          const imgSrc = { src: SmallStar.IMG_SRC.WHITE1 };
-          Object.assign(args, { imgSrc });
+          args.imgSrc = SmallStar.IMG_SRC.WHITE1;
           return this.spawn(SmallStar, args);
         },
         white2: (args = { img: {} }) => {
-          const imgSrc = { src: SmallStar.IMG_SRC.WHITE2 };
-          Object.assign(args, { imgSrc });
+          args.imgSrc = SmallStar.IMG_SRC.WHITE2;
           return this.spawn(SmallStar, args);
         },
         white3: (args = {}) => {
-          const imgSrc = { src: SmallStar.IMG_SRC.WHITE3 };
-          Object.assign(args, { imgSrc });
+          args.imgSrc = SmallStar.IMG_SRC.WHITE3;
           return this.spawn(SmallStar, args);
         },
         white4: (args = {}) => {
-          const imgSrc = { src: SmallStar.IMG_SRC.WHITE4 };
-          Object.assign(args, { imgSrc });
+          args.imgSrc = SmallStar.IMG_SRC.WHITE4;
           return this.spawn(SmallStar, args);
         },
         white5: (args = {}) => {
-          const imgSrc = { src: SmallStar.IMG_SRC.WHITE5 };
-          Object.assign(args, { imgSrc });
+          args.imgSrc = SmallStar.IMG_SRC.WHITE5;
           return this.spawn(SmallStar, args);
         },
         whiteBlinking: (args = {}) => {
-          const imgSrc = { src: SmallStar.IMG_SRC.WHITE_BLINKING };
-          Object.assign(Object.assign(args, { img: {} }).img, imgSrc);
+          args.imgSrc = SmallStar.IMG_SRC.WHITE_BLINKING;
           return this.spawn(SmallStar, args);
         }
       },
       medium: {
         purpleBlinking: (args = {}) => {
-          const imgSrc = { src: MediumStar.IMG_SRC.PURPLE_BLINKING };
-          Object.assign(args, { imgSrc });
-          return this.spawn(SmallStar, args);
+          args.imgSrc = LargeStar.IMG_SRC.PURPLE_BLINKING;
+          return this.spawn(MediumStar, args);
         },
         redBlinking: (args = {}) => {
-          const imgSrc = { src: MediumStar.IMG_SRC.RED_BLINKING };
-          Object.assign(args, { imgSrc });
-          return this.spawn([MediumStar, args]);
+          args.imgSrc = LargeStar.IMG_SRC.RED_BLINKING;
+          return this.spawn(MediumStar, args);
         },
         whiteBlinking: (args = {}) => {
-          const imgSrc = { src: MediumStar.IMG_SRC.WHITE_BLINKING };
-          Object.assign(args, { imgSrc });
-          return this.spawn([MediumStar, args]);
+          args.imgSrc = LargeStar.IMG_SRC.WHITE_BLINKING;
+          return this.spawn(MediumStar, args);
         }
       },
       large: {
         purpleBlinking: (args = {}) => {
-          const imgSrc = { src: LargeStar.IMG_SRC.PURPLE_BLINKING };
-          Object.assign(args, { imgSrc });
-          return this.spawn([LargeStar, args]);
+          args.imgSrc = LargeStar.IMG_SRC.PURPLE_BLINKING;
+          return this.spawn(LargeStar, args);
         },
-        RED_BLINKING: (args = {}) => {
-          const imgSrc = { src: LargeStar.IMG_SRC.RED_BLINKING };
-          Object.assign(args, { imgSrc });
-          return this.spawn([LargeStar, args]);
+        redBlinking: (args = {}) => {
+          args.imgSrc = LargeStar.IMG_SRC.RED_BLINKING;
+          return this.spawn(LargeStar, args);
         },
-        WHITE_BLINKING: (args = {}) => {
-          const imgSrc = { src: LargeStar.IMG_SRC.WHITE_BLINKING };
-          Object.assign(args, { imgSrc });
-          return this.spawn([LargeStar, args]);
+        whiteBlinking: (args = {}) => {
+          args.imgSrc = LargeStar.IMG_SRC.WHITE_BLINKING;
+          return this.spawn(LargeStar, args);
         }
       },
       largeWide: {
         purple: (args = {}) => {
-          const imgSrc = { src: LargeWideStar.IMG_SRC.PURPLE };
-          Object.assign(args, { imgSrc });
-          return this.spawn([LargeWideStar, args]);
+          args.imgSrc = LargeWideStar.IMG_SRC.PURPLE;
+          return this.spawn(LargeWideStar, args);
         },
         red: (args = {}) => {
-          const imgSrc = { src: LargeWideStar.IMG_SRC.RED };
-          Object.assign(args, { imgSrc });
-          return this.spawn([LargeWideStar, args]);
+          args.imgSrc = LargeWideStar.IMG_SRC.RED;
+          return this.spawn(LargeWideStar, args);
         },
         white: (args = {}) => {
-          const imgSrc = { src: LargeWideStar.IMG_SRC.WHITE };
-          Object.assign(args, { imgSrc });
-          return this.spawn([LargeWideStar, args]);
+          args.imgSrc = LargeWideStar.IMG_SRC.WHITE;
+          return this.spawn(LargeWideStar, args);
         }
       }
     }

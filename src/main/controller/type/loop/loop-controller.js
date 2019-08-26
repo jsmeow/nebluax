@@ -1,46 +1,47 @@
-const StateController = require('../state/state-controller');
 const gameFrame = require('./frame/game-frame');
-const e = require('../../../exception/exception-handler');
+const enums = require('../../enum/enums');
+const e = require('../../exception/exception-handler');
+const log = require('../../../util/log');
+const { whteHvyChckMrk } = require('../../../util/emoji');
 
 // The application loop controller
 function LoopController() {
-  // The frame functions to execute on an application frame
-  const game = gameFrame(this.controllers.entities);
-
   // The frame function to execute will depend on the application state
-  let frame = null;
+  this.frame = null;
 
   // The application loop
-  function loop() {
-    window.requestAnimationFrame(loop);
-    frame[0]();
-    frame[1]();
-  }
-
-  // Starts the application loop
-  this.start = function() {
-    window.requestAnimationFrame(loop);
+  this.loop = () => {
+    window.requestAnimationFrame(this.loop);
+    this.frame.update();
+    this.frame.render();
   };
 
-  // Stops the application loop
-  this.stop = function() {
-    window.cancelAnimationFrame(loop);
-  };
-
-  // The change frame function event action
-  this.onchange = function() {
-    switch (this.controllers.state.current) {
-      case StateController.states.TITLE:
-        break;
-      case StateController.states.MENU:
-        break;
-      case StateController.states.GAME:
-        frame = game;
-        break;
-      default:
-        throw new e.state.InvalidStateException(this.controllers.state.current);
-    }
-  };
+  log.succ(`${whteHvyChckMrk} successfully created the loop controller`);
 }
 
-module.exports = LoopController;
+// Starts the application loop
+LoopController.prototype.start = function() {
+  window.requestAnimationFrame(this.loop);
+};
+
+// Stops the application loop
+LoopController.prototype.stop = function() {
+  window.cancelAnimationFrame(this.loop);
+};
+
+// The change frame function event action
+LoopController.prototype.onchange = function(state) {
+  switch (state) {
+    case enums.STATE.STATES.TITLE:
+      break;
+    case enums.STATE.STATES.MENU:
+      break;
+    case enums.STATE.STATES.GAME:
+      this.frame = gameFrame();
+      break;
+    default:
+      throw new e.state.InvalidStateException(state);
+  }
+};
+
+module.exports = new LoopController();

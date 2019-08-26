@@ -1,5 +1,5 @@
 // Update the animation loop image index
-function updateAnimationIndex(entity) {
+function updateAnimationIndexEvent(entity) {
   const step = entity.imgAnimTimer.delay / entity.img.length;
   const timerRangeBegin = entity.imgIdx * step;
   const timerRangeEnd = (entity.imgIdx + 1) * step;
@@ -13,4 +13,4 @@ function updateAnimationIndex(entity) {
   entity.imgIdx >= entity.img.length && Object.assign(entity, { imgIdx: 0 });
 }
 
-module.exports = updateAnimationIndex;
+module.exports = updateAnimationIndexEvent;

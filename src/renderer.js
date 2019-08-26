@@ -1,3 +1,12 @@
+const { width, height, scale } = require('./main/options').window;
+const log = require('./main/util/log');
+const { dsktpCmptr, sprkls } = require('./main/util/emoji');
+
+log.info(`${sprkls} initializing nebulax`);
+log.info(
+  `${dsktpCmptr} window resolution set to : ${width * scale}x${height * scale}`
+);
+
 const main = require('./main/main');
 
 /*

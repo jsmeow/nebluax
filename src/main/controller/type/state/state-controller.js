@@ -1,32 +1,28 @@
-const e = require('../../../exception/exception-handler');
+const loop = require('../loop/loop-controller');
+const enums = require('../../enum/enums');
+const e = require('../../exception/exception-handler');
+const log = require('../../../util/log');
+const { whteHvyChckMrk } = require('../../../util/emoji');
 
 // The application state controller
 function StateController() {
-  // The current application state
-  this.current = null;
+  log.succ(`${whteHvyChckMrk} successfully created the state controller`);
 }
-
-// The application states enum
-StateController.states = Object.freeze({
-  TITLE: 'TITLE',
-  MENU: 'MENU',
-  GAME: 'GAME'
-});
 
 // The change application state event action
 StateController.prototype.onchange = function(state) {
   switch (state) {
-    case StateController.states.TITLE:
+    case enums.STATE.STATES.TITLE:
       break;
-    case StateController.states.MENU:
+    case enums.STATE.STATES.MENU:
       break;
-    case StateController.states.GAME:
-      this.current = StateController.states.GAME;
-      this.controllers.loop.onchange();
+    case enums.STATE.STATES.GAME:
+      loop.onchange(state);
       break;
     default:
       throw new e.state.InvalidStateException(state);
   }
 };
 
-module.exports = StateController;
+module.exports = new StateController();
+module.exports.STATES = StateController.STATES;

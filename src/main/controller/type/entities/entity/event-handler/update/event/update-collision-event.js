@@ -25,7 +25,7 @@ function isCollisionValid(entity, _entity, index, _index) {
 }
 
 // Perform a collision assertion and collision action
-function updateCollision(entity, index) {
+function updateCollisionEvent(entity, index) {
   entity.setList[entity.setListIdx].forEach((_entity, _index) => {
     if (
       isCollisionValid(entity, _entity, index, _index) &&
@@ -70,4 +70,4 @@ function updateCollision(entity, index) {
   });
 }
 
-module.exports = updateCollision;
+module.exports = updateCollisionEvent;

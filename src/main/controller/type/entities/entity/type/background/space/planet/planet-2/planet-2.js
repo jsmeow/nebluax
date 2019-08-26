@@ -1,12 +1,14 @@
 const Planet = require('../planet');
 
 function Planet2(args) {
-  Planet2.call(this, {
-    ...args,
-    width: Planet2.WIDTH,
-    height: Planet2.HEIGHT,
-    imgSrc: Planet2.IMG_SRC
-  });
+  Planet.call(
+    this,
+    Object.assign(args, {
+      width: Planet2.WIDTH,
+      height: Planet2.HEIGHT,
+      imgSrc: Planet2.IMG_SRC
+    })
+  );
 }
 
 Planet2.prototype = Object.create(Planet.prototype);

@@ -2,13 +2,15 @@ const Star = require('../star');
 const getRndRangedFloat = require('../../../../../util/get-random-ranged-float');
 
 function MediumStar(args) {
-  Star.call(this, {
-    ...args,
-    width: MediumStar.WIDTH,
-    height: MediumStar.HEIGHT,
-    speed: args.speed || getRndRangedFloat(0.25, 0.3),
-    dy: args.dy || 1
-  });
+  Star.call(
+    this,
+    Object.assign(args, {
+      width: MediumStar.WIDTH,
+      height: MediumStar.HEIGHT,
+      speed: args.speed || getRndRangedFloat(0.25, 0.3),
+      dy: args.dy || 1
+    })
+  );
 }
 
 MediumStar.prototype = Object.create(Star.prototype);

@@ -1,29 +1,24 @@
-const log = require('../../../../util/log');
-const { newBtn } = require('../../../../util/emoji');
-
 // The types of entities the entity factory can produce will be the same as
 // the valid entity types enum
-function EntityFactory(idx) {
-  // The index of the type of entity to create in the entity types enum
-  this.idx = idx;
+function EntityFactory({ setList, setListIdx, factory }) {
+  Object.assign(this, {
+    setList,
+    setListIdx,
+    factory
+  });
 }
 
 // Creates and an entity and returns it
 EntityFactory.prototype.spawn = function(Entity, args, swap) {
-  const list = this.setList[this.idx];
-
-  log.spawn(`${newBtn} a ${Entity.name} entity has been spawned`);
+  const list = this.setList[this.setListIdx];
 
   return list.push(
     new Entity({
       ...args,
       name: Entity.name,
-      setListType: this.types[this.idx],
-      setListTypes: this.types,
       setList: this.setList,
-      setListIdx: this.idx,
-      factory: this,
-      canvas: this.canvas
+      setListIdx: this.setListIdx,
+      factory: this.factory
     })
   ) && swap
     ? list.unshift(list.pop()) && list[0]

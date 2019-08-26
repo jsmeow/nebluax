@@ -1,4 +1,6 @@
 const { window } = require('../../../options');
+const log = require('../../../util/log');
+const { whteHvyChckMrk } = require('../../../util/emoji');
 
 // The application canvas controller
 function CanvasController() {
@@ -25,6 +27,8 @@ function CanvasController() {
   // Since transferControlToOffscreen is used on the offscreen canvas, all
   // drawing will be done with this context
   this.ctx = offscreenCanvas.getContext('2d');
+
+  log.succ(`${whteHvyChckMrk} successfully created the canvas controller`);
 }
 
-module.exports = CanvasController;
+module.exports = new CanvasController();

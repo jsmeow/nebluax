@@ -1,7 +1,7 @@
 const Entity = require('../../entity');
 
 function Background(args) {
-  Entity.call(this, { ...args });
+  Entity.call(this, args);
 
   /** @override **/
   this.preUpdate = function() {
