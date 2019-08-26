@@ -10,6 +10,8 @@
       <w>arrowup</w>
       <w>backquote</w>
       <w>bcksp</w>
+      <w>blln</w>
+      <w>brfcs</w>
       <w>btnclick</w>
       <w>capslock</w>
       <w>cattacked</w>
@@ -21,27 +23,41 @@
       <w>controlleft</w>
       <w>controlright</w>
       <w>crss</w>
+      <w>crwn</w>
       <w>ctrlr</w>
       <w>ctrlright</w>
       <w>dggr</w>
       <w>dsktp</w>
+      <w>elctrc</w>
       <w>electronjs</w>
       <w>emojis</w>
+      <w>exclmtn</w>
       <w>fctry</w>
       <w>fpsmeter</w>
+      <w>glng</w>
+      <w>glss</w>
+      <w>hndrd</w>
       <w>hokein</w>
+      <w>hrts</w>
       <w>imgd</w>
+      <w>infrmtn</w>
       <w>keya</w>
       <w>keyb</w>
       <w>keyc</w>
       <w>keypressed</w>
+      <w>knbs</w>
+      <w>kycp</w>
       <w>lifecycles</w>
       <w>loadnewwindow</w>
       <w>lptp</w>
+      <w>medl</w>
+      <w>mnstr</w>
       <w>multicolorblinking</w>
       <w>narrowbill</w>
       <w>nebulax</w>
       <w>nebulon</w>
+      <w>nmbr</w>
+      <w>ntry</w>
       <w>ocanvas</w>
       <w>ocontext</w>
       <w>outerspace</w>
@@ -53,23 +69,34 @@
       <w>postupdate</w>
       <w>prerender</w>
       <w>preupdate</w>
+      <w>prhbtd</w>
       <w>pstl</w>
       <w>purpleblinking</w>
+      <w>qstn</w>
+      <w>rckt</w>
       <w>respawning</w>
       <w>rght</w>
+      <w>rvlvng</w>
       <w>secondparam</w>
       <w>shiftleft</w>
+      <w>skll</w>
       <w>spacebar</w>
       <w>spawner</w>
+      <w>spch</w>
+      <w>spkr</w>
       <w>sprkls</w>
+      <w>sprts</w>
       <w>strg</w>
       <w>succ</w>
+      <w>thrd</w>
       <w>timestep</w>
+      <w>trph</w>
       <w>unpower</w>
       <w>unpowered</w>
       <w>unshield</w>
       <w>whte</w>
       <w>woff</w>
+      <w>wrnng</w>
     </words>
   </dictionary>
 </component>

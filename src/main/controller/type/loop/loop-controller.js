@@ -30,7 +30,7 @@ LoopController.prototype.stop = function() {
 };
 
 // The change frame function event action
-LoopController.prototype.onchange = function(state) {
+LoopController.prototype.onChange = function(state) {
   switch (state) {
     case enums.STATE.STATES.TITLE:
       break;

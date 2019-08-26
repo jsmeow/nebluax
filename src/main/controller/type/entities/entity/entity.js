@@ -4,7 +4,7 @@ const render = require('./event-handler/render/handle-on-render');
 const validate = require('./util/validate-args');
 const generate = require('./util/generate-property');
 const log = require('../../../../util/log');
-const { newBtn } = require('../../../../util/emoji');
+const { nwBtn } = require('../../../../util/emoji');
 
 function Entity(args) {
   validate(args);
@@ -82,7 +82,7 @@ function Entity(args) {
   this.setListIdx = args.setListIdx;
   this.factory = args.factory || null;
 
-  log.spawn(`${newBtn} spawned a ${this.name} with id ${this.uuid}`);
+  log.spawn(`${nwBtn} spawned a ${this.name} with id ${this.uuid}`);
 }
 
 // Remove the entity from an entities list

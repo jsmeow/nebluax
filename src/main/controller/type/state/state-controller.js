@@ -10,14 +10,14 @@ function StateController() {
 }
 
 // The change application state event action
-StateController.prototype.onchange = function(state) {
+StateController.prototype.onChange = function(state) {
   switch (state) {
     case enums.STATE.STATES.TITLE:
       break;
     case enums.STATE.STATES.MENU:
       break;
     case enums.STATE.STATES.GAME:
-      loop.onchange(state);
+      loop.onChange(state);
       break;
     default:
       throw new e.state.InvalidStateException(state);

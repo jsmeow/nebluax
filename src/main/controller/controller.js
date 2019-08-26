@@ -6,7 +6,7 @@ const log = require('../util/log');
 const { sprkls } = require('../util/emoji');
 
 function Controller() {
-  state.onchange(enums.STATE.STATES.GAME);
+  state.onChange(enums.STATE.STATES.GAME);
   loop.start();
 
   log.info(`${sprkls} nebulax initialized`);

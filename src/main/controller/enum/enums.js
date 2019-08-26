@@ -1,5 +1,5 @@
-const entities = require('./entities-enums');
-const state = require('./state-enums');
+const entities = require('./type/entities-enums');
+const state = require('./type/state-enums');
 
 module.exports = {
   ENTITIES: entities,
