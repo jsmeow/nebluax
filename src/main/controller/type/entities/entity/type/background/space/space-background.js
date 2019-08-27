@@ -1,5 +1,7 @@
 const { window } = require('../../../../../../../options');
 const Background = require('../background');
+const log = require('../../../../../../../log/log');
+const emojis = require('emoji.json/emoji-compact.json');
 
 function SpaceBackground(args) {
   Background.call(
@@ -12,8 +14,6 @@ function SpaceBackground(args) {
       imgSrc: SpaceBackground.IMG_SRC
     })
   );
-
-  // Background entities
 
   /** @override **/
   this.children = [
@@ -52,15 +52,18 @@ function SpaceBackground(args) {
     Array(1).fill(this.factory.bg.space.planet[2])
   ]
     .reduce((children, entities) => {
-      children.push(entities.map(entity => entity()));
+      children.push(entities.map(entity => entity({ creator: this })));
       return children;
     }, [])
     .flat();
+
+  log.entity.spwnchld(this);
 }
 
 SpaceBackground.prototype = Object.create(Background.prototype);
 
 SpaceBackground.PATH = `${Background.PATH}/space`;
+SpaceBackground.EMOJI = emojis[2853];
 SpaceBackground.WIDTH = window.width;
 SpaceBackground.HEIGHT = window.height;
 SpaceBackground.IMG_SRC = `${SpaceBackground.PATH}/assets/images/image-source.png`;

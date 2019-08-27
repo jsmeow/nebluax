@@ -1,6 +1,6 @@
 const { window } = require('../../../options');
-const log = require('../../../util/log');
-const { whteHvyChckMrk } = require('../../../util/emoji');
+const log = require('../../../log/log');
+const { whteHvyChckMrk } = require('../../../util/emoji/emoji');
 
 // The application canvas controller
 function CanvasController() {

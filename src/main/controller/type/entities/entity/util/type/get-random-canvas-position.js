@@ -1,4 +1,4 @@
-const canvas = require('../../../canvas/canvas-controller');
+const canvas = require('../../../../canvas/canvas-controller');
 const getRandomRangedInt = require('./get-random-ranged-int');
 
 // Get a random position within the canvas bounds
@@ -11,6 +11,6 @@ function getRandomCanvasY(y = []) {
 }
 
 module.exports = {
-  x: getRandomCanvasX,
-  y: getRandomCanvasY
+  getRandomCanvasX,
+  getRandomCanvasY
 };

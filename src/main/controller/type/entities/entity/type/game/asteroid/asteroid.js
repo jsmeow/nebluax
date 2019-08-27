@@ -1,7 +1,7 @@
 const Entity = require('../game');
-const getRandomRangedFloat = require('../../../util/get-random-ranged-float');
-const getRandomCanvasPosition = require('../../../util/get-random-canvas-position');
-const hasCollidedBoundary = require('../../../util/has-collided-boundary');
+const getRandomRangedFloat = require('../../../util/type/get-random-ranged-float');
+const getRandomCanvasPosition = require('../../../util/type/get-random-canvas-position');
+const hasCollidedBoundary = require('../../../util/type/has-collided-boundary');
 
 function Asteroid({ pos, vector, props, ...args }) {
   Entity.call(this, {

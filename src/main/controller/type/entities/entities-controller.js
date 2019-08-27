@@ -1,31 +1,27 @@
-const BackgroundFactory = require('./factory/type/background-factory');
-const enums = require('../../enum/enums');
-const log = require('../../../util/log');
-const { whteHvyChckMrk } = require('../../../util/emoji');
+const BackgroundEntityFactory = require('./factory/type/background-entity-factory');
+const entityFctry = require('./factory/entity-factory');
+const log = require('../../../log/log');
+const { whteHvyChckMrk } = require('../../../util/emoji/emoji');
 
 // The application entities controller
 function EntitiesController() {
   // The application entities list set
   this.setList = [[], [], []];
 
-  // The entity factory used by the controller
-  // A reference of the this factory instance will be passed down to the
-  // factory created entities so they may create child entities
-  this.factory = {};
+  // Mixin reference to the main the application entities list set to the main
+  // entity factory
+  Object.getPrototypeOf(entityFctry).setList = this.setList;
 
-  // The entity factory types
-  this.factory.bg = this.create(BackgroundFactory, enums.ENTITIES.TYPE.BG);
+  // Mixin main entity factory methods to child entity factories
+  [BackgroundEntityFactory].forEach(Factory => {
+    Factory.prototype = Object.getPrototypeOf(entityFctry);
+    Factory.prototype.constructor = Factory;
+  });
+
+  // Create the entity type child factories
+  entityFctry.createFactories();
 
   log.succ(`${whteHvyChckMrk} successfully created the entities controller`);
 }
-
-// Create the factories by entity type
-EntitiesController.prototype.create = function(EntityFactory, setListIdx) {
-  return new EntityFactory({
-    setList: this.setList,
-    setListIdx,
-    factory: this.factory
-  });
-};
 
 module.exports = new EntitiesController();

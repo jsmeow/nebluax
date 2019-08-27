@@ -1,5 +1,5 @@
-const log = require('../../../util/log');
-const { crsMrk } = require('../../../util/emoji');
+const log = require('../../../log/log');
+const { crsMrk } = require('../../../util/emoji/emoji');
 
 function EntityExceptionHandler({ desc, entity, name, val }) {
   desc && log.err(`${crsMrk} ${desc}`);

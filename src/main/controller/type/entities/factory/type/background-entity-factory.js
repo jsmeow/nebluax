@@ -1,4 +1,3 @@
-const EntityFactory = require('../entity-factory');
 const SpaceBackground = require('../../entity/type/background/space/space-background');
 const Planet1 = require('../../entity/type/background/space/planet/planet-1/planet-1');
 const Planet2 = require('../../entity/type/background/space/planet/planet-2/planet-2');
@@ -7,8 +6,8 @@ const MediumStar = require('../../entity/type/background/space/star/medium/mediu
 const LargeStar = require('../../entity/type/background/space/star/large/large-star');
 const LargeWideStar = require('../../entity/type/background/space/star/large-wide/large-wide-star');
 
-function BackgroundFactory(args) {
-  EntityFactory.call(this, args);
+function BackgroundEntityFactory(setListIdx) {
+  this.setListIdx = setListIdx;
 
   this.space = {
     bg: (args = {}) => this.spawn(SpaceBackground, args, true),
@@ -125,6 +124,4 @@ function BackgroundFactory(args) {
   };
 }
 
-BackgroundFactory.prototype = Object.create(EntityFactory.prototype);
-
-module.exports = BackgroundFactory;
+module.exports = BackgroundEntityFactory;

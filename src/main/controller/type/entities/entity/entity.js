@@ -1,13 +1,12 @@
 const { fps } = require('../../../../options');
 const update = require('./event-handler/update/handle-on-update');
 const render = require('./event-handler/render/handle-on-render');
-const validate = require('./util/validate-args');
-const generate = require('./util/generate-property');
-const log = require('../../../../util/log');
-const { nwBtn } = require('../../../../util/emoji');
+const util = require('./util/entity-util');
+const log = require('../../../../log/log');
+const emojis = require('emoji.json/emoji-compact.json');
 
 function Entity(args) {
-  validate(args);
+  util.validateArgs(args);
 
   // Position coordinates relative to the html5 canvas
   // x - position on the x axis in terms of canvas pixel units
@@ -30,8 +29,7 @@ function Entity(args) {
   this.dy = args.dy || 0;
 
   // Status properties
-  // The extending entity class are expected to implement additional status
-  // properties if needed.
+  // Extending entities can add more status properties if needed.
   // dispose - flag if the entity should be removed from the entities list
   // after an update
   // collides - flag if the entity collides with other entities
@@ -47,7 +45,7 @@ function Entity(args) {
   // imgAnimTimer - The animation loop timer used to animate the entity image
   // imgDeg - the rotation in degrees to render the image
   this.imgSrc = Array.isArray(args.imgSrc) ? args.imgSrc : [args.imgSrc];
-  this.img = generate.img(this.imgSrc);
+  this.img = util.generateImg(this.imgSrc);
   this.imgIdx = 0;
   this.imgAnimTimer = {
     delay: (!args.imgAnimTimer && fps) || args.imgAnimTimer.delay,
@@ -57,32 +55,34 @@ function Entity(args) {
 
   // Entity timers
   // The animation loop timer is included by default, but extending entities
-  // can add more timers if needed.
+  // can add more timers if needed. (optional)
   this.timers = { imgAnimTimer: this.imgAnimTimer };
 
   // Description properties
-  // uuid- unique universal identifier or custom defined id
-  // type - the type of list the entity belongs to
-  this.name = args.name || Entity.name;
-  this.uuid = generate.uuid(this.name);
+  // Extending entities can add more description properties if needed.
+  // name - name of the constructor class (optional)
+  this.name = args.name || 'unknown';
+  this.emoji = args.emoji || emojis[103];
 
   // Meta properties
   // Contains references to eternal application entities/objects
+  // constr - the constructor class (optional)
+  // uuid- unique universal identifier or custom defined id (optional)
   // creator - creator entity reference (optional)
   // children - children entity reference (optional)
-  // setListType - entities set list type which the entity belongs to
-  // setListType - entities set list types
-  // type - entities list type which the entity belongs to
+  // factory - the entity factory reference (optional)
   // setList - entities list set reference
   // setListIdx - entities list set index reference
-  // factory - the entity factory reference
+  this.constr = args.constr || 'entity constructor unknown';
+  this.path = args.path || 'entity path unknown';
+  this.uuid = args.uuid || util.generateUuid(this.name);
   this.creator = args.creator || null;
   this.children = args.children || [];
+  this.factory = args.factory || null;
   this.setList = args.setList;
   this.setListIdx = args.setListIdx;
-  this.factory = args.factory || null;
 
-  log.spawn(`${nwBtn} spawned a ${this.name} with id ${this.uuid}`);
+  log.entity.spwn(this);
 }
 
 // Remove the entity from an entities list

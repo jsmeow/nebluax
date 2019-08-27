@@ -1,8 +1,8 @@
 const gameFrame = require('./frame/game-frame');
 const enums = require('../../enum/enums');
 const e = require('../../exception/exception-handler');
-const log = require('../../../util/log');
-const { whteHvyChckMrk } = require('../../../util/emoji');
+const log = require('../../../log/log');
+const { whteHvyChckMrk } = require('../../../util/emoji/emoji');
 
 // The application loop controller
 function LoopController() {

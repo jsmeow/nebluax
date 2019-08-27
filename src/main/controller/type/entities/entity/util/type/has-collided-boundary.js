@@ -1,4 +1,4 @@
-const canvas = require('../../../canvas/canvas-controller');
+const canvas = require('../../../../canvas/canvas-controller');
 
 // Returns a boundary collision assertion for each cardinal direction
 
@@ -27,8 +27,10 @@ function hasCollidedBoundary({ x, y }, { width, height }) {
   );
 }
 
-module.exports = hasCollidedBoundary;
-module.exports.left = hasCollidedLeftBoundary;
-module.exports.right = hasCollidedRightBoundary;
-module.exports.top = hasCollidedBottomBoundary;
-module.exports.bot = hasCollidedBottomBoundary;
+module.exports = {
+  left: hasCollidedLeftBoundary,
+  right: hasCollidedRightBoundary,
+  top: hasCollidedTopBoundary,
+  bttm: hasCollidedBottomBoundary,
+  any: hasCollidedBoundary
+};

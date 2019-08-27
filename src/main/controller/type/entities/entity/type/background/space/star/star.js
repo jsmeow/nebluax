@@ -1,23 +1,22 @@
 const canvas = require('../../../../../../canvas/canvas-controller');
 const Entity = require('../../../../entity');
-const getRandomCanvasPos = require('../../../../util/get-random-canvas-position');
-const hasCollBoundary = require('../../../../util/has-collided-boundary');
+const util = require('../../../../util/entity-util');
 
 function Star(args) {
   Entity.call(
     this,
     Object.assign(args, {
-      x: args.x || getRandomCanvasPos.x(),
-      y: args.y || getRandomCanvasPos.y()
+      x: args.x || util.getRndmCanvasX(),
+      y: args.y || util.getRndmCanvasY()
     })
   );
 
   /** @override **/
   this.preUpdate = function() {
-    hasCollBoundary.bot(this.y, 0) &&
+    util.hasCollidedBndry.bttm(this.y, 0) &&
       Object.assign(this, {
-        x: getRandomCanvasPos.x(),
-        y: getRandomCanvasPos.y([-canvas.height, 0])
+        x: util.getRndmCanvasX(),
+        y: util.getRndmCanvasY([-canvas.height, 0])
       });
   };
 }

@@ -8,7 +8,7 @@ function createOptions() {
   const window = {
     width: 320,
     height: 320,
-    scale: 2
+    scale: 4
   };
 
   return { fps, window };

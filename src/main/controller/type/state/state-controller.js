@@ -1,8 +1,8 @@
 const loop = require('../loop/loop-controller');
 const enums = require('../../enum/enums');
 const e = require('../../exception/exception-handler');
-const log = require('../../../util/log');
-const { whteHvyChckMrk } = require('../../../util/emoji');
+const log = require('../../../log/log');
+const { whteHvyChckMrk } = require('../../../util/emoji/emoji');
 
 // The application state controller
 function StateController() {

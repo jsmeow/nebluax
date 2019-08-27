@@ -11,6 +11,6 @@ function generateUuid(name) {
 }
 
 module.exports = {
-  img: generateImage,
-  uuid: generateUuid
+  generateImage,
+  generateUuid
 };

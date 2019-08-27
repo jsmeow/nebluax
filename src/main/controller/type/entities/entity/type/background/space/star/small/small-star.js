@@ -1,5 +1,5 @@
 const Star = require('../star');
-const getRndRangedFloat = require('../../../../../util/get-random-ranged-float');
+const util = require('../../../../../util/entity-util');
 
 function SmallStar(args) {
   Star.call(
@@ -7,7 +7,7 @@ function SmallStar(args) {
     Object.assign(args, {
       width: SmallStar.WIDTH,
       height: SmallStar.HEIGHT,
-      speed: args.speed || getRndRangedFloat(0.25, 1.5),
+      speed: args.speed || util.getRndmRangedFlt(0.25, 1.5),
       dy: args.dy || 1
     })
   );
