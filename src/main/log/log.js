@@ -1,8 +1,12 @@
-const logController = require('./type/controller/log-controller-event');
-const logEntity = require('./type/entity/log-entity-event');
-const { COLORS } = require('../enum/enums').LOG;
+const mainLog = require('./type/log-main');
+const windowLog = require('./type/log-window');
+const ctrlrLog = require('../controller/log/log-controller');
+const { COLORS } = require('../controller/enum/enums').LOG;
+const findEmoji = require('../util/emoji-finder');
 
-const infoLoggers = [
+// findEmoji('saucer');
+
+const loggers = [
   ['err', COLORS.DANGER],
   ['errdrk', COLORS.DANGER_DARK],
   ['wrn', COLORS.WARNING],
@@ -27,14 +31,11 @@ function toConsole(msg, obj, color) {
 }
 
 const logger = Object.fromEntries(
-  infoLoggers.map(([key, color]) => [
-    key,
-    (msg, obj) => toConsole(msg, obj, color)
-  ])
+  loggers.map(([key, color]) => [key, (msg, obj) => toConsole(msg, obj, color)])
 );
 
-module.exports = {
-  ...logger,
-  cntrllr: logController(logger),
-  entity: logEntity(logger)
-};
+module.exports = Object.assign(logger, {
+  main: mainLog(logger),
+  window: windowLog(logger),
+  ctrlr: ctrlrLog(logger)
+});

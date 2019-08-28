@@ -3,18 +3,31 @@ const enums = require('../../../enum/enums');
 
 // The types of entities the entity factory can produce will be the same as
 // the entity types enum values
-function EntityFactory() {}
+function EntityFactory() {
+  // The entity factories by entity types
+  this.factories = {};
+}
 
-// Create the entity factories by entity types
-EntityFactory.prototype.createFactories = function() {
-  return [['bg', BackgroundEntityFactory, enums.ENTITIES.TYPE.BG]].reduce(
-    (factories, [key, Factory, setListIdx]) => {
-      const factory = new Factory(setListIdx);
-      EntityFactory.prototype[key] = new Factory(setListIdx);
-      return Object.assign(factories, { [key]: factory });
-    },
-    {}
-  );
+// Initialize the entity factory
+EntityFactory.prototype.init = function(setList) {
+  // Factory keys
+  const keys = Object.keys(enums.ENTITIES.TYPE).map(key => key.toLowerCase());
+
+  // Mixin main entity factory properties and methods to child entity factories
+  const Factories = [BackgroundEntityFactory].map(Factory => {
+    Factory.prototype.setList = setList;
+    Factory.prototype.factories = this.factories;
+    Factory.prototype.spawn = EntityFactory.prototype.spawn;
+    Factory.prototype.constructor = Factory;
+    return Factory;
+  });
+
+  // Create the entity factories
+  Object.assign(this.factories, {
+    [keys[enums.ENTITIES.TYPE.BG]]: new Factories[enums.ENTITIES.TYPE.BG](
+      enums.ENTITIES.TYPE.BG
+    )
+  });
 };
 
 // Creates and an entity and returns it
@@ -27,10 +40,10 @@ EntityFactory.prototype.spawn = function(Entity, args, swap) {
     name: Entity.name,
     constr: Entity,
     path: Entity.PATH,
-    emoji: Entity.EMOJI,
+    emoji: args.emoji || Entity.EMOJI,
     setList: this.setList,
     setListIdx: this.setListIdx,
-    factory: this.createFactories()
+    factory: this.factories
   });
 
   return list.push(new Entity(args)) && swap

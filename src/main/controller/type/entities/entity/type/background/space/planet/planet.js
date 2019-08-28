@@ -10,7 +10,8 @@ function Planet(args) {
       x: args.x || util.pos.x.rndm(),
       y: args.y || util.pos.y.rndm(),
       speed: args.speed || util.num.rndm.flt(0.25, 0.3),
-      dy: args.dy || 1
+      dy: args.dy || 1,
+      emoji: Planet.EMOJI
     })
   );
 

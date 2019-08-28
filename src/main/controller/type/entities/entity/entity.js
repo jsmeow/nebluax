@@ -2,7 +2,7 @@ const { fps, window } = require('../../../../options');
 const update = require('./event-handler/update/handle-on-update');
 const render = require('./event-handler/render/handle-on-render');
 const util = require('./util/entity-util');
-const log = require('../../../log/log');
+const log = require('../../../../log/log');
 const emojis = require('emoji.json/emoji-compact.json');
 
 function Entity(args) {
@@ -86,14 +86,14 @@ function Entity(args) {
   this.setListIdx = args.setListIdx;
 
   // Log entity spawn event
-  log.entity.spwn(this);
+  log.ctrlr.entities.entity.spawn(this);
 }
 
 // Spawn child entities by passing in the entity factory method and add them
 // to the children list
 Entity.prototype.spawnChildren = function(children) {
   this.children.push(...children);
-  log.entity.spwnchld(this);
+  log.ctrlr.entities.entity.children(this);
 };
 
 // Remove the entity from an entities list

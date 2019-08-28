@@ -1,7 +1,6 @@
 const gameFrame = require('./frame/game-frame');
 const enums = require('../../enum/enums');
-const e = require('../../exception/exception-handler');
-const log = require('../../log/log');
+const log = require('../../../log/log');
 
 // The application loop controller
 function LoopController() {
@@ -15,7 +14,7 @@ function LoopController() {
     this.frame.render();
   };
 
-  log.cntrllr.loop.initsuc();
+  log.ctrlr.loop.init.suc();
 }
 
 // Starts the application loop
@@ -39,7 +38,7 @@ LoopController.prototype.onChange = function(state) {
       this.frame = gameFrame();
       break;
     default:
-      throw new e.state.InvalidStateException(state);
+      throw new Error('InvalidStateException');
   }
 };
 

@@ -1,5 +1,5 @@
 const { window } = require('../../../options');
-const log = require('../../log/log');
+const log = require('../../../log/log');
 
 // The application canvas controller
 function CanvasController() {
@@ -27,7 +27,7 @@ function CanvasController() {
   // drawing will be done with this context
   this.ctx = offscreenCanvas.getContext('2d');
 
-  log.cntrllr.cnvs.initsuc();
+  log.ctrlr.canvas.init.suc();
 }
 
 module.exports = new CanvasController();

@@ -1,11 +1,10 @@
 const loop = require('../loop/loop-controller');
 const enums = require('../../enum/enums');
-const e = require('../../exception/exception-handler');
-const log = require('../../log/log');
+const log = require('../../../log/log');
 
 // The application state controller
 function StateController() {
-  log.cntrllr.ste.initsuc();
+  log.ctrlr.state.init.suc();
 }
 
 // The change application state event action
@@ -19,7 +18,7 @@ StateController.prototype.onChange = function(state) {
       loop.onChange(state);
       break;
     default:
-      throw new e.state.InvalidStateException(state);
+      throw new Error('InvalidStateException');
   }
 };
 

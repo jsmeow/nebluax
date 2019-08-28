@@ -8,7 +8,8 @@ function Star(args) {
     this,
     Object.assign(args, {
       x: args.x || util.pos.x.rndm(),
-      y: args.y || util.pos.y.rndm()
+      y: args.y || util.pos.y.rndm(),
+      emoji: Star.EMOJI
     })
   );
 

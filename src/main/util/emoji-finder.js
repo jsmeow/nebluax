@@ -1,4 +1,4 @@
-const emojis = require('../../../../node_modules/emoji.json/emoji');
+const emojis = require('emoji.json');
 
 function findEmoji(str) {
   console.log(
