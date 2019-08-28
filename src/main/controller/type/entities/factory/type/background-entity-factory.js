@@ -80,15 +80,15 @@ function BackgroundEntityFactory(setListIdx) {
       },
       medium: {
         purpleBlinking: (args = {}) => {
-          args.imgSrc = LargeStar.IMG_SRC.PURPLE_BLINKING;
+          args.imgSrc = MediumStar.IMG_SRC.PURPLE_BLINKING;
           return this.spawn(MediumStar, args);
         },
         redBlinking: (args = {}) => {
-          args.imgSrc = LargeStar.IMG_SRC.RED_BLINKING;
+          args.imgSrc = MediumStar.IMG_SRC.RED_BLINKING;
           return this.spawn(MediumStar, args);
         },
         whiteBlinking: (args = {}) => {
-          args.imgSrc = LargeStar.IMG_SRC.WHITE_BLINKING;
+          args.imgSrc = MediumStar.IMG_SRC.WHITE_BLINKING;
           return this.spawn(MediumStar, args);
         }
       },

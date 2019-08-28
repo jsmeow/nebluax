@@ -1,7 +1,9 @@
-const entities = require('./type/entities-enums');
-const state = require('./type/state-enums');
+const entitiesEnums = require('./type/entities-enums');
+const logEnums = require('./type/log-enums');
+const stateEnums = require('./type/state-enums');
 
 module.exports = {
-  ENTITIES: entities,
-  STATE: state
+  ENTITIES: entitiesEnums,
+  LOG: logEnums,
+  STATE: stateEnums
 };

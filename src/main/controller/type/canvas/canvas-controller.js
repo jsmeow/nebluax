@@ -1,6 +1,5 @@
 const { window } = require('../../../options');
-const log = require('../../../log/log');
-const { whteHvyChckMrk } = require('../../../util/emoji/emoji');
+const log = require('../../log/log');
 
 // The application canvas controller
 function CanvasController() {
@@ -28,7 +27,7 @@ function CanvasController() {
   // drawing will be done with this context
   this.ctx = offscreenCanvas.getContext('2d');
 
-  log.succ(`${whteHvyChckMrk} successfully created the canvas controller`);
+  log.cntrllr.cnvs.initsuc();
 }
 
 module.exports = new CanvasController();

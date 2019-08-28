@@ -3,12 +3,12 @@ const loop = require('./type/loop/loop-controller');
 const entities = require('./type/entities/entities-controller');
 const entityFctry = require('./type/entities/factory/entity-factory');
 const enums = require('./enum/enums');
-const log = require('../log/log');
+const log = require('./log/log');
 
 // todo log controller event logger
 
 function Controller() {
-  log.cntrllr.initdone();
+  log.cntrllr.main.initsuc();
   state.onChange(enums.STATE.STATES.GAME);
   loop.start();
 }

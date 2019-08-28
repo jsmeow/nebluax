@@ -1,12 +1,11 @@
 const loop = require('../loop/loop-controller');
 const enums = require('../../enum/enums');
 const e = require('../../exception/exception-handler');
-const log = require('../../../log/log');
-const { whteHvyChckMrk } = require('../../../util/emoji/emoji');
+const log = require('../../log/log');
 
 // The application state controller
 function StateController() {
-  log.succ(`${whteHvyChckMrk} successfully created the state controller`);
+  log.cntrllr.ste.initsuc();
 }
 
 // The change application state event action

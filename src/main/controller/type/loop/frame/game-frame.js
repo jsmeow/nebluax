@@ -1,18 +1,19 @@
 const entities = require('../../entities/entities-controller');
+const enums = require('../../../enum/enums');
 
 // An application game frame
 function gameFrame() {
   function update() {
-    entities.setList.forEach(list => {
-      list.forEach((entity, index) => {
+    Object.values(enums.ENTITIES.TYPE).forEach(type => {
+      entities.setList[type].forEach((entity, index) => {
         entity.update(index);
       });
     });
   }
 
   function render() {
-    entities.setList.forEach(list => {
-      list.forEach((entity, index) => {
+    Object.values(enums.ENTITIES.TYPE).forEach(type => {
+      entities.setList[type].forEach((entity, index) => {
         entity.render(index);
       });
     });

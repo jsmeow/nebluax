@@ -1,8 +1,7 @@
 const gameFrame = require('./frame/game-frame');
 const enums = require('../../enum/enums');
 const e = require('../../exception/exception-handler');
-const log = require('../../../log/log');
-const { whteHvyChckMrk } = require('../../../util/emoji/emoji');
+const log = require('../../log/log');
 
 // The application loop controller
 function LoopController() {
@@ -16,7 +15,7 @@ function LoopController() {
     this.frame.render();
   };
 
-  log.succ(`${whteHvyChckMrk} successfully created the loop controller`);
+  log.cntrllr.loop.initsuc();
 }
 
 // Starts the application loop

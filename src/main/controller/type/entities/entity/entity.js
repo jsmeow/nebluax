@@ -1,12 +1,12 @@
-const { fps } = require('../../../../options');
+const { fps, window } = require('../../../../options');
 const update = require('./event-handler/update/handle-on-update');
 const render = require('./event-handler/render/handle-on-render');
 const util = require('./util/entity-util');
-const log = require('../../../../log/log');
+const log = require('../../../log/log');
 const emojis = require('emoji.json/emoji-compact.json');
 
 function Entity(args) {
-  util.validateArgs(args);
+  util.val.args(args);
 
   // Position coordinates relative to the html5 canvas
   // x - position on the x axis in terms of canvas pixel units
@@ -17,8 +17,8 @@ function Entity(args) {
   // Size dimensions relative to the html5 canvas
   // width - width in terms of canvas pixel units
   // height - height in terms of canvas pixel units
-  this.width = args.width;
-  this.height = args.height;
+  this.width = args.width * window.scale;
+  this.height = args.height * window.scale;
 
   // Vector movement properties
   // speed - vector movement magnitude
@@ -34,9 +34,12 @@ function Entity(args) {
   // after an update
   // collides - flag if the entity collides with other entities
   // collided - flag if the entity has collided with other entities
+  // collidedListIdx - list of entity indexes an entity in the entities list
+  // has collided with
   this.dispose = args.dispose || false;
   this.collides = args.collides || false;
   this.collided = args.collided || false;
+  this.collidedListIdx = [];
 
   // Image properties
   // imgSrc - the image source(s) used by the entity
@@ -45,7 +48,7 @@ function Entity(args) {
   // imgAnimTimer - The animation loop timer used to animate the entity image
   // imgDeg - the rotation in degrees to render the image
   this.imgSrc = Array.isArray(args.imgSrc) ? args.imgSrc : [args.imgSrc];
-  this.img = util.generateImg(this.imgSrc);
+  this.img = util.gen.img(this.imgSrc);
   this.imgIdx = 0;
   this.imgAnimTimer = {
     delay: (!args.imgAnimTimer && fps) || args.imgAnimTimer.delay,
@@ -69,24 +72,38 @@ function Entity(args) {
   // constr - the constructor class (optional)
   // uuid- unique universal identifier or custom defined id (optional)
   // creator - creator entity reference (optional)
-  // children - children entity reference (optional)
+  // children - list of entity children spawn by the entity (optional)
   // factory - the entity factory reference (optional)
   // setList - entities list set reference
   // setListIdx - entities list set index reference
   this.constr = args.constr || 'entity constructor unknown';
   this.path = args.path || 'entity path unknown';
-  this.uuid = args.uuid || util.generateUuid(this.name);
+  this.uuid = args.uuid || util.gen.uuid(this.name);
   this.creator = args.creator || null;
-  this.children = args.children || [];
+  this.children = [];
   this.factory = args.factory || null;
   this.setList = args.setList;
   this.setListIdx = args.setListIdx;
 
+  // Log entity spawn event
   log.entity.spwn(this);
 }
 
+// Spawn child entities by passing in the entity factory method and add them
+// to the children list
+Entity.prototype.spawnChildren = function(children) {
+  this.children.push(...children);
+  log.entity.spwnchld(this);
+};
+
 // Remove the entity from an entities list
-Entity.remove = function(index) {
+Entity.prototype.remove = function(index) {
+  this.setList[this.setListIdx].splice(index, 1);
+};
+
+// Reset entity statuses before the next update if needed
+// todo send to game entity
+Entity.prototype.reset = function(index) {
   this.setList[this.setListIdx].splice(index, 1);
 };
 

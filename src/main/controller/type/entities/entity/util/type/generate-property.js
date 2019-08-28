@@ -1,13 +1,15 @@
 function generateImage(imgSrc) {
-  return Array(imgSrc.length)
-    .fill(new Image())
-    .map((_img, _idx) => Object.assign(_img, { src: imgSrc[_idx] }));
+  return imgSrc.map(_imgSrc => {
+    const _img = new Image();
+    _img.src = _imgSrc;
+    return _img;
+  });
 }
 
 function generateUuid(name) {
   return `${name || 'unknown'}-${Math.random()
     .toString(36)
-    .substr(2, 9)}\``.toLowerCase();
+    .substr(2, 9)}`;
 }
 
 module.exports = {

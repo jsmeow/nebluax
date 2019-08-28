@@ -1,4 +1,4 @@
-const log = require('./main/log/log').cntrllr.init();
+const log = require('./main/controller/log/log').cntrllr.main.init();
 const main = require('./main/main');
 
 /*

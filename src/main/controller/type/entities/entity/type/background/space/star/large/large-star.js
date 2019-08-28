@@ -7,7 +7,7 @@ function LargeStar(args) {
     Object.assign(args, {
       width: LargeStar.WIDTH,
       height: LargeStar.HEIGHT,
-      speed: args.speed || util.getRndmRangedFlt(0.25, 0.3),
+      speed: args.speed || util.num.rndm.flt(0.25, 0.3),
       dy: args.dy || 1
     })
   );

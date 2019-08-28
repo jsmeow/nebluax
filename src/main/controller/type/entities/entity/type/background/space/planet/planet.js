@@ -7,20 +7,19 @@ function Planet(args) {
   Entity.call(
     this,
     Object.assign(args, {
-      x: args.x || util.getRndmCanvasX(),
-      y: args.y || util.getRndmCanvasY(),
-      speed: args.speed || util.getRndmRangedFlt(0.25, 0.3),
-      dy: args.dy || 1,
-      emoji: Planet.EMOJI
+      x: args.x || util.pos.x.rndm(),
+      y: args.y || util.pos.y.rndm(),
+      speed: args.speed || util.num.rndm.flt(0.25, 0.3),
+      dy: args.dy || 1
     })
   );
 
   /** @override **/
   this.preUpdate = function() {
-    util.hasCollidedBndry.bttm(this.y, 0) &&
+    util.val.collsn.bndry.bttm(this.y, 0) &&
       Object.assign(this, {
-        x: util.getRndmCanvasX(),
-        y: util.getRndmCanvasY([-canvas.height, 0])
+        x: util.pos.x.rndm(),
+        y: util.pos.y.rndm([-canvas.height, 0])
       });
   };
 }

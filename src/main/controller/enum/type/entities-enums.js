@@ -1,4 +1,4 @@
-// The application entities enum
+// The application entities enums
 const enums = Object.freeze({
   TYPE: {
     BG: 0,

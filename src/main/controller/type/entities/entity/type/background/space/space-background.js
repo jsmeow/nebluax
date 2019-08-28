@@ -1,6 +1,5 @@
 const { window } = require('../../../../../../../options');
 const Background = require('../background');
-const log = require('../../../../../../../log/log');
 const emojis = require('emoji.json/emoji-compact.json');
 
 function SpaceBackground(args) {
@@ -15,49 +14,43 @@ function SpaceBackground(args) {
     })
   );
 
-  /** @override **/
-  this.children = [
-    Array(1).fill(this.factory.bg.space.star.largeWide.purple),
-    Array(1).fill(this.factory.bg.space.star.largeWide.red),
-    Array(1).fill(this.factory.bg.space.star.largeWide.white),
+  // The space background entity factories used
+  const { star: starFactory, planet: planetFactory } = this.factory.bg.space;
 
-    Array(1).fill(this.factory.bg.space.star.large.purpleBlinking),
-    Array(1).fill(this.factory.bg.space.star.large.redBlinking),
-    Array(1).fill(this.factory.bg.space.star.large.whiteBlinking),
-
-    Array(1).fill(this.factory.bg.space.star.medium.purpleBlinking),
-    Array(1).fill(this.factory.bg.space.star.medium.redBlinking),
-    Array(1).fill(this.factory.bg.space.star.medium.whiteBlinking),
-
-    Array(20).fill(this.factory.bg.space.star.small.multicolorBlinking),
-
-    Array(5).fill(this.factory.bg.space.star.small.purple1),
-    Array(5).fill(this.factory.bg.space.star.small.purple2),
-    Array(5).fill(this.factory.bg.space.star.small.purple3),
-    Array(5).fill(this.factory.bg.space.star.small.purpleBlinking),
-
-    Array(5).fill(this.factory.bg.space.star.small.red1),
-    Array(5).fill(this.factory.bg.space.star.small.red2),
-    Array(5).fill(this.factory.bg.space.star.small.red3),
-    Array(5).fill(this.factory.bg.space.star.small.redBlinking),
-
-    Array(5).fill(this.factory.bg.space.star.small.white1),
-    Array(5).fill(this.factory.bg.space.star.small.white2),
-    Array(5).fill(this.factory.bg.space.star.small.white3),
-    Array(5).fill(this.factory.bg.space.star.small.white4),
-    Array(5).fill(this.factory.bg.space.star.small.white5),
-    Array(20).fill(this.factory.bg.space.star.small.whiteBlinking),
-
-    Array(1).fill(this.factory.bg.space.planet[1]),
-    Array(1).fill(this.factory.bg.space.planet[2])
-  ]
-    .reduce((children, entities) => {
-      children.push(entities.map(entity => entity({ creator: this })));
-      return children;
-    }, [])
-    .flat();
-
-  log.entity.spwnchld(this);
+  // Spawn the background children entities
+  this.spawnChildren([
+    starFactory.largeWide.purple({ creator: this }),
+    starFactory.largeWide.red({ creator: this }),
+    starFactory.largeWide.white({ creator: this }),
+    starFactory.large.purpleBlinking({ creator: this }),
+    starFactory.large.redBlinking({ creator: this }),
+    starFactory.large.whiteBlinking({ creator: this }),
+    starFactory.medium.purpleBlinking({ creator: this }),
+    starFactory.medium.redBlinking({ creator: this }),
+    starFactory.medium.whiteBlinking({ creator: this }),
+    ...[...Array(5)].map(() => starFactory.small.purple1({ creator: this })),
+    ...[...Array(5)].map(() => starFactory.small.purple2({ creator: this })),
+    ...[...Array(5)].map(() => starFactory.small.purple3({ creator: this })),
+    ...[...Array(5)].map(() =>
+      starFactory.small.purpleBlinking({ creator: this })
+    ),
+    ...[...Array(5)].map(() => starFactory.small.red1({ creator: this })),
+    ...[...Array(5)].map(() => starFactory.small.red2({ creator: this })),
+    ...[...Array(5)].map(() => starFactory.small.red3({ creator: this })),
+    ...[...Array(5)].map(() =>
+      starFactory.small.redBlinking({ creator: this })
+    ),
+    ...[...Array(5)].map(() => starFactory.small.white1({ creator: this })),
+    ...[...Array(5)].map(() => starFactory.small.white2({ creator: this })),
+    ...[...Array(5)].map(() => starFactory.small.white3({ creator: this })),
+    ...[...Array(5)].map(() => starFactory.small.white4({ creator: this })),
+    ...[...Array(5)].map(() => starFactory.small.white5({ creator: this })),
+    ...[...Array(20)].map(() =>
+      starFactory.small.whiteBlinking({ creator: this })
+    ),
+    planetFactory[1]({ creator: this }),
+    planetFactory[2]({ creator: this })
+  ]);
 }
 
 SpaceBackground.prototype = Object.create(Background.prototype);

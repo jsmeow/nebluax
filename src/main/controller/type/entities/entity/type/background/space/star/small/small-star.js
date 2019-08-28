@@ -7,7 +7,7 @@ function SmallStar(args) {
     Object.assign(args, {
       width: SmallStar.WIDTH,
       height: SmallStar.HEIGHT,
-      speed: args.speed || util.getRndmRangedFlt(0.25, 1.5),
+      speed: args.speed || util.num.rndm.flt(0.25, 1.5),
       dy: args.dy || 1
     })
   );
@@ -51,6 +51,10 @@ SmallStar.IMG_SRC = {
   WHITE_BLINKING: [
     `${SmallStar.PATH}/assets/images/white-blinking/image-source-1.png`,
     `${SmallStar.PATH}/assets/images/white-blinking/image-source-2.png`,
+    `${SmallStar.PATH}/assets/images/white-blinking/image-source-3.png`,
+    `${SmallStar.PATH}/assets/images/white-blinking/image-source-4.png`,
+    `${SmallStar.PATH}/assets/images/white-blinking/image-source-5.png`,
+    `${SmallStar.PATH}/assets/images/white-blinking/image-source-4.png`,
     `${SmallStar.PATH}/assets/images/white-blinking/image-source-3.png`,
     `${SmallStar.PATH}/assets/images/white-blinking/image-source-2.png`
   ]

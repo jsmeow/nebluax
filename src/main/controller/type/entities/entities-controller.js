@@ -1,7 +1,6 @@
 const BackgroundEntityFactory = require('./factory/type/background-entity-factory');
 const entityFctry = require('./factory/entity-factory');
-const log = require('../../../log/log');
-const { whteHvyChckMrk } = require('../../../util/emoji/emoji');
+const log = require('../../log/log');
 
 // The application entities controller
 function EntitiesController() {
@@ -21,7 +20,7 @@ function EntitiesController() {
   // Create the entity type child factories
   entityFctry.createFactories();
 
-  log.succ(`${whteHvyChckMrk} successfully created the entities controller`);
+  log.cntrllr.ents.initsuc();
 }
 
 module.exports = new EntitiesController();

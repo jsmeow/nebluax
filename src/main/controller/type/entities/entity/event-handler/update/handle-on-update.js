@@ -22,10 +22,8 @@ function handleOnUpdate(entity, idx) {
     updateTimer(timer);
   });
 
-  // Update the animation loop timer and image idx
-  if (entity.img.length > 1) {
-    updateAnimationIndex(entity);
-  }
+  // Update the animation loop timer and image index
+  updateAnimationIndex(entity);
 }
 
 module.exports = handleOnUpdate;

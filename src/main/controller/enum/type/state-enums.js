@@ -1,4 +1,4 @@
-// The application states enum
+// The application state enums
 const enums = Object.freeze({
   STATES: {
     TITLE: 0,

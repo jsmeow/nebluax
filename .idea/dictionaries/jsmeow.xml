@@ -12,6 +12,7 @@
       <w>bcksp</w>
       <w>blln</w>
       <w>bllsy</w>
+      <w>bludrk</w>
       <w>bluedrk</w>
       <w>bndry</w>
       <w>brfcs</w>
@@ -25,19 +26,46 @@
       <w>cfor</w>
       <w>chck</w>
       <w>chldrn</w>
+      <w>cllpsd</w>
       <w>cllsn</w>
       <w>closebracket</w>
       <w>clppng</w>
+      <w>clpsd</w>
+      <w>clpsdblu</w>
+      <w>clpsdbludrk</w>
+      <w>clpsdblue</w>
+      <w>clpsdbluedrk</w>
+      <w>clpsderr</w>
+      <w>clpsderrdrk</w>
+      <w>clpsdinfo</w>
+      <w>clpsdinfodrk</w>
+      <w>clpsdpurp</w>
+      <w>clpsdpurpdrk</w>
+      <w>clpsdpurple</w>
+      <w>clpsdpurpledrk</w>
+      <w>clpsdsuc</w>
+      <w>clpsdsucc</w>
+      <w>clpsdsuccdrk</w>
+      <w>clpsdsucdrk</w>
+      <w>clpsdteal</w>
+      <w>clpsdtealdrk</w>
+      <w>clpsdwarn</w>
+      <w>clpsdwarndrk</w>
+      <w>clpsdwrn</w>
+      <w>clpsdwrndrk</w>
       <w>clsd</w>
       <w>cmptr</w>
       <w>cnstrctn</w>
       <w>cntrllr</w>
+      <w>cnvs</w>
+      <w>collsn</w>
       <w>controlleft</w>
       <w>controlright</w>
       <w>crss</w>
       <w>crwn</w>
       <w>ctrlr</w>
       <w>ctrlright</w>
+      <w>cuuid</w>
       <w>dggr</w>
       <w>drpf</w>
       <w>dsktp</w>
@@ -45,6 +73,7 @@
       <w>elctrc</w>
       <w>electronjs</w>
       <w>emojis</w>
+      <w>ents</w>
       <w>errdrk</w>
       <w>exclmtn</w>
       <w>fctry</w>
@@ -52,6 +81,7 @@
       <w>flyng</w>
       <w>fpsmeter</w>
       <w>frmd</w>
+      <w>gclpsderr</w>
       <w>glng</w>
       <w>glss</w>
       <w>glwng</w>
@@ -64,6 +94,8 @@
       <w>infodrk</w>
       <w>infrmtn</w>
       <w>initdone</w>
+      <w>initsuc</w>
+      <w>initsucc</w>
       <w>keya</w>
       <w>keyb</w>
       <w>keyc</w>
@@ -99,6 +131,8 @@
       <w>preupdate</w>
       <w>prhbtd</w>
       <w>pstl</w>
+      <w>purp</w>
+      <w>purpdrk</w>
       <w>purpleblinking</w>
       <w>purpledrk</w>
       <w>qstn</w>
@@ -127,6 +161,7 @@
       <w>strg</w>
       <w>succ</w>
       <w>succdrk</w>
+      <w>sucdrk</w>
       <w>tealdrk</w>
       <w>thmbsdwn</w>
       <w>thmbsp</w>
@@ -137,10 +172,13 @@
       <w>unpower</w>
       <w>unpowered</w>
       <w>unshield</w>
+      <w>valdte</w>
       <w>warndrk</w>
       <w>whte</w>
+      <w>wndwres</w>
       <w>woff</w>
       <w>wrnch</w>
+      <w>wrndrk</w>
       <w>wrnng</w>
     </words>
   </dictionary>
