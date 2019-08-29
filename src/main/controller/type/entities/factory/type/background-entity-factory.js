@@ -10,10 +10,10 @@ function BackgroundEntityFactory(setListIdx) {
   this.setListIdx = setListIdx;
 
   this.space = {
-    bg: (args = {}) => this.spawn(SpaceBackground, args, true),
+    bg: args => this.spawn(SpaceBackground, args, true),
     planet: {
-      1: (args = {}) => this.spawn(Planet1, args),
-      2: (args = {}) => this.spawn(Planet2, args)
+      1: args => this.spawn(Planet1, args),
+      2: args => this.spawn(Planet2, args)
     },
     star: {
       small: {

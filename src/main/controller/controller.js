@@ -14,7 +14,9 @@ function Controller() {
 
 // Run the application controller
 Controller.prototype.run = function() {
+  console.log(entityFctry);
   const spaceBg = entityFctry.factories.bg.space.bg();
+  const asteroid1 = entityFctry.factories.game.asteroid[1]();
   // console.log(factory);
   /* const spaceBg = entities.factory.bg.space.bg();
   console.log(entities.setList);*/

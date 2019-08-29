@@ -1,33 +1,33 @@
-const Entity = require('../game');
-const getRandomRangedFloat = require('../../../util/type/get-random-ranged-float');
-const getRandomCanvasPosition = require('../../../util/type/get-random-canvas-position');
-const hasCollidedBoundary = require('../../../util/type/has-collided-boundary');
+const canvas = require('../../../../../canvas/canvas-controller');
+const GameEntity = require('../game-entity');
+const util = require('../../../util/entity-util');
+const emojis = require('emoji.json/emoji-compact.json');
 
-function Asteroid({ pos, vector, props, ...args }) {
-  Entity.call(this, {
-    pos: pos || { ...getRandomCanvasPosition() },
-    vector: {
-      speed: (() => getRandomRangedFloat(1, 2))(),
-      dy: 1,
-      ...vector
-    },
-    props: {
-      type: ['asteroid', ...props.type]
-    },
-    ...args
-  });
+function Asteroid(args) {
+  GameEntity.call(
+    this,
+    Object.assign(args, {
+      x: args.x || util.pos.x.rand(),
+      y: args.y || -args.height,
+      speed: args.speed || 100, // util.num.rand.float(0.25, 0.3),
+      dy: args.dy || 1,
+      emoji: Asteroid.EMOJI
+    })
+  );
 
   /** @override **/
   this.preUpdate = function() {
-    // Get new random position coordinate on bottom boundary collision
-    if (hasCollidedBoundary.bottom(this.pos.y, 0)) {
-      this.pos = {
-        ...getRandomCanvasPosition({ y: [-canvas.height, 0] })
-      };
-    }
+    util.valid.collision.boundary.bttm(this.y, 0) &&
+      Object.assign(this, {
+        x: util.pos.x.rand(),
+        y: util.pos.y.rand([-canvas.height, 0])
+      });
   };
 }
 
-Asteroid.prototype = Object.create(Entity.prototype);
+Asteroid.prototype = Object.create(GameEntity.prototype);
+
+Asteroid.PATH = `${GameEntity.PATH}/asteroid`;
+Asteroid.EMOJI = emojis[2831];
 
 module.exports = Asteroid;

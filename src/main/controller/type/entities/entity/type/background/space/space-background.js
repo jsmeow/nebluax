@@ -1,9 +1,9 @@
 const { window } = require('../../../../../../../options');
-const Background = require('../background');
+const BackgroundEntity = require('../background-entity');
 const emojis = require('emoji.json/emoji-compact.json');
 
 function SpaceBackground(args) {
-  Background.call(
+  BackgroundEntity.call(
     this,
     Object.assign(args, {
       width: SpaceBackground.WIDTH,
@@ -53,9 +53,9 @@ function SpaceBackground(args) {
   ]);
 }
 
-SpaceBackground.prototype = Object.create(Background.prototype);
+SpaceBackground.prototype = Object.create(BackgroundEntity.prototype);
 
-SpaceBackground.PATH = `${Background.PATH}/space`;
+SpaceBackground.PATH = `${BackgroundEntity.PATH}/space`;
 SpaceBackground.EMOJI = emojis[2853];
 SpaceBackground.WIDTH = window.width;
 SpaceBackground.HEIGHT = window.height;

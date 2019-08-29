@@ -1,10 +1,9 @@
 const mainLog = require('./type/log-main');
 const windowLog = require('./type/log-window');
 const ctrlrLog = require('../controller/log/log-controller');
-const { COLORS } = require('../controller/enum/enums').LOG;
-const findEmoji = require('../util/emoji-finder');
-
-// findEmoji('saucer');
+const COLORS = require('./log-colors');
+// const findEmoji = require('../util/emoji-finder');
+// findEmoji('moon');
 
 const loggers = [
   ['err', COLORS.DANGER],
@@ -17,8 +16,6 @@ const loggers = [
   ['infodrk', COLORS.INFO_DARK],
   ['teal', COLORS.TEAL],
   ['tealdrk', COLORS.TEAL_DARK],
-  ['blu', COLORS.BLUE],
-  ['bludrk', COLORS.BLUE_DARK],
   ['purp', COLORS.PURPLE],
   ['purpdrk', COLORS.PURPLE_DARK]
 ];

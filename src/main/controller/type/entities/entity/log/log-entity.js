@@ -14,13 +14,13 @@ function log(logger) {
   return {
     spawn(entity) {
       const { _name, _uuid, _cname, _cuuid } = getProps(entity);
-      const msg = `${_name} has been spawned with ${_uuid}`;
+      const msg = `${_name} has been spawned ${_uuid}`;
 
       if (entity.creator && options.spawn.children) {
         msg.concat(` by ${_cname} ${_cuuid}`);
-        logger.teal(msg);
+        logger.teal(msg, entity);
       } else if (!entity.creator) {
-        logger.teal(msg);
+        logger.teal(msg, entity);
       }
     },
     children({ children, ...entity }) {

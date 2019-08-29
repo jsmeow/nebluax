@@ -4,27 +4,40 @@ const log = require('../../../log/log');
 
 // The application loop controller
 function LoopController() {
-  // The frame function to execute will depend on the application state
-  this.frame = null;
+  // The last loop frame timestamp
+  let last = Date.now();
 
-  // The application loop
   this.loop = () => {
-    window.requestAnimationFrame(this.loop);
-    this.frame.update();
+    const now = Date.now();
+    const dt = (now - last) / 1000.0;
+
+    this.frame.update(dt);
     this.frame.render();
+
+    last = now;
+    window.requestAnimationFrame(this.loop);
   };
 
   log.ctrlr.loop.init.suc();
 }
 
+// Get a timestamp at the current time
+LoopController.prototype.timestamp = function() {
+  return window.performance && window.performance.now
+    ? window.performance.now()
+    : new Date().getTime();
+};
+
 // Starts the application loop
 LoopController.prototype.start = function() {
   window.requestAnimationFrame(this.loop);
+  log.ctrlr.loop.start();
 };
 
 // Stops the application loop
 LoopController.prototype.stop = function() {
   window.cancelAnimationFrame(this.loop);
+  log.ctrlr.loop.stop();
 };
 
 // The change frame function event action

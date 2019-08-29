@@ -7,7 +7,7 @@ function MediumStar(args) {
     Object.assign(args, {
       width: MediumStar.WIDTH,
       height: MediumStar.HEIGHT,
-      speed: args.speed || util.num.rndm.flt(0.25, 0.3),
+      speed: args.speed || util.num.rand.float(0.25, 0.3),
       dy: args.dy || 1
     })
   );

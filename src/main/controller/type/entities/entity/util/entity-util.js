@@ -1,35 +1,35 @@
-const generateProp = require('./type/generate-property');
-const getRndmCanvasPos = require('./type/get-random-canvas-position');
-const getRndmRangedFlt = require('./type/get-random-ranged-float');
-const getRndmRangedInt = require('./type/get-random-ranged-int');
-const hasCollidedBndry = require('./type/has-collided-boundary');
+const generateProperty = require('./type/generate-property');
+const getRandomCanvasPosition = require('./type/get-random-canvas-position');
+const getRandomRangedFloat = require('./type/get-random-ranged-float');
+const getRandomRangedInt = require('./type/get-random-ranged-int');
+const hasCollidedBoundary = require('./type/has-collided-boundary');
 const hasCollidedEntity = require('./type/has-collided-boundary');
-const validateArgs = require('./type/validate-args');
+const validateArguments = require('./type/validate-arguments');
 
 module.exports = {
   gen: {
-    img: generateProp.generateImage,
-    uuid: generateProp.generateUuid
+    img: generateProperty.generateImage,
+    uuid: generateProperty.generateUuid
   },
   pos: {
     x: {
-      rndm: getRndmCanvasPos.getRandomCanvasX
+      rand: getRandomCanvasPosition.getRandomCanvasX
     },
     y: {
-      rndm: getRndmCanvasPos.getRandomCanvasY
+      rand: getRandomCanvasPosition.getRandomCanvasY
     }
   },
   num: {
-    rndm: {
-      flt: getRndmRangedFlt,
-      int: getRndmRangedInt
+    rand: {
+      float: getRandomRangedFloat,
+      int: getRandomRangedInt
     }
   },
-  val: {
-    args: validateArgs,
-    collsn: {
-      bndry: hasCollidedBndry,
-      ent: hasCollidedEntity
+  valid: {
+    args: validateArguments,
+    collision: {
+      boundary: hasCollidedBoundary,
+      entity: hasCollidedEntity
     }
   }
 };

@@ -1,4 +1,6 @@
 const BackgroundEntityFactory = require('./type/background-entity-factory');
+const DisplayEntityFactory = require('./type/display-entity-factory');
+const GameEntityFactory = require('./type/game-entity-factory');
 const enums = require('../../../enum/enums');
 
 // The types of entities the entity factory can produce will be the same as
@@ -14,7 +16,11 @@ EntityFactory.prototype.init = function(setList) {
   const keys = Object.keys(enums.ENTITIES.TYPE).map(key => key.toLowerCase());
 
   // Mixin main entity factory properties and methods to child entity factories
-  const Factories = [BackgroundEntityFactory].map(Factory => {
+  const Factories = [
+    BackgroundEntityFactory,
+    DisplayEntityFactory,
+    GameEntityFactory
+  ].map(Factory => {
     Factory.prototype.setList = setList;
     Factory.prototype.factories = this.factories;
     Factory.prototype.spawn = EntityFactory.prototype.spawn;
@@ -26,12 +32,15 @@ EntityFactory.prototype.init = function(setList) {
   Object.assign(this.factories, {
     [keys[enums.ENTITIES.TYPE.BG]]: new Factories[enums.ENTITIES.TYPE.BG](
       enums.ENTITIES.TYPE.BG
+    ),
+    [keys[enums.ENTITIES.TYPE.GAME]]: new Factories[enums.ENTITIES.TYPE.GAME](
+      enums.ENTITIES.TYPE.GAME
     )
   });
 };
 
 // Creates and an entity and returns it
-EntityFactory.prototype.spawn = function(Entity, args, swap) {
+EntityFactory.prototype.spawn = function(Entity, args = {}, swap) {
   const list = this.setList[this.setListIdx];
 
   // Append the entities set list, factory and constructor metadata to the

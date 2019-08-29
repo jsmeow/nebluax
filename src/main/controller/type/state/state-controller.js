@@ -20,6 +20,8 @@ StateController.prototype.onChange = function(state) {
     default:
       throw new Error('InvalidStateException');
   }
+
+  log.ctrlr.state.change(state);
 };
 
 module.exports = new StateController();

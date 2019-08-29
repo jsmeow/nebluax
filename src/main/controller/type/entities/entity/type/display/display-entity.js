@@ -1,6 +1,6 @@
 const Entity = require('../../entity');
 
-function Display({
+function DisplayEntity({
   pos,
   dims,
   vector,
@@ -26,6 +26,6 @@ function Display({
   });
 }
 
-Display.prototype = Object.create(Entity.prototype);
+DisplayEntity.prototype = Object.create(Entity.prototype);
 
-module.exports = Display;
+module.exports = DisplayEntity;

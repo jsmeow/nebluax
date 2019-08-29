@@ -13,6 +13,14 @@ function log(logger) {
         const msg = `The ${name} controller was not created`;
         logger.err(msg);
       }
+    },
+    start() {
+      const msg = `The application ${name} has been started`;
+      logger.info(msg);
+    },
+    stop() {
+      const msg = `The application ${name} has been stopped`;
+      logger.info(msg);
     }
   };
 }

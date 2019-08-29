@@ -7,7 +7,7 @@ function SmallStar(args) {
     Object.assign(args, {
       width: SmallStar.WIDTH,
       height: SmallStar.HEIGHT,
-      speed: args.speed || util.num.rndm.flt(0.25, 1.5),
+      speed: args.speed || util.num.rand.float(0.25, 1.5),
       dy: args.dy || 1
     })
   );

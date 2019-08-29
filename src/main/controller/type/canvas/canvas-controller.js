@@ -1,4 +1,5 @@
 const { window } = require('../../../options');
+const canvasContext = require('./context/canvas-context');
 const log = require('../../../log/log');
 
 // The application canvas controller
@@ -26,6 +27,9 @@ function CanvasController() {
   // Since transferControlToOffscreen is used on the offscreen canvas, all
   // drawing will be done with this context
   this.ctx = offscreenCanvas.getContext('2d');
+
+  // Define the canvas context drawing methods
+  CanvasController.prototype.drawImage = canvasContext.drawImage(this);
 
   log.ctrlr.canvas.init.suc();
 }
