@@ -1,10 +1,10 @@
 const updateEntityPosition = require('./type/update-entity-position');
-const updateEntityCollision = require('./type/update-entity-collision');
 const updateEntityTimers = require('./type/update-entity-timers');
 const updateEntityAnimationIndex = require('./type/update-entity-animation-index');
+const updateEntityCollision = require('./type/update-entity-collision');
 
 // Update the entity position coordinates
-function updatePosition(entity, dt) {
+function updatePosition(entity, _, dt) {
   updateEntityPosition(entity, dt);
 }
 
@@ -23,15 +23,12 @@ function updateCollision(entity, idx) {
   entity.collides && updateEntityCollision(entity, idx);
 }
 
-// Perform an application frame entity update
-function update(entity, dt) {
-  updatePosition(entity, dt);
-  updateTimers(entity);
-  updateAnimationIndex(entity);
+function update(entity, idx, dt) {
+  entity.actions.forEach(action => action(entity, idx, dt));
 }
 
 module.exports = update;
-module.exports.updatePosition = updatePosition;
-module.exports.updateTimers = updateTimers;
-module.exports.updateAnimationIndex = updateAnimationIndex;
-module.exports.updateCollision = updateCollision;
+module.exports.position = updatePosition;
+module.exports.timers = updateTimers;
+module.exports.animIndex = updateAnimationIndex;
+module.exports.collision = updateCollision;

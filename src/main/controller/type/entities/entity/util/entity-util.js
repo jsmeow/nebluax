@@ -3,7 +3,7 @@ const getRandomCanvasPosition = require('./type/get-random-canvas-position');
 const getRandomRangedFloat = require('./type/get-random-ranged-float');
 const getRandomRangedInt = require('./type/get-random-ranged-int');
 const hasCollidedBoundary = require('./type/has-collided-boundary');
-const hasCollidedEntity = require('./type/has-collided-boundary');
+const hasCollidedEntity = require('./type/has-collided-entity');
 const validateArguments = require('./type/validate-arguments');
 
 module.exports = {

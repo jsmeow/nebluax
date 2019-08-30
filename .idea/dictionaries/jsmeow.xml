@@ -25,6 +25,7 @@
       <w>cattacked</w>
       <w>cfor</w>
       <w>chck</w>
+      <w>cheight</w>
       <w>chldrn</w>
       <w>cllpsd</w>
       <w>cllsn</w>
@@ -67,6 +68,7 @@
       <w>ctrlr</w>
       <w>ctrlright</w>
       <w>cuuid</w>
+      <w>cwidth</w>
       <w>dggr</w>
       <w>drpf</w>
       <w>dsktp</w>
@@ -100,7 +102,10 @@
       <w>keya</w>
       <w>keyb</w>
       <w>keyc</w>
+      <w>keyd</w>
+      <w>keyevent</w>
       <w>keypressed</w>
+      <w>keyw</w>
       <w>knbs</w>
       <w>kycp</w>
       <w>lghtng</w>
@@ -182,6 +187,8 @@
       <w>wrnch</w>
       <w>wrndrk</w>
       <w>wrnng</w>
+      <w>xmax</w>
+      <w>ymax</w>
     </words>
   </dictionary>
 </component>

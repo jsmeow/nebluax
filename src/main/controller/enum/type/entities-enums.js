@@ -4,6 +4,11 @@ const enums = Object.freeze({
     BG: 0,
     DISP: 1,
     GAME: 2
+  },
+  FACTION: {
+    NEUTRAL: 0,
+    ALLIED: 1,
+    ENEMY: 2
   }
 });
 

@@ -7,8 +7,7 @@ function LargeWideStar(args) {
     Object.assign(args, {
       width: LargeWideStar.WIDTH,
       height: LargeWideStar.HEIGHT,
-      speed: args.speed || util.num.rand.float(0.25, 0.3),
-      dy: args.dy || 1
+      speed: args.speed || util.num.rand.float(20, 30)
     })
   );
 }

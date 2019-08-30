@@ -9,6 +9,7 @@ function Star(args) {
     Object.assign(args, {
       x: args.x || util.pos.x.rand(),
       y: args.y || util.pos.y.rand(),
+      dy: args.dy || 1,
       emoji: Star.EMOJI
     })
   );

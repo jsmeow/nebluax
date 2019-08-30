@@ -45,8 +45,9 @@ EntityFactory.prototype.spawn = function(Entity, args = {}, swap) {
 
   // Append the entities set list, factory and constructor metadata to the
   // entity arguments
+  // If swap is set to true, send to the front of the set list.
   Object.assign(args, {
-    name: Entity.name,
+    name: args.name || Entity.name,
     constr: Entity,
     path: Entity.PATH,
     emoji: args.emoji || Entity.EMOJI,

@@ -7,6 +7,8 @@ function LoopController() {
   // The last loop frame timestamp
   let last = Date.now();
 
+  // The main loop method
+  // The delta time will be used to smooth out position animations.
   this.loop = () => {
     const now = Date.now();
     const dt = (now - last) / 1000.0;

@@ -6,21 +6,23 @@ const log = require('../../../../log/log');
 const emojis = require('emoji.json/emoji-compact.json');
 
 function Entity(args) {
-  // Position coordinates relative to the html5 canvas
-  // x - position on the x axis in terms of canvas pixel units
-  // y - position on the y axis in terms of canvas pixel units
-  util.valid.args.pos(args);
-  this.x = args.x || 0;
-  this.y = args.y || 0;
-
   // Size dimensions relative to the html5 canvas
   // width - width in terms of canvas pixel units
   // height - height in terms of canvas pixel units
   util.valid.args.size(args);
   this.width = args.width * window.scale;
   this.height = args.height * window.scale;
-  /* this.width = args.width * window.scale;
-  this.height = args.height * window.scale;*/
+
+  // Position coordinates relative to the html5 canvas
+  // xmax - the magnitude of the maximum value x can take within the canvas
+  // ymax - the magnitude of the maximum value y can take within the canvas
+  // x - position on the x axis in terms of canvas pixel units
+  // y - position on the y axis in terms of canvas pixel units
+  util.valid.args.pos(args);
+  this.xmax = canvas.width * 0.5;
+  this.ymax = canvas.height * 0.5;
+  this.x = this.xmax - this.width * 0.5 + (args.x || 0);
+  this.y = this.ymax - this.height * 0.5 + (args.y || 0);
 
   // Vector movement properties
   // speed - vector movement magnitude
@@ -79,6 +81,9 @@ function Entity(args) {
   this.setList = args.setList;
   this.setListIdx = args.setListIdx;
 
+  // Default entity action to take on an application frame update
+  this.actions = [update.position, update.timers, update.animIndex];
+
   // Dispose flags if the entity should be removed from the entities list after
   // an update
   this.dispose = args.dispose || false;
@@ -102,13 +107,10 @@ Entity.prototype.remove = function(idx) {
 // Perform an update on a single application frame.
 // If the disposing status is true, perform entity disposal.
 // Preupdate and postupdate methods are expected to overridden if needed.
+// Iterate over and perform the entity actions.
 Entity.prototype.update = function(idx, dt) {
-  /* if (this.name.includes('Asteroid')) {
-    console.log(this.y);
-  }*/
-
   this.preUpdate && this.preUpdate(idx);
-  update(this, dt);
+  update(this, idx, dt);
   this.postUpdate && this.postUpdate(idx);
   this.dispose && this.remove(idx);
 };

@@ -9,7 +9,7 @@ function Planet(args) {
     Object.assign(args, {
       x: args.x || util.pos.x.rand(),
       y: args.y || util.pos.y.rand(),
-      speed: args.speed || util.num.rand.float(0.25, 0.3),
+      speed: args.speed || util.num.rand.float(20, 30),
       dy: args.dy || 1,
       emoji: Planet.EMOJI
     })

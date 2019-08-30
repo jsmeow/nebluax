@@ -2,8 +2,8 @@ const mainLog = require('./type/log-main');
 const windowLog = require('./type/log-window');
 const ctrlrLog = require('../controller/log/log-controller');
 const COLORS = require('./log-colors');
-// const findEmoji = require('../util/emoji-finder');
-// findEmoji('moon');
+/* const findEmoji = require('../util/emoji-finder');
+findEmoji('game');*/
 
 const loggers = [
   ['err', COLORS.DANGER],

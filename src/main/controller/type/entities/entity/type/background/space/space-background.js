@@ -8,7 +8,7 @@ function SpaceBackground(args) {
     Object.assign(args, {
       width: SpaceBackground.WIDTH,
       height: SpaceBackground.HEIGHT,
-      speed: args.speed || 0.25,
+      speed: args.speed || 20,
       dy: 1,
       imgSrc: SpaceBackground.IMG_SRC
     })

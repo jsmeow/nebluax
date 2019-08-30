@@ -23,3 +23,20 @@ function drawImage({ ctx }) {
 }
 
 module.exports = drawImage;
+
+/*
+We use the 3rd form of drawImage which lets us specify an offset and size for
+  the sprite and the destination separately.
+
+ctx.drawImage(
+  resources.get(this.url),
+  x,
+  y,
+  this.size[0],
+  this.size[1],
+  0,
+  0,
+  this.size[0],
+  this.size[1]
+);
+*/

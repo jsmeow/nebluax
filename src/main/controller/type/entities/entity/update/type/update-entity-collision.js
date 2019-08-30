@@ -11,7 +11,7 @@ function isCollisionEventValid(entity, _entity, idx, _idx) {
   return (
     idx !== _idx &&
     (entity.alive && _entity.alive) &&
-    entity.faction === _entity.faction &&
+    entity.faction !== _entity.faction &&
     !(entity.name.includes('Bullet') && _entity.name.includes('Bullet')) &&
     util.valid.collision.entity(entity, _entity)
   );
@@ -28,28 +28,31 @@ function doCombat(src, target) {
 // On entity death assign score points to the target entity and set the alive
 // flag to false on the source entity
 function onDeath(src, target) {
-  target.creator
-    ? Object.assign(target.creator, { score: target.creator.score + src.value })
-    : Object.assign(target, { score: target.score + src.value });
-  src.alive = false;
+  if (src.health <= 0) {
+    target.creator
+      ? Object.assign(target.creator, {
+          score: target.creator.score + src.value
+        })
+      : Object.assign(target, { score: target.score + src.value });
+    src.alive = false;
+  }
 }
 
 // Perform a collision assertion and collision action
 function updateEntityCollision(entity, idx) {
   entity.setList[entity.setListIdx].forEach((_entity, _index) => {
     if (isCollisionEventValid(entity, _entity, idx, _index)) {
-      [[entity, _entity], [_entity, entity]].forEach((src, target) =>
-        doCombat(src, target)
-      );
+      [[entity, _entity], [_entity, entity]].forEach(e => doCombat(e[0], e[1]));
 
-      [[entity, _entity], [_entity, entity]].forEach((src, target) =>
-        onDeath(src, target)
-      );
+      [[entity, _entity], [_entity, entity]].forEach(e => onDeath(e[0], e[1]));
 
       // Set the collided status to an entity
-      [entity, _entity].forEach(src => {
-        !src.collided && Object.assign(src, { collided: true });
+      [entity, _entity].forEach(e => {
+        !e.collided && Object.assign(e, { collided: true });
       });
+
+      console.log(entity);
+      console.log(_entity);
     }
   });
 }

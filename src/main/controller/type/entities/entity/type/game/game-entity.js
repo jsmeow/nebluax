@@ -1,11 +1,12 @@
 const Entity = require('../../entity');
 const update = require('../../update/update-entity');
+const enums = require('../../../../../enum/enums');
 
 function GameEntity(args) {
   Entity.call(this, args);
 
   // The entity faction affiliation
-  this.faction = '';
+  this.faction = args.faction || enums.ENTITIES.FACTION.NEUTRAL;
 
   // Status properties
   // Extending entities can add more status properties if needed.
@@ -16,10 +17,10 @@ function GameEntity(args) {
 
   // Point properties
   // Extending entities can add more point properties if needed.
-  this.health = 0;
-
-  this.attack = 0;
-  this.value = 0;
+  // Default health is set to 1.
+  this.health = args.health || 1;
+  this.attack = args.attack || 0;
+  this.value = args.value || 0;
   this.score = 0;
 
   // Collision properties
@@ -27,14 +28,12 @@ function GameEntity(args) {
   // collided - flag if the entity has collided with other entities
   // collidedList - list of entity indexes of entities that this entity has
   // already collided with
-  this.collides = args.collides || false;
+  this.collides = args.collides || true;
   this.collided = args.collided || false;
   this.collidedList = [];
 
-  /** @override**/
-  this.preUpdate = function(idx) {
-    update.updateCollision(this, idx);
-  };
+  // Add the collision action to the entity update actions list
+  this.actions.push(update.collision);
 
   /** @override**/
   this.postUpdate = function() {
