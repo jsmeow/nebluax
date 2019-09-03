@@ -1,5 +1,5 @@
 require('./main/log/log').main.run();
-require('./main/log/log').window.res();
+require('./main/log/log').options.window.res();
 const main = require('./main/main');
 
 /*

@@ -1,8 +1,8 @@
-const ctrlr = require('./controller/controller');
+const controller = require('./controller/controller');
 
 // Application entry point
 function main() {
-  ctrlr.run();
+  controller.run();
 }
 
 module.exports = main;

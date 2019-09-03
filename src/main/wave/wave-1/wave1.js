@@ -1,5 +1,5 @@
 const factory = require('../../factory/factory/factory-entity');
-const properties = require('../../controller/type/entities/entity/properties/properties-entity');
+const properties = require('../../controller/entities/entity/properties/properties-entity');
 const Wave = require('../wave');
 
 function Wave1() {

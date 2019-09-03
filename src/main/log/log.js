@@ -1,8 +1,10 @@
-const mainLog = require('./type/log-main');
-const windowLog = require('./type/log-window');
-const ctrlrLog = require('../controller/log/log-controller');
+const logController = require('./controller/log-controller');
+const logEntity = require('./entity/log-entity');
+const logMain = require('./main/log-main');
+const logOptions = require('./options/log-options');
 const COLORS = require('./log-colors');
-/* const findEmoji = require('../util/emoji-finder');
+
+/* const findEmoji = require('../utils/utils');
 findEmoji('game');*/
 
 const loggers = [
@@ -32,7 +34,8 @@ const logger = Object.fromEntries(
 );
 
 module.exports = Object.assign(logger, {
-  main: mainLog(logger),
-  window: windowLog(logger),
-  ctrlr: ctrlrLog(logger)
+  controller: logController(logger),
+  entity: logEntity(logger),
+  main: logMain(logger),
+  options: logOptions(logger)
 });

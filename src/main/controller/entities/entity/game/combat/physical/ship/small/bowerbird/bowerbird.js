@@ -1,0 +1,59 @@
+const canvas = require('../../../../../../canvas');
+const Ship = require('../../ship');
+const StandardBullet = require('../../../../invulnerable/bullet/standard/standard-bullet');
+const allied =
+  './main/entity/type/ship/small/bowerbird/assets/images/allied.png';
+const enemy =
+  './main/entity/type/ship/small/bowerbird/assets/images/enemy.png';
+const neutral =
+  './main/entity/type/ship/small/bowerbird/assets/images/neutral.png';
+const damaged =
+  './main/entity/type/ship/small/bowerbird/assets/images/damaged.png';
+
+// The Bowerbird entity.
+function Bowerbird({ degrees, faction, factory, entities }) {
+  Ship.call(this, {
+    x: canvas.width * 0.5,
+    y: canvas.height * 0.5,
+    width: Bowerbird.width,
+    height: Bowerbird.height,
+    faction,
+    imageSource: {
+      allied,
+      enemy,
+      neutral,
+      damaged
+    },
+    degrees,
+    factory,
+    entities
+  });
+
+  /** @override **/
+  this.props.type = [...this.props.type, 'bowerbird'];
+
+  /** @override **/
+  this.points = {
+    health: 3,
+    attack: 1,
+    score: 0,
+    value: 0
+  };
+
+  /** @override **/
+  this.createBullets = function() {
+    factory.bullet.standardBullet({
+      x: this.pos.x + this.dims.width * 0.5 - StandardBullet.width * 0.5,
+      y: this.pos.y + this.dims.height,
+      degrees: Math.PI,
+      creator: this
+    });
+  };
+}
+
+Bowerbird.prototype = Object.create(Ship.prototype);
+
+Bowerbird.width = canvas.res * 15;
+Bowerbird.height = canvas.res * 15;
+
+module.exports = Bowerbird;
