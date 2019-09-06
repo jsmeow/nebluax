@@ -2,13 +2,12 @@ const { fps } = require('../../../../../options');
 
 function toggle(timer, entity, state) {
   if (entity.imageDamaged) {
-    if (entity.timers.image) {
+    if (entity.timers.animation) {
       entity.timers.animation.active = !state;
     }
     entity.image = state ? entity.imageDamaged : entity.imageBasic;
   }
   entity.damaged = state;
-  entity.invincible = state;
   timer.active = state;
 }
 
@@ -23,11 +22,17 @@ module.exports = function({ entity, ...args }) {
       function() {
         toggle(this, entity, true);
       },
+    begin:
+      args.begin ||
+      function() {
+        entity.invincible = true;
+      },
     tick: args.tick || null,
     expire:
       args.expire ||
       function() {
         toggle(this, entity, false);
+        entity.invincible = false;
       },
     trigger: args.trigger || null
   };

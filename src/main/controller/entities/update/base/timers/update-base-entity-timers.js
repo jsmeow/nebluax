@@ -1,6 +1,9 @@
 module.exports = function(entity) {
   Object.values(entity.timers).forEach(timer => {
     if (timer.active && !entity.dispose) {
+      if (timer.frame === 0 && timer.begin) {
+        timer.begin();
+      }
       timer.tick && timer.tick();
       if (timer.frame > timer.delay) {
         timer.expire && timer.expire();

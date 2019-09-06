@@ -7,6 +7,7 @@ module.exports = function({ entity, spawn, ...args }) {
     index: 0,
     active: args.active || true,
     init: args.init || null,
+    begin: args.begin || null,
     tick: args.tick || null,
     expire: args.expire || (entity.alive && entity.firing && spawn),
     trigger: args.trigger || null

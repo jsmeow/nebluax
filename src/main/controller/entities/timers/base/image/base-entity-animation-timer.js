@@ -7,6 +7,7 @@ module.exports = function({ entity, ...args }) {
     index: 0,
     active: args.active || true,
     init: args.init || null,
+    begin: args.begin || null,
     tick:
       args.tick ||
       function() {

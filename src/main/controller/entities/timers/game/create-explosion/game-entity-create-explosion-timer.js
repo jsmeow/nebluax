@@ -19,6 +19,7 @@ module.exports = function({ entity, amount, ...args }) {
     index: 0,
     active: args.active || false,
     init: args.init || null,
+    begin: args.begin || null,
     tick:
       args.tick ||
       function() {
