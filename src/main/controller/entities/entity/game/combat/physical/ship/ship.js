@@ -5,6 +5,8 @@ function Ship(args) {
 
   // Flags if the ship entity is creating/firing bullets at an interval
   this.firing = typeof args.firing === 'boolean' ? args.firing : true;
+
+
 }
 
 Ship.prototype = Object.create(PhysicalEntity.prototype);

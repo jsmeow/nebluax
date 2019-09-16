@@ -1,6 +1,6 @@
 const canvas = require('../../../../../../canvas/canvas-controller');
 const PhysicalEntity = require('../physical-entity');
-const utils = require('../../../../../../../utils/utils');
+const timers = require('../../../../../timers/entity-timers');
 const emojis = require('emoji.json/emoji-compact.json');
 
 function Asteroid(args) {
@@ -14,13 +14,12 @@ function Asteroid(args) {
     })
   );
 
-  /** @override **/
-  /*  this.preUpdate = function() {
-    if (utils.entity.assert.collision.boundary.bottom(this.y)) {
-      this.x = utils.entity.position.x.rng();
-      this.y = -this.height;
-    }
-  };*/
+  // Add the create explosion timer to the timer list
+  this.timers.explosion = timers.game.explosion({
+    entity: this,
+    amount: 1,
+    trigger: () => !this.alive
+  });
 }
 
 Asteroid.prototype = Object.create(PhysicalEntity.prototype);

@@ -7,15 +7,15 @@ function Explosion(args) {
   InvulnerableEntity.call(
     this,
     Object.assign(args, {
-      explodes: false,
       emoji: Explosion.EMOJI
     })
   );
 
-  this.timers.image = timers.image({
+  /** @override **/
+  this.timers.image = timers.base.animation({
     entity: this,
     delay: fps * 0.5,
-    onExpire: () => {
+    expire: () => {
       this.dispose = true;
     }
   });

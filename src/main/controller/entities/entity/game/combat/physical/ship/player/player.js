@@ -47,6 +47,16 @@ function Player(args) {
 
 Player.prototype = Object.create(Ship.prototype);
 
+// Create/fire a bomb
+Player.prototype.fireBomb = function() {
+  this.factory.game.combat.physical.explosive.bomb.standardBomb.allied({
+    x: (this.x + this.width * 0.5) / window.scale,
+    y: this.y / window.scale,
+    dy: -1,
+    creator: this
+  });
+};
+
 Player.PATH = `${Ship.PATH}/player`;
 Player.EMOJI = emojis[2960];
 Player.X = window.width * 0.5;

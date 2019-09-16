@@ -1,5 +1,6 @@
 const bulletEntityCollisionEvent = require('./event/bullet-entity-collision-event');
 const combatEntityCollisionEvent = require('./event/combat-entity-collision-event');
+const explosiveEntityCollisionEvent = require('./event/explosive-entity-collision-event');
 const utils = require('../../../../../../utils/utils');
 
 function updateGameEntityCollision(entity, idx) {
@@ -22,5 +23,6 @@ function updateGameEntityCollision(entity, idx) {
 module.exports = updateGameEntityCollision;
 module.exports.event = {
   bullet: bulletEntityCollisionEvent,
-  combat: combatEntityCollisionEvent
+  combat: combatEntityCollisionEvent,
+  explosive: explosiveEntityCollisionEvent
 };

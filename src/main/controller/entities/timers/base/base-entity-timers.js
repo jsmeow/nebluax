@@ -1,4 +1,4 @@
-const baseEntityAnimationTimer = require('./image/base-entity-animation-timer');
+const baseEntityAnimationTimer = require('./animation/base-entity-animation-timer');
 
 module.exports = {
   animation: baseEntityAnimationTimer

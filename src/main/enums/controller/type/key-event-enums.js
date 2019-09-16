@@ -5,6 +5,7 @@ module.exports = Object.freeze({
     A: keyCodes.KEYA,
     D: keyCodes.KEYD,
     W: keyCodes.KEYW,
-    S: keyCodes.KEYS
+    S: keyCodes.KEYS,
+    SPACE: keyCodes.SPACE
   }
 });

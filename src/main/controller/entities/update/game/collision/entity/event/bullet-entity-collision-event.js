@@ -1,8 +1,4 @@
 module.exports = function(entity, _entity) {
-  /*  if (entity.faction !== _entity.faction) {
-    entity.alive = false;
-  }*/
-
   if (
     !_entity.invincible &&
     entity.attack &&

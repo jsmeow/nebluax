@@ -1,6 +1,7 @@
 const Asteroid1 = require('../../entity/game/combat/physical/asteroid/1/asteroid-1');
 const Explosion1 = require('../../entity/game/combat/invulnerable/explosion/1/explosion-1');
 const Player = require('../../entity/game/combat/physical/ship/player/player');
+const StandardBomb = require('../../entity/game/combat/physical/explosive/bomb/standard/standard-bomb');
 const StandardBullet = require('../../entity/game/combat/invulnerable/bullet/standard/standard-bullet');
 const enums = require('../../../../enums/enums');
 
@@ -35,6 +36,24 @@ function GameEntityFactory(setListIdx) {
     physical: {
       asteroid: {
         asteroid1: args => this.spawn(Asteroid1, args)
+      },
+      explosive: {
+        bomb: {
+          standardBomb: {
+            allied: args => {
+              args.faction = enums.entity.faction.ALLIED;
+              this.spawn(StandardBomb, args);
+            },
+            enemy: args => {
+              args.faction = enums.entity.faction.ENEMY;
+              this.spawn(StandardBomb, args);
+            },
+            neutral: args => {
+              args.faction = enums.entity.faction.NEUTRAL;
+              this.spawn(StandardBomb, args);
+            }
+          }
+        }
       },
       ship: {
         player: args => this.spawn(Player, args)

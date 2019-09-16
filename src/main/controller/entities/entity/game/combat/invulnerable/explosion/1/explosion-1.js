@@ -4,8 +4,8 @@ function Explosion1(args) {
   Explosion.call(
     this,
     Object.assign(args, {
-      width: Explosion1.WIDTH,
-      height: Explosion1.HEIGHT,
+      width: args.width || Explosion1.WIDTH,
+      height: args.height || Explosion1.HEIGHT,
       imagePath: Explosion1.IMAGE_PATH
     })
   );

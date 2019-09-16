@@ -1,73 +1,34 @@
-const Entity = require('../../../../entity');
-const DestroyExplosion = require('../combatant/explosion/destroy/destroy-explosion');
+const { fps } = require('../../../../../../../options');
+const PhysicalEntity = require('../physical-entity');
+const timers = require('../../../../../timers/entity-timers');
+const update = require('../../../../../update/update-entity');
+const emojis = require('emoji.json/emoji-compact.json');
 
-function Explosive({
-  x,
-  y,
-  width,
-  height,
-  speed,
-  dx,
-  dy,
-  faction,
-  imageSource,
-  degrees,
-  creator,
-  factory,
-  entities
-}) {
-  Entity.call(this, {
-    x,
-    y,
-    width,
-    height,
-    speed,
-    dx,
-    dy,
-    faction,
-    type: ['explosive'],
-    imageSource,
-    degrees,
-    creator,
-    factory,
-    entities
+function Explosive(args) {
+  PhysicalEntity.call(this, args);
+
+  // The arguments passed to the explosion created when the explosive is
+  // detonated
+  this.explosion = args.explosion;
+
+  /** @override **/
+  this.timers.image = timers.base.animation({
+    entity: this,
+    delay: fps * 0.5
   });
 
   /** @override **/
-  this.status = {
-    ...this.status,
-    alive: true
-  };
+  this.onCollision = update.game.collision.entity.event.explosive;
 
-  /** @override **/
-  this.points = {
-    health: 1,
-    attack: 0,
-    score: 0,
-    value: 0
-  };
-
-  /** @override **/
-  this.postUpdate = function() {
-    if (this.validateBoundaryCollision().all) {
-      this.status.dispose = true;
-    }
-
-    if (!this.status.alive && this.status.dispose) {
-      this.factory.explosion.destroyExplosion({
-        x: this.pos.x + this.dims.width - DestroyExplosion.width * 5 * 0.5,
-        y: this.pos.y - this.dims.height - DestroyExplosion.height * 5 * 0.5,
-        width: DestroyExplosion.width * 5,
-        height: DestroyExplosion.height * 5,
-        faction: this.creator.faction,
-        points: {
-          attack: this.creator.points.attack * 2
-        }
-      });
-    }
-  };
+  // Add the boundary collision to the entity update actions list
+  this.actions.push(update.game.collision.boundary);
 }
 
-Explosive.prototype = Object.create(Entity.prototype);
+Explosive.prototype = Object.create(PhysicalEntity.prototype);
+
+Explosive.PATH = `${PhysicalEntity.PATH}/explosive`;
+Explosive.EMOJI = emojis[2831];
+Explosive.EXPLOSION_X = 0;
+Explosive.EXPLOSION_Y = 0;
 
 module.exports = Explosive;

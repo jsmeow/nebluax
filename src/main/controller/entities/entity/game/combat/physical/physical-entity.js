@@ -6,9 +6,9 @@ function PhysicalEntity(args) {
   CombatEntity.call(this, args);
 
   // Damage properties
-  // If the entity is capable of being damaged and the damaged image path is
-  // supplied, it gains a short invincibility time between hits and set the
-  // standard image source to the damaged image source.
+  // If the entity is capable of being damaged, it gains a short invincibility
+  // time between hits and set the standard image source to the damaged image
+  // source.
   // damaged - flags if the entity has been damaged
   // imagePathDamaged - the file path to the damaged image source
   // imageDamaged - the damaged image object

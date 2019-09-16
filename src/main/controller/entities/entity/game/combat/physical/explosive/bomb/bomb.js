@@ -1,44 +1,19 @@
-const { fps } = require('../../../../options');
 const Explosive = require('../explosive');
 
-function Bomb({
-  x,
-  y,
-  width,
-  height,
-  speed,
-  dx,
-  dy,
-  faction,
-  imageSource,
-  degrees,
-  creator,
-  factory,
-  entities
-}) {
-  Explosive.call(this, {
-    x,
-    y,
-    width,
-    height,
-    speed,
-    dx,
-    dy,
-    faction,
-    imageSource,
-    degrees,
-    creator,
-    factory,
-    entities
-  });
-
-  /** @override **/
-  this.props.type = [...this.props.type, 'bomb'];
-
-  /** @override **/
-  this.animationTimer.delay = fps * 0.5;
+function Bomb(args) {
+  Explosive.call(
+    this,
+    Object.assign(args, {
+      width: Bomb.WIDTH,
+      height: Bomb.HEIGHT
+    })
+  );
 }
 
 Bomb.prototype = Object.create(Explosive.prototype);
+
+Bomb.PATH = `${Explosive.PATH}/bomb`;
+Bomb.WIDTH = 7;
+Bomb.HEIGHT = 7;
 
 module.exports = Bomb;

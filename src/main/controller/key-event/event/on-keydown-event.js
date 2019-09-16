@@ -19,6 +19,9 @@ function onKeydownEvent(event) {
     [enums.controller.keyEvent.keys.S]() {
       player.dy = 1;
       player.direction.down = true;
+    },
+    [enums.controller.keyEvent.keys.SPACE]() {
+      player.fireBomb();
     }
   };
 

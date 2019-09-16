@@ -1,5 +1,5 @@
 module.exports = function(entity) {
-  entity.onDeath && entity.onDeath();
+  entity.death && entity.death();
   if (!entity.alive && !entity.damaged) {
     entity.dispose = true;
   }
