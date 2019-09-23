@@ -1,6 +1,7 @@
 <component name="ProjectDictionaryState">
   <dictionary name="jsmeow">
     <words>
+      <w>accel</w>
       <w>altleft</w>
       <w>altr</w>
       <w>altright</w>
@@ -134,6 +135,7 @@
       <w>polyfilled</w>
       <w>postrender</w>
       <w>postupdate</w>
+      <w>powerup</w>
       <w>prerender</w>
       <w>prettierrc</w>
       <w>preupdate</w>

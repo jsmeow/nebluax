@@ -1,6 +1,6 @@
 const { fps } = require('../../../../../options');
 
-module.exports = function({ entity, spawn, ...args }) {
+module.exports = function({ fireBullet, ...args } = {}) {
   return {
     delay: args.delay || fps,
     frame: 0,
@@ -9,7 +9,13 @@ module.exports = function({ entity, spawn, ...args }) {
     init: args.init || null,
     begin: args.begin || null,
     tick: args.tick || null,
-    expire: args.expire || (entity.alive && entity.firing && spawn),
+    expire:
+      args.expire ||
+      function(entity) {
+        if (entity.alive && !entity.dispose && entity.firing && fireBullet) {
+          fireBullet();
+        }
+      },
     trigger: args.trigger || null
   };
 };

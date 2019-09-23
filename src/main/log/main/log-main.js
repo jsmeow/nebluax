@@ -8,7 +8,7 @@ module.exports = function(logger) {
       logger.info(msg);
     },
     init: {
-      suc() {
+      success() {
         const msg = `${name} initialized`;
         logger.info(msg);
       },

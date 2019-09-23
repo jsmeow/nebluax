@@ -1,16 +1,16 @@
 const emojis = require('emoji.json/emoji-compact.json');
 
 module.exports = function(logger) {
-  const name = `${emojis[2799]} key event`;
+  const name = `${emojis[3077]} key event`;
   return {
     init: {
-      suc() {
+      success() {
         const msg = `Successfully created the ${name} controller`;
-        logger.suc(msg);
+        logger.success(msg);
       },
       fail() {
         const msg = `The ${name} controller was not created`;
-        logger.err(msg);
+        logger.error(msg);
       }
     },
     start() {

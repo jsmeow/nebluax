@@ -31,9 +31,9 @@ function collision(index) {
       }
 
       if (this.points.health <= 0) {
-        if (entity.creator) {
-          entity.creator.points.score =
-            entity.creator.points.score + this.points.value;
+        if (entity.parent) {
+          entity.parent.points.score =
+            entity.parent.points.score + this.points.value;
         } else {
           entity.points.score = entity.points.score + this.points.value;
         }
@@ -42,9 +42,9 @@ function collision(index) {
       }
 
       if (entity.points.health <= 0) {
-        if (this.creator) {
-          this.creator.points.score =
-            this.creator.points.score + entity.points.value;
+        if (this.parent) {
+          this.parent.points.score =
+            this.parent.points.score + entity.points.value;
         } else {
           this.points.score = this.points.score + entity.points.value;
         }

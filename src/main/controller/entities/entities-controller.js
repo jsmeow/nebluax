@@ -12,9 +12,9 @@ function EntitiesController() {
 
   // Create the current application background and player user entity
   entityFactory.factories.bg.scene.space();
-  this.player = entityFactory.factories.game.combat.physical.ship.player();
+  this.player = entityFactory.factories.game.combat.ship.player();
 
-  entityFactory.factories.game.combat.physical.asteroid.asteroid1();
+  entityFactory.factories.game.combat.asteroid();
   //
   /*  entityFctry.factories.game.asteroid.asteroid1();
   entityFctry.factories.game.asteroid.asteroid1();
@@ -27,7 +27,7 @@ function EntitiesController() {
   entityFctry.factories.game.asteroid.asteroid1();
   entityFctry.factories.game.asteroid.asteroid1();*/
 
-  log.controller.entities.init.suc();
+  log.controller.entities.init.success();
 }
 
 module.exports = new EntitiesController();

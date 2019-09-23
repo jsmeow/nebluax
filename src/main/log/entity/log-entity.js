@@ -1,11 +1,11 @@
 const emojis = require('emoji.json/emoji-compact.json');
 
-function getProps({ name, emoji, uuid, creator }) {
+function getProps({ name, emoji, uuid, parent }) {
   return {
     _name: `${emoji} ${name}`,
     _uuid: `${emojis[3493]} ${uuid}`,
-    _cname: creator ? `${creator.emoji} ${creator.name}` : ``,
-    _cuuid: creator ? `${emojis[3493]} ${creator.uuid}` : ``
+    _cname: parent ? `${parent.emoji} ${parent.name}` : ``,
+    _cuuid: parent ? `${emojis[3493]} ${parent.uuid}` : ``
   };
 }
 
@@ -16,10 +16,10 @@ module.exports = function(logger) {
         const { _name, _uuid, _cname, _cuuid } = getProps(entity);
         const msg = `${_name} has been spawned ${_uuid}`;
 
-        if (entity.creator) {
+        if (entity.parent) {
           msg.concat(` by ${_cname} ${_cuuid}`);
           logger.teal(msg, entity);
-        } else if (!entity.creator) {
+        } else if (!entity.parent) {
           logger.teal(msg, entity);
         }
       }

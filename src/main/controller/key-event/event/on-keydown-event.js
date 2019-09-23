@@ -22,10 +22,16 @@ function onKeydownEvent(event) {
     },
     [enums.controller.keyEvent.keys.SPACE]() {
       player.fireBomb();
+    },
+    [enums.controller.keyEvent.keys.Q]() {
+      player.shield();
+    },
+    [enums.controller.keyEvent.keys.E]() {
+      player.fireMine();
     }
   };
 
-  // If key corresponds to an action, perform the keydown event action.
+  // If key corresponds to an action, perform the keydown event action
   if (Object.keys(actions).includes(event.keyCode.toString())) {
     actions[event.keyCode]();
   }

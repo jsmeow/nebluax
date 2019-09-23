@@ -1,6 +1,8 @@
 module.exports = function(entity) {
-  entity.death && entity.death();
   if (!entity.alive && !entity.damaged) {
+    if (entity.death) {
+      entity.death(entity);
+    }
     entity.dispose = true;
   }
 };

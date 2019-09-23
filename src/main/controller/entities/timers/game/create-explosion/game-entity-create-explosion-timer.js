@@ -1,19 +1,18 @@
 const { fps } = require('../../../../../options');
 const utils = require('../../../../../utils/utils');
 
-module.exports = function({ entity, amount, ...args }) {
-  const delayStep = fps * 0.125;
-  const delay = amount * delayStep;
-  const spawnExplosion = () => {
-    entity.factory.game.combat.invulnerable.explosion.explosion1({
-      x: utils.entity.position.x.rng([entity.x, entity.x + entity.width]),
-      y: utils.entity.position.y.rng([entity.y, entity.y + entity.height]),
-      creator: entity
-    });
-  };
+function spawnExplosion(entity) {
+  const { x, y, width, height } = entity;
+  entity.factory.game.combat.explosion({
+    x: utils.entity.position.x.rng([x, x + width]),
+    y: utils.entity.position.y.rng([y, y + height]),
+    parent: entity
+  });
+}
 
+module.exports = function({ amount = 1, ...args } = {}) {
   return {
-    delay,
+    delay: fps * 0.125,
     frame: 0,
     index: 0,
     active: args.active || false,
@@ -21,11 +20,12 @@ module.exports = function({ entity, amount, ...args }) {
     begin: args.begin || null,
     tick:
       args.tick ||
-      function() {
-        const timerRangeBegin = this.index * delayStep;
-        const timerRangeEnd = (this.index + 1) * delayStep;
+      function(entity) {
+        const step = this.delay / (amount + 0.5);
+        const timerRangeBegin = this.index * step;
+        const timerRangeEnd = (this.index + 1) * step;
         if (this.frame >= timerRangeBegin && this.frame < timerRangeEnd) {
-          spawnExplosion();
+          spawnExplosion(entity);
           this.index = this.index + 1;
         }
       },

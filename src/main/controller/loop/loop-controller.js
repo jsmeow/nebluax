@@ -20,7 +20,7 @@ function LoopController() {
     window.requestAnimationFrame(this.loop);
   };
 
-  log.controller.loop.init.suc();
+  log.controller.loop.init.success();
 }
 
 // Get a timestamp at the current time
@@ -42,8 +42,8 @@ LoopController.prototype.stop = function() {
   log.controller.loop.stop();
 };
 
-// The change frame function event action
-LoopController.prototype.onChange = function(state) {
+// The change frame function on change state event
+LoopController.prototype.onStateChange = function(state) {
   switch (state) {
     case enums.controller.state.states.TITLE:
       break;

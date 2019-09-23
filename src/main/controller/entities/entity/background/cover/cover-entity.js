@@ -4,7 +4,8 @@ const update = require('../../../update/update-entity');
 function CoverEntity(args) {
   BackgroundEntity.call(this, args);
 
-  this.actions.push(update.bg.position.cover(args.y));
+  // Add the entity position action to the entity update actions list
+  this.actions.push(update.bg.position.cover);
 }
 
 CoverEntity.prototype = Object.create(BackgroundEntity.prototype);

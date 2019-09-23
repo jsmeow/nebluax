@@ -5,13 +5,13 @@ const imageSource1 =
 const imageSource2 =
   './main/entity/type/ship-trail/blue/assets/images/image-source-2.png';
 
-function BlueShipTrail({ degrees, creator, entities, getX, getY }) {
+function BlueShipTrail({ degrees, parent, entities, getX, getY }) {
   ShipTrail.call(this, {
     width: BlueShipTrail.width,
     height: BlueShipTrail.height,
     imageSource: [imageSource1, imageSource2],
     degrees,
-    creator,
+    parent,
     entities,
     getX,
     getY

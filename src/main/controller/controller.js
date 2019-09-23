@@ -6,13 +6,13 @@ const enums = require('../enums/enums');
 const log = require('../log/log');
 
 function Controller() {
-  log.controller.master.init.suc();
-  log.main.init.suc();
+  log.controller.master.init.success();
+  log.main.init.success();
 }
 
-// Run the application controller
+// Start the application controller
 Controller.prototype.run = function() {
-  state.onChange(enums.controller.state.states.GAME);
+  state.change(enums.controller.state.states.GAME);
   loop.start();
 };
 

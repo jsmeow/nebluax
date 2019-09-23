@@ -1,17 +1,27 @@
 const { fps } = require('../../../../../options');
 
-function toggle(timer, entity, state) {
+function toggleDamagedImage(entity) {
   if (entity.imageDamaged) {
     if (entity.timers.animation) {
-      entity.timers.animation.active = !state;
+      entity.timers.animation.active = !entity.timers.animation.active;
     }
-    entity.image = state ? entity.imageDamaged : entity.imageBasic;
+    entity.image = entity.damaged ? entity.imageDamaged : entity.imageBasic;
   }
-  entity.damaged = state;
-  timer.active = state;
 }
 
-module.exports = function({ entity, ...args }) {
+function toggleDamagedStatus(entity) {
+  entity.damaged = !entity.damaged;
+}
+
+function toggleInvincibleStatus(entity) {
+  entity.invincible = !entity.invincible;
+}
+
+function toggleTimerState(timer) {
+  timer.active = !timer.active;
+}
+
+module.exports = function(args = {}) {
   return {
     delay: fps * 0.125,
     frame: 0,
@@ -19,20 +29,26 @@ module.exports = function({ entity, ...args }) {
     active: args.active || false,
     init:
       args.init ||
-      function() {
-        toggle(this, entity, true);
+      function(entity) {
+        if (entity.damages) {
+          toggleDamagedStatus(entity);
+          toggleDamagedImage(entity);
+          toggleTimerState(this);
+        }
       },
     begin:
       args.begin ||
-      function() {
-        entity.invincible = true;
+      function(entity) {
+        toggleInvincibleStatus(entity);
       },
     tick: args.tick || null,
     expire:
       args.expire ||
-      function() {
-        toggle(this, entity, false);
-        entity.invincible = false;
+      function(entity) {
+        toggleDamagedStatus(entity);
+        toggleDamagedImage(entity);
+        toggleInvincibleStatus(entity);
+        toggleTimerState(this);
       },
     trigger: args.trigger || null
   };

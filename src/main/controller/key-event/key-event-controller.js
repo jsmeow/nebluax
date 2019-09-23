@@ -8,7 +8,7 @@ function KeyEventController() {
   this.addKeydownEventListener();
   this.addKeyupEventListener();
 
-  log.controller.keyEvent.init.suc();
+  log.controller.keyEvent.init.success();
 }
 
 // Add keydown event Listener

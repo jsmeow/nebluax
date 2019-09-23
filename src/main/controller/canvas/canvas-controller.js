@@ -26,12 +26,12 @@ function CanvasController() {
   // Define the offscreen canvas context
   // Since transferControlToOffscreen is used on the offscreen canvas, all
   // drawing will be done with this context
-  this.ctx = offscreenCanvas.getContext('2d');
+  this.context = offscreenCanvas.getContext('2d');
 
   // Define the canvas context drawing methods
   this.drawImage = canvasContext.drawImage(this);
 
-  log.controller.canvas.init.suc();
+  log.controller.canvas.init.success();
 }
 
 module.exports = new CanvasController();

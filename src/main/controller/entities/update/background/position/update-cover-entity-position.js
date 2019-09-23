@@ -1,7 +1,9 @@
-module.exports = function(spawnY) {
-  return function(entity) {
-    if (entity.y > spawnY + entity.height) {
-      entity.y = 0;
-    }
-  };
+// The spawn position y value
+let spawnY = null;
+
+module.exports = function(entity) {
+  spawnY = typeof spawnY !== 'number' && entity.y;
+  if (entity.y > spawnY + entity.height) {
+    entity.y = 0;
+  }
 };

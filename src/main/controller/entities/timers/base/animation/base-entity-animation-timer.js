@@ -1,6 +1,6 @@
 const { fps } = require('../../../../../options');
 
-module.exports = function({ entity, ...args }) {
+module.exports = function(args = {}) {
   return {
     delay: args.delay || fps,
     frame: 1,
@@ -10,7 +10,7 @@ module.exports = function({ entity, ...args }) {
     begin: args.begin || null,
     tick:
       args.tick ||
-      function() {
+      function(entity) {
         const step = this.delay / entity.imageSource.length;
         const timerRangeBegin = (this.index + 1) * step;
         const timerRangeEnd = (this.index + 2) * step;

@@ -4,18 +4,18 @@ const log = require('../../log/log');
 
 // The application state controller
 function StateController() {
-  log.controller.state.init.suc();
+  log.controller.state.init.success();
 }
 
 // The change application state event action
-StateController.prototype.onChange = function(state) {
+StateController.prototype.change = function(state) {
   switch (state) {
     case enums.controller.state.states.TITLE:
       break;
     case enums.controller.state.states.MENU:
       break;
     case enums.controller.state.states.GAME:
-      loop.onChange(state);
+      loop.onStateChange(state);
       break;
     default:
       throw new Error('InvalidStateException');

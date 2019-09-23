@@ -2,17 +2,24 @@ module.exports = function(entity) {
   Object.values(entity.timers).forEach(timer => {
     if (timer.active && !entity.dispose) {
       if (timer.frame === 0 && timer.begin) {
-        timer.begin();
+        timer.begin(entity);
       }
-      timer.tick && timer.tick();
-      if (timer.frame > timer.delay) {
-        timer.expire && timer.expire();
-        timer.frame = 0;
-      } else {
+      if (timer.tick) {
+        timer.tick(entity);
+      }
+      if (timer.frame <= timer.delay) {
         timer.frame = timer.frame + 1;
       }
-    } else if (timer.trigger && timer.trigger()) {
-      timer.init && timer.init();
+      if (timer.frame > timer.delay) {
+        if (timer.expire) {
+          timer.expire(entity);
+        }
+        timer.frame = 0;
+      }
+    } else if (timer.trigger && timer.trigger(entity)) {
+      if (timer.init) {
+        timer.init(entity);
+      }
       timer.frame = 0;
       timer.active = true;
     }

@@ -4,13 +4,13 @@ module.exports = function(logger) {
   const name = `${emojis[2981]} canvas`;
   return {
     init: {
-      suc() {
+      success() {
         const msg = `Successfully created the ${name} controller`;
-        logger.suc(msg);
+        logger.success(msg);
       },
       fail() {
         const msg = `The ${name} controller was not created`;
-        logger.err(msg);
+        logger.error(msg);
       }
     }
   };

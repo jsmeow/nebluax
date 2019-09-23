@@ -1,11 +1,11 @@
-const updateGameEntityBoundaryCollision = require('./collision/boundary/update-game-entity-boundary-collision');
-const updateGameEntityCollision = require('./collision/entity/update-game-entity-collision');
+const updateGameEntityCollision = require('./collision/update-game-entity-collision');
 const updateGameEntityDeath = require('./death/update-game-entity-death');
+const updateShieldEntityPosition = require('./position/update-shield-entity-position');
 
 module.exports = {
-  collision: {
-    boundary: updateGameEntityBoundaryCollision,
-    entity: updateGameEntityCollision
-  },
-  death: updateGameEntityDeath
+  collision: updateGameEntityCollision,
+  death: updateGameEntityDeath,
+  position: {
+    shield: updateShieldEntityPosition
+  }
 };

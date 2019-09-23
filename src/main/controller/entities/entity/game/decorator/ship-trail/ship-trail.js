@@ -6,7 +6,7 @@ function ShipTrail({
   height,
   imageSource,
   degrees,
-  creator,
+  parent,
   entities,
   getX,
   getY
@@ -19,7 +19,7 @@ function ShipTrail({
     type: ['ship-trail'],
     imageSource,
     degrees,
-    creator,
+    parent,
     entities
   });
 

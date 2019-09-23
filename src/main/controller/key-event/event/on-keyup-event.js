@@ -38,7 +38,7 @@ function onKeyupEvent(event) {
     }
   };
 
-  // If key corresponds to an action, perform the keydown event action.
+  // If key corresponds to an action, perform the keydown event action
   if (Object.keys(actions).includes(event.keyCode.toString())) {
     actions[event.keyCode]();
   }
